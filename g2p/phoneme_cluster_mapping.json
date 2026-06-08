@@ -1,0 +1,1014 @@
+{
+  "a": {
+    "cluster_id": 0,
+    "cluster_label": "Short Vowels",
+    "cluster_members": [
+      "a",
+      "ee",
+      "hq",
+      "i",
+      "ii",
+      "o",
+      "rq",
+      "u"
+    ],
+    "frequency": 209515
+  },
+  "aa": {
+    "cluster_id": 2,
+    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_members": [
+      "aa",
+      "c",
+      "dh",
+      "h",
+      "j",
+      "l",
+      "lx",
+      "m",
+      "nj",
+      "nx",
+      "q",
+      "t",
+      "th",
+      "txh",
+      "w",
+      "y"
+    ],
+    "frequency": 44658
+  },
+  "ae": {
+    "cluster_id": 7,
+    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_members": [
+      "ae",
+      "b",
+      "dx",
+      "n",
+      "r",
+      "s",
+      "tx"
+    ],
+    "frequency": 25
+  },
+  "ax": {
+    "cluster_id": 10,
+    "cluster_label": "Long/Diphthong Vowels",
+    "cluster_members": [
+      "ax"
+    ],
+    "frequency": 110
+  },
+  "b": {
+    "cluster_id": 7,
+    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_members": [
+      "ae",
+      "b",
+      "dx",
+      "n",
+      "r",
+      "s",
+      "tx"
+    ],
+    "frequency": 5082
+  },
+  "bh": {
+    "cluster_id": 3,
+    "cluster_label": "Velar Stops",
+    "cluster_members": [
+      "bh",
+      "ch",
+      "d",
+      "dxh",
+      "dxhq",
+      "dxq",
+      "g",
+      "gh",
+      "jh",
+      "k",
+      "kh",
+      "khq",
+      "ng",
+      "p",
+      "sh"
+    ],
+    "frequency": 2331
+  },
+  "c": {
+    "cluster_id": 2,
+    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_members": [
+      "aa",
+      "c",
+      "dh",
+      "h",
+      "j",
+      "l",
+      "lx",
+      "m",
+      "nj",
+      "nx",
+      "q",
+      "t",
+      "th",
+      "txh",
+      "w",
+      "y"
+    ],
+    "frequency": 8008
+  },
+  "ch": {
+    "cluster_id": 3,
+    "cluster_label": "Velar Stops",
+    "cluster_members": [
+      "bh",
+      "ch",
+      "d",
+      "dxh",
+      "dxhq",
+      "dxq",
+      "g",
+      "gh",
+      "jh",
+      "k",
+      "kh",
+      "khq",
+      "ng",
+      "p",
+      "sh"
+    ],
+    "frequency": 658
+  },
+  "d": {
+    "cluster_id": 3,
+    "cluster_label": "Velar Stops",
+    "cluster_members": [
+      "bh",
+      "ch",
+      "d",
+      "dxh",
+      "dxhq",
+      "dxq",
+      "g",
+      "gh",
+      "jh",
+      "k",
+      "kh",
+      "khq",
+      "ng",
+      "p",
+      "sh"
+    ],
+    "frequency": 6149
+  },
+  "dh": {
+    "cluster_id": 2,
+    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_members": [
+      "aa",
+      "c",
+      "dh",
+      "h",
+      "j",
+      "l",
+      "lx",
+      "m",
+      "nj",
+      "nx",
+      "q",
+      "t",
+      "th",
+      "txh",
+      "w",
+      "y"
+    ],
+    "frequency": 2766
+  },
+  "dx": {
+    "cluster_id": 7,
+    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_members": [
+      "ae",
+      "b",
+      "dx",
+      "n",
+      "r",
+      "s",
+      "tx"
+    ],
+    "frequency": 4232
+  },
+  "dxh": {
+    "cluster_id": 3,
+    "cluster_label": "Velar Stops",
+    "cluster_members": [
+      "bh",
+      "ch",
+      "d",
+      "dxh",
+      "dxhq",
+      "dxq",
+      "g",
+      "gh",
+      "jh",
+      "k",
+      "kh",
+      "khq",
+      "ng",
+      "p",
+      "sh"
+    ],
+    "frequency": 726
+  },
+  "dxhq": {
+    "cluster_id": 3,
+    "cluster_label": "Velar Stops",
+    "cluster_members": [
+      "bh",
+      "ch",
+      "d",
+      "dxh",
+      "dxhq",
+      "dxq",
+      "g",
+      "gh",
+      "jh",
+      "k",
+      "kh",
+      "khq",
+      "ng",
+      "p",
+      "sh"
+    ],
+    "frequency": 189
+  },
+  "dxq": {
+    "cluster_id": 3,
+    "cluster_label": "Velar Stops",
+    "cluster_members": [
+      "bh",
+      "ch",
+      "d",
+      "dxh",
+      "dxhq",
+      "dxq",
+      "g",
+      "gh",
+      "jh",
+      "k",
+      "kh",
+      "khq",
+      "ng",
+      "p",
+      "sh"
+    ],
+    "frequency": 430
+  },
+  "ee": {
+    "cluster_id": 0,
+    "cluster_label": "Short Vowels",
+    "cluster_members": [
+      "a",
+      "ee",
+      "hq",
+      "i",
+      "ii",
+      "o",
+      "rq",
+      "u"
+    ],
+    "frequency": 15391
+  },
+  "ei": {
+    "cluster_id": 5,
+    "cluster_label": "Long/Diphthong Vowels",
+    "cluster_members": [
+      "ei",
+      "ou",
+      "z"
+    ],
+    "frequency": 939
+  },
+  "f": {
+    "cluster_id": 4,
+    "cluster_label": "Fricatives",
+    "cluster_members": [
+      "f"
+    ],
+    "frequency": 235
+  },
+  "g": {
+    "cluster_id": 3,
+    "cluster_label": "Velar Stops",
+    "cluster_members": [
+      "bh",
+      "ch",
+      "d",
+      "dxh",
+      "dxhq",
+      "dxq",
+      "g",
+      "gh",
+      "jh",
+      "k",
+      "kh",
+      "khq",
+      "ng",
+      "p",
+      "sh"
+    ],
+    "frequency": 5706
+  },
+  "gh": {
+    "cluster_id": 3,
+    "cluster_label": "Velar Stops",
+    "cluster_members": [
+      "bh",
+      "ch",
+      "d",
+      "dxh",
+      "dxhq",
+      "dxq",
+      "g",
+      "gh",
+      "jh",
+      "k",
+      "kh",
+      "khq",
+      "ng",
+      "p",
+      "sh"
+    ],
+    "frequency": 1153
+  },
+  "gq": {
+    "cluster_id": 8,
+    "cluster_label": "Velar Stops",
+    "cluster_members": [
+      "gq"
+    ],
+    "frequency": 59
+  },
+  "h": {
+    "cluster_id": 2,
+    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_members": [
+      "aa",
+      "c",
+      "dh",
+      "h",
+      "j",
+      "l",
+      "lx",
+      "m",
+      "nj",
+      "nx",
+      "q",
+      "t",
+      "th",
+      "txh",
+      "w",
+      "y"
+    ],
+    "frequency": 5192
+  },
+  "hq": {
+    "cluster_id": 0,
+    "cluster_label": "Short Vowels",
+    "cluster_members": [
+      "a",
+      "ee",
+      "hq",
+      "i",
+      "ii",
+      "o",
+      "rq",
+      "u"
+    ],
+    "frequency": 238
+  },
+  "i": {
+    "cluster_id": 0,
+    "cluster_label": "Short Vowels",
+    "cluster_members": [
+      "a",
+      "ee",
+      "hq",
+      "i",
+      "ii",
+      "o",
+      "rq",
+      "u"
+    ],
+    "frequency": 11814
+  },
+  "ii": {
+    "cluster_id": 0,
+    "cluster_label": "Short Vowels",
+    "cluster_members": [
+      "a",
+      "ee",
+      "hq",
+      "i",
+      "ii",
+      "o",
+      "rq",
+      "u"
+    ],
+    "frequency": 16290
+  },
+  "j": {
+    "cluster_id": 2,
+    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_members": [
+      "aa",
+      "c",
+      "dh",
+      "h",
+      "j",
+      "l",
+      "lx",
+      "m",
+      "nj",
+      "nx",
+      "q",
+      "t",
+      "th",
+      "txh",
+      "w",
+      "y"
+    ],
+    "frequency": 5167
+  },
+  "jh": {
+    "cluster_id": 3,
+    "cluster_label": "Velar Stops",
+    "cluster_members": [
+      "bh",
+      "ch",
+      "d",
+      "dxh",
+      "dxhq",
+      "dxq",
+      "g",
+      "gh",
+      "jh",
+      "k",
+      "kh",
+      "khq",
+      "ng",
+      "p",
+      "sh"
+    ],
+    "frequency": 892
+  },
+  "k": {
+    "cluster_id": 3,
+    "cluster_label": "Velar Stops",
+    "cluster_members": [
+      "bh",
+      "ch",
+      "d",
+      "dxh",
+      "dxhq",
+      "dxq",
+      "g",
+      "gh",
+      "jh",
+      "k",
+      "kh",
+      "khq",
+      "ng",
+      "p",
+      "sh"
+    ],
+    "frequency": 13148
+  },
+  "kh": {
+    "cluster_id": 3,
+    "cluster_label": "Velar Stops",
+    "cluster_members": [
+      "bh",
+      "ch",
+      "d",
+      "dxh",
+      "dxhq",
+      "dxq",
+      "g",
+      "gh",
+      "jh",
+      "k",
+      "kh",
+      "khq",
+      "ng",
+      "p",
+      "sh"
+    ],
+    "frequency": 2449
+  },
+  "khq": {
+    "cluster_id": 3,
+    "cluster_label": "Velar Stops",
+    "cluster_members": [
+      "bh",
+      "ch",
+      "d",
+      "dxh",
+      "dxhq",
+      "dxq",
+      "g",
+      "gh",
+      "jh",
+      "k",
+      "kh",
+      "khq",
+      "ng",
+      "p",
+      "sh"
+    ],
+    "frequency": 126
+  },
+  "kq": {
+    "cluster_id": 1,
+    "cluster_label": "Velar Stops",
+    "cluster_members": [
+      "kq"
+    ],
+    "frequency": 142
+  },
+  "l": {
+    "cluster_id": 2,
+    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_members": [
+      "aa",
+      "c",
+      "dh",
+      "h",
+      "j",
+      "l",
+      "lx",
+      "m",
+      "nj",
+      "nx",
+      "q",
+      "t",
+      "th",
+      "txh",
+      "w",
+      "y"
+    ],
+    "frequency": 11631
+  },
+  "lx": {
+    "cluster_id": 2,
+    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_members": [
+      "aa",
+      "c",
+      "dh",
+      "h",
+      "j",
+      "l",
+      "lx",
+      "m",
+      "nj",
+      "nx",
+      "q",
+      "t",
+      "th",
+      "txh",
+      "w",
+      "y"
+    ],
+    "frequency": 2073
+  },
+  "m": {
+    "cluster_id": 2,
+    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_members": [
+      "aa",
+      "c",
+      "dh",
+      "h",
+      "j",
+      "l",
+      "lx",
+      "m",
+      "nj",
+      "nx",
+      "q",
+      "t",
+      "th",
+      "txh",
+      "w",
+      "y"
+    ],
+    "frequency": 11009
+  },
+  "mq": {
+    "cluster_id": 9,
+    "cluster_label": "Long/Diphthong Vowels",
+    "cluster_members": [
+      "mq",
+      "uu"
+    ],
+    "frequency": 477
+  },
+  "n": {
+    "cluster_id": 7,
+    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_members": [
+      "ae",
+      "b",
+      "dx",
+      "n",
+      "r",
+      "s",
+      "tx"
+    ],
+    "frequency": 16697
+  },
+  "ng": {
+    "cluster_id": 3,
+    "cluster_label": "Velar Stops",
+    "cluster_members": [
+      "bh",
+      "ch",
+      "d",
+      "dxh",
+      "dxhq",
+      "dxq",
+      "g",
+      "gh",
+      "jh",
+      "k",
+      "kh",
+      "khq",
+      "ng",
+      "p",
+      "sh"
+    ],
+    "frequency": 87
+  },
+  "nj": {
+    "cluster_id": 2,
+    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_members": [
+      "aa",
+      "c",
+      "dh",
+      "h",
+      "j",
+      "l",
+      "lx",
+      "m",
+      "nj",
+      "nx",
+      "q",
+      "t",
+      "th",
+      "txh",
+      "w",
+      "y"
+    ],
+    "frequency": 299
+  },
+  "nx": {
+    "cluster_id": 2,
+    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_members": [
+      "aa",
+      "c",
+      "dh",
+      "h",
+      "j",
+      "l",
+      "lx",
+      "m",
+      "nj",
+      "nx",
+      "q",
+      "t",
+      "th",
+      "txh",
+      "w",
+      "y"
+    ],
+    "frequency": 3815
+  },
+  "o": {
+    "cluster_id": 0,
+    "cluster_label": "Short Vowels",
+    "cluster_members": [
+      "a",
+      "ee",
+      "hq",
+      "i",
+      "ii",
+      "o",
+      "rq",
+      "u"
+    ],
+    "frequency": 9499
+  },
+  "ou": {
+    "cluster_id": 5,
+    "cluster_label": "Long/Diphthong Vowels",
+    "cluster_members": [
+      "ei",
+      "ou",
+      "z"
+    ],
+    "frequency": 576
+  },
+  "p": {
+    "cluster_id": 3,
+    "cluster_label": "Velar Stops",
+    "cluster_members": [
+      "bh",
+      "ch",
+      "d",
+      "dxh",
+      "dxhq",
+      "dxq",
+      "g",
+      "gh",
+      "jh",
+      "k",
+      "kh",
+      "khq",
+      "ng",
+      "p",
+      "sh"
+    ],
+    "frequency": 8886
+  },
+  "ph": {
+    "cluster_id": 6,
+    "cluster_label": "Bilabial Stops",
+    "cluster_members": [
+      "ph"
+    ],
+    "frequency": 1501
+  },
+  "q": {
+    "cluster_id": 2,
+    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_members": [
+      "aa",
+      "c",
+      "dh",
+      "h",
+      "j",
+      "l",
+      "lx",
+      "m",
+      "nj",
+      "nx",
+      "q",
+      "t",
+      "th",
+      "txh",
+      "w",
+      "y"
+    ],
+    "frequency": 13115
+  },
+  "r": {
+    "cluster_id": 7,
+    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_members": [
+      "ae",
+      "b",
+      "dx",
+      "n",
+      "r",
+      "s",
+      "tx"
+    ],
+    "frequency": 21980
+  },
+  "rq": {
+    "cluster_id": 0,
+    "cluster_label": "Short Vowels",
+    "cluster_members": [
+      "a",
+      "ee",
+      "hq",
+      "i",
+      "ii",
+      "o",
+      "rq",
+      "u"
+    ],
+    "frequency": 533
+  },
+  "s": {
+    "cluster_id": 7,
+    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_members": [
+      "ae",
+      "b",
+      "dx",
+      "n",
+      "r",
+      "s",
+      "tx"
+    ],
+    "frequency": 12075
+  },
+  "sh": {
+    "cluster_id": 3,
+    "cluster_label": "Velar Stops",
+    "cluster_members": [
+      "bh",
+      "ch",
+      "d",
+      "dxh",
+      "dxhq",
+      "dxq",
+      "g",
+      "gh",
+      "jh",
+      "k",
+      "kh",
+      "khq",
+      "ng",
+      "p",
+      "sh"
+    ],
+    "frequency": 4202
+  },
+  "sx": {
+    "cluster_id": 11,
+    "cluster_label": "Fricatives",
+    "cluster_members": [
+      "sx"
+    ],
+    "frequency": 2094
+  },
+  "t": {
+    "cluster_id": 2,
+    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_members": [
+      "aa",
+      "c",
+      "dh",
+      "h",
+      "j",
+      "l",
+      "lx",
+      "m",
+      "nj",
+      "nx",
+      "q",
+      "t",
+      "th",
+      "txh",
+      "w",
+      "y"
+    ],
+    "frequency": 14454
+  },
+  "th": {
+    "cluster_id": 2,
+    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_members": [
+      "aa",
+      "c",
+      "dh",
+      "h",
+      "j",
+      "l",
+      "lx",
+      "m",
+      "nj",
+      "nx",
+      "q",
+      "t",
+      "th",
+      "txh",
+      "w",
+      "y"
+    ],
+    "frequency": 1860
+  },
+  "tx": {
+    "cluster_id": 7,
+    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_members": [
+      "ae",
+      "b",
+      "dx",
+      "n",
+      "r",
+      "s",
+      "tx"
+    ],
+    "frequency": 4925
+  },
+  "txh": {
+    "cluster_id": 2,
+    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_members": [
+      "aa",
+      "c",
+      "dh",
+      "h",
+      "j",
+      "l",
+      "lx",
+      "m",
+      "nj",
+      "nx",
+      "q",
+      "t",
+      "th",
+      "txh",
+      "w",
+      "y"
+    ],
+    "frequency": 1337
+  },
+  "u": {
+    "cluster_id": 0,
+    "cluster_label": "Short Vowels",
+    "cluster_members": [
+      "a",
+      "ee",
+      "hq",
+      "i",
+      "ii",
+      "o",
+      "rq",
+      "u"
+    ],
+    "frequency": 7759
+  },
+  "uu": {
+    "cluster_id": 9,
+    "cluster_label": "Long/Diphthong Vowels",
+    "cluster_members": [
+      "mq",
+      "uu"
+    ],
+    "frequency": 3775
+  },
+  "w": {
+    "cluster_id": 2,
+    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_members": [
+      "aa",
+      "c",
+      "dh",
+      "h",
+      "j",
+      "l",
+      "lx",
+      "m",
+      "nj",
+      "nx",
+      "q",
+      "t",
+      "th",
+      "txh",
+      "w",
+      "y"
+    ],
+    "frequency": 11857
+  },
+  "y": {
+    "cluster_id": 2,
+    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_members": [
+      "aa",
+      "c",
+      "dh",
+      "h",
+      "j",
+      "l",
+      "lx",
+      "m",
+      "nj",
+      "nx",
+      "q",
+      "t",
+      "th",
+      "txh",
+      "w",
+      "y"
+    ],
+    "frequency": 11121
+  },
+  "z": {
+    "cluster_id": 5,
+    "cluster_label": "Long/Diphthong Vowels",
+    "cluster_members": [
+      "ei",
+      "ou",
+      "z"
+    ],
+    "frequency": 300
+  }
+}

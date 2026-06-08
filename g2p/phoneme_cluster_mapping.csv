@@ -1,0 +1,58 @@
+phoneme,cluster_id,cluster_label,cluster_members,frequency
+a,0,Short Vowels,a | ee | hq | i | ii | o | rq | u,209515
+aa,2,Dental/Retroflex Stops,aa | c | dh | h | j | l | lx | m | nj | nx | q | t | th | txh | w | y,44658
+ae,7,Dental/Retroflex Stops,ae | b | dx | n | r | s | tx,25
+ax,10,Long/Diphthong Vowels,ax,110
+b,7,Dental/Retroflex Stops,ae | b | dx | n | r | s | tx,5082
+bh,3,Velar Stops,bh | ch | d | dxh | dxhq | dxq | g | gh | jh | k | kh | khq | ng | p | sh,2331
+c,2,Dental/Retroflex Stops,aa | c | dh | h | j | l | lx | m | nj | nx | q | t | th | txh | w | y,8008
+ch,3,Velar Stops,bh | ch | d | dxh | dxhq | dxq | g | gh | jh | k | kh | khq | ng | p | sh,658
+d,3,Velar Stops,bh | ch | d | dxh | dxhq | dxq | g | gh | jh | k | kh | khq | ng | p | sh,6149
+dh,2,Dental/Retroflex Stops,aa | c | dh | h | j | l | lx | m | nj | nx | q | t | th | txh | w | y,2766
+dx,7,Dental/Retroflex Stops,ae | b | dx | n | r | s | tx,4232
+dxh,3,Velar Stops,bh | ch | d | dxh | dxhq | dxq | g | gh | jh | k | kh | khq | ng | p | sh,726
+dxhq,3,Velar Stops,bh | ch | d | dxh | dxhq | dxq | g | gh | jh | k | kh | khq | ng | p | sh,189
+dxq,3,Velar Stops,bh | ch | d | dxh | dxhq | dxq | g | gh | jh | k | kh | khq | ng | p | sh,430
+ee,0,Short Vowels,a | ee | hq | i | ii | o | rq | u,15391
+ei,5,Long/Diphthong Vowels,ei | ou | z,939
+f,4,Fricatives,f,235
+g,3,Velar Stops,bh | ch | d | dxh | dxhq | dxq | g | gh | jh | k | kh | khq | ng | p | sh,5706
+gh,3,Velar Stops,bh | ch | d | dxh | dxhq | dxq | g | gh | jh | k | kh | khq | ng | p | sh,1153
+gq,8,Velar Stops,gq,59
+h,2,Dental/Retroflex Stops,aa | c | dh | h | j | l | lx | m | nj | nx | q | t | th | txh | w | y,5192
+hq,0,Short Vowels,a | ee | hq | i | ii | o | rq | u,238
+i,0,Short Vowels,a | ee | hq | i | ii | o | rq | u,11814
+ii,0,Short Vowels,a | ee | hq | i | ii | o | rq | u,16290
+j,2,Dental/Retroflex Stops,aa | c | dh | h | j | l | lx | m | nj | nx | q | t | th | txh | w | y,5167
+jh,3,Velar Stops,bh | ch | d | dxh | dxhq | dxq | g | gh | jh | k | kh | khq | ng | p | sh,892
+k,3,Velar Stops,bh | ch | d | dxh | dxhq | dxq | g | gh | jh | k | kh | khq | ng | p | sh,13148
+kh,3,Velar Stops,bh | ch | d | dxh | dxhq | dxq | g | gh | jh | k | kh | khq | ng | p | sh,2449
+khq,3,Velar Stops,bh | ch | d | dxh | dxhq | dxq | g | gh | jh | k | kh | khq | ng | p | sh,126
+kq,1,Velar Stops,kq,142
+l,2,Dental/Retroflex Stops,aa | c | dh | h | j | l | lx | m | nj | nx | q | t | th | txh | w | y,11631
+lx,2,Dental/Retroflex Stops,aa | c | dh | h | j | l | lx | m | nj | nx | q | t | th | txh | w | y,2073
+m,2,Dental/Retroflex Stops,aa | c | dh | h | j | l | lx | m | nj | nx | q | t | th | txh | w | y,11009
+mq,9,Long/Diphthong Vowels,mq | uu,477
+n,7,Dental/Retroflex Stops,ae | b | dx | n | r | s | tx,16697
+ng,3,Velar Stops,bh | ch | d | dxh | dxhq | dxq | g | gh | jh | k | kh | khq | ng | p | sh,87
+nj,2,Dental/Retroflex Stops,aa | c | dh | h | j | l | lx | m | nj | nx | q | t | th | txh | w | y,299
+nx,2,Dental/Retroflex Stops,aa | c | dh | h | j | l | lx | m | nj | nx | q | t | th | txh | w | y,3815
+o,0,Short Vowels,a | ee | hq | i | ii | o | rq | u,9499
+ou,5,Long/Diphthong Vowels,ei | ou | z,576
+p,3,Velar Stops,bh | ch | d | dxh | dxhq | dxq | g | gh | jh | k | kh | khq | ng | p | sh,8886
+ph,6,Bilabial Stops,ph,1501
+q,2,Dental/Retroflex Stops,aa | c | dh | h | j | l | lx | m | nj | nx | q | t | th | txh | w | y,13115
+r,7,Dental/Retroflex Stops,ae | b | dx | n | r | s | tx,21980
+rq,0,Short Vowels,a | ee | hq | i | ii | o | rq | u,533
+s,7,Dental/Retroflex Stops,ae | b | dx | n | r | s | tx,12075
+sh,3,Velar Stops,bh | ch | d | dxh | dxhq | dxq | g | gh | jh | k | kh | khq | ng | p | sh,4202
+sx,11,Fricatives,sx,2094
+t,2,Dental/Retroflex Stops,aa | c | dh | h | j | l | lx | m | nj | nx | q | t | th | txh | w | y,14454
+th,2,Dental/Retroflex Stops,aa | c | dh | h | j | l | lx | m | nj | nx | q | t | th | txh | w | y,1860
+tx,7,Dental/Retroflex Stops,ae | b | dx | n | r | s | tx,4925
+txh,2,Dental/Retroflex Stops,aa | c | dh | h | j | l | lx | m | nj | nx | q | t | th | txh | w | y,1337
+u,0,Short Vowels,a | ee | hq | i | ii | o | rq | u,7759
+uu,9,Long/Diphthong Vowels,mq | uu,3775
+w,2,Dental/Retroflex Stops,aa | c | dh | h | j | l | lx | m | nj | nx | q | t | th | txh | w | y,11857
+y,2,Dental/Retroflex Stops,aa | c | dh | h | j | l | lx | m | nj | nx | q | t | th | txh | w | y,11121
+z,5,Long/Diphthong Vowels,ei | ou | z,300
