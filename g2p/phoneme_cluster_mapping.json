@@ -16,7 +16,7 @@
   },
   "aa": {
     "cluster_id": 2,
-    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_label": "Liquids/Semivowels",
     "cluster_members": [
       "aa",
       "c",
@@ -97,7 +97,7 @@
   },
   "c": {
     "cluster_id": 2,
-    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_label": "Liquids/Semivowels",
     "cluster_members": [
       "aa",
       "c",
@@ -164,7 +164,7 @@
   },
   "dh": {
     "cluster_id": 2,
-    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_label": "Liquids/Semivowels",
     "cluster_members": [
       "aa",
       "c",
@@ -352,7 +352,7 @@
   },
   "h": {
     "cluster_id": 2,
-    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_label": "Liquids/Semivowels",
     "cluster_members": [
       "aa",
       "c",
@@ -420,7 +420,7 @@
   },
   "j": {
     "cluster_id": 2,
-    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_label": "Liquids/Semivowels",
     "cluster_members": [
       "aa",
       "c",
@@ -539,7 +539,7 @@
   },
   "l": {
     "cluster_id": 2,
-    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_label": "Liquids/Semivowels",
     "cluster_members": [
       "aa",
       "c",
@@ -562,7 +562,7 @@
   },
   "lx": {
     "cluster_id": 2,
-    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_label": "Liquids/Semivowels",
     "cluster_members": [
       "aa",
       "c",
@@ -585,7 +585,7 @@
   },
   "m": {
     "cluster_id": 2,
-    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_label": "Liquids/Semivowels",
     "cluster_members": [
       "aa",
       "c",
@@ -653,7 +653,7 @@
   },
   "nj": {
     "cluster_id": 2,
-    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_label": "Liquids/Semivowels",
     "cluster_members": [
       "aa",
       "c",
@@ -676,7 +676,7 @@
   },
   "nx": {
     "cluster_id": 2,
-    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_label": "Liquids/Semivowels",
     "cluster_members": [
       "aa",
       "c",
@@ -754,7 +754,7 @@
   },
   "q": {
     "cluster_id": 2,
-    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_label": "Liquids/Semivowels",
     "cluster_members": [
       "aa",
       "c",
@@ -850,7 +850,7 @@
   },
   "t": {
     "cluster_id": 2,
-    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_label": "Liquids/Semivowels",
     "cluster_members": [
       "aa",
       "c",
@@ -873,7 +873,7 @@
   },
   "th": {
     "cluster_id": 2,
-    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_label": "Liquids/Semivowels",
     "cluster_members": [
       "aa",
       "c",
@@ -910,7 +910,7 @@
   },
   "txh": {
     "cluster_id": 2,
-    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_label": "Liquids/Semivowels",
     "cluster_members": [
       "aa",
       "c",
@@ -957,7 +957,7 @@
   },
   "w": {
     "cluster_id": 2,
-    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_label": "Liquids/Semivowels",
     "cluster_members": [
       "aa",
       "c",
@@ -980,7 +980,7 @@
   },
   "y": {
     "cluster_id": 2,
-    "cluster_label": "Dental/Retroflex Stops",
+    "cluster_label": "Liquids/Semivowels",
     "cluster_members": [
       "aa",
       "c",

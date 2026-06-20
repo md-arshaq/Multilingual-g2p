@@ -153,7 +153,7 @@ embedding_matrix = learned_matrix   # shape: (vocab_size, vocab_size)
 try:
     import umap
     print("\nRunning UMAP...")
-    reducer = umap.UMAP(n_components=2, random_state=42, n_neighbors=5, min_dist=0.3)
+    reducer = umap.UMAP(n_components=2, random_state=42, n_neighbors=15, min_dist=0.1)
     embeddings_2d_umap = reducer.fit_transform(embedding_matrix)
     method_used = "UMAP"
     embeddings_2d = embeddings_2d_umap
@@ -198,7 +198,7 @@ ax.set_xlabel(f"{method_used} Dimension 1")
 ax.set_ylabel(f"{method_used} Dimension 2")
 ax.grid(True, alpha=0.3)
 plt.tight_layout()
-plt.savefig("phoneme_clusters.png", dpi=150)
+plt.savefig("phoneme_scatter_raw.png", dpi=150)
 plt.show()
 print("✅ Plot saved → phoneme_clusters.png")
 

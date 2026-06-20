@@ -80,11 +80,13 @@ LINGUISTIC_LABELS = {
 
 def get_label(phoneme_set):
     s = frozenset(phoneme_set)
-    best_label, best_overlap = "Misc", 0
+    best_label, best_score = "Misc", 0
     for key, label in LINGUISTIC_LABELS.items():
         overlap = len(s & key)
-        if overlap > best_overlap:
-            best_overlap, best_label = overlap, label
+        union   = len(s | key)
+        jaccard = overlap / union if union > 0 else 0
+        if jaccard > best_score:
+            best_score, best_label = jaccard, label
     return best_label
 
 cluster_labels = {cid: get_label(phones) for cid, phones in clusters.items()}
@@ -136,7 +138,7 @@ print("\n✅ silhouette_scores.png saved")
 # ── Fig 2: UMAP scatter + cluster table ───────
 try:
     import umap
-    reducer = umap.UMAP(n_components=2, random_state=42, n_neighbors=5, min_dist=0.3)
+    reducer = umap.UMAP(n_components=2, random_state=42, n_neighbors=15, min_dist=0.1)
     emb2d = reducer.fit_transform(embeddings)
     dim_method = "UMAP"
 except ImportError:
