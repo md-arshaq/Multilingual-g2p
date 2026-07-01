@@ -1,0 +1,7 @@
+Metric,Baseline,Clustered,Delta
+PER,0.0003,0.0008,+0.0006
+WER,0.0022,0.0035,+0.0013
+Output Vocab Size,57,39,-31.6%
+Parameter Count,1422141,1417515,-4626
+Checkpoint Size (MB),5.68,5.66,-0.02
+Test Samples,5476,5476,—

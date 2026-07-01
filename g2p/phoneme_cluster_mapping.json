@@ -1,0 +1,287 @@
+{
+  "a": {
+    "cluster_id": 0,
+    "representative": "a",
+    "cluster_label": "Phonetic_Group_a"
+  },
+  "aa": {
+    "cluster_id": 1,
+    "representative": "aa",
+    "cluster_label": "Phonetic_Group_aa"
+  },
+  "ae": {
+    "cluster_id": 2,
+    "representative": "ei",
+    "cluster_label": "Phonetic_Group_ei"
+  },
+  "ax": {
+    "cluster_id": 0,
+    "representative": "a",
+    "cluster_label": "Phonetic_Group_a"
+  },
+  "b": {
+    "cluster_id": 3,
+    "representative": "b",
+    "cluster_label": "Phonetic_Group_b"
+  },
+  "bh": {
+    "cluster_id": 4,
+    "representative": "bh",
+    "cluster_label": "Phonetic_Group_bh"
+  },
+  "c": {
+    "cluster_id": 5,
+    "representative": "c",
+    "cluster_label": "Phonetic_Group_c"
+  },
+  "ch": {
+    "cluster_id": 6,
+    "representative": "ch",
+    "cluster_label": "Phonetic_Group_ch"
+  },
+  "d": {
+    "cluster_id": 7,
+    "representative": "d",
+    "cluster_label": "Phonetic_Group_d"
+  },
+  "dh": {
+    "cluster_id": 8,
+    "representative": "dh",
+    "cluster_label": "Phonetic_Group_dh"
+  },
+  "dx": {
+    "cluster_id": 9,
+    "representative": "dx",
+    "cluster_label": "Phonetic_Group_dx"
+  },
+  "dxh": {
+    "cluster_id": 10,
+    "representative": "dxh",
+    "cluster_label": "Phonetic_Group_dxh"
+  },
+  "dxhq": {
+    "cluster_id": 10,
+    "representative": "dxh",
+    "cluster_label": "Phonetic_Group_dxh"
+  },
+  "dxq": {
+    "cluster_id": 9,
+    "representative": "dx",
+    "cluster_label": "Phonetic_Group_dx"
+  },
+  "ee": {
+    "cluster_id": 11,
+    "representative": "e",
+    "cluster_label": "Phonetic_Group_e"
+  },
+  "ei": {
+    "cluster_id": 2,
+    "representative": "ei",
+    "cluster_label": "Phonetic_Group_ei"
+  },
+  "f": {
+    "cluster_id": 12,
+    "representative": "ph",
+    "cluster_label": "Phonetic_Group_ph"
+  },
+  "g": {
+    "cluster_id": 13,
+    "representative": "g",
+    "cluster_label": "Phonetic_Group_g"
+  },
+  "gh": {
+    "cluster_id": 14,
+    "representative": "gh",
+    "cluster_label": "Phonetic_Group_gh"
+  },
+  "gq": {
+    "cluster_id": 13,
+    "representative": "g",
+    "cluster_label": "Phonetic_Group_g"
+  },
+  "h": {
+    "cluster_id": 15,
+    "representative": "h",
+    "cluster_label": "Phonetic_Group_h"
+  },
+  "hq": {
+    "cluster_id": 15,
+    "representative": "h",
+    "cluster_label": "Phonetic_Group_h"
+  },
+  "i": {
+    "cluster_id": 16,
+    "representative": "i",
+    "cluster_label": "Phonetic_Group_i"
+  },
+  "ii": {
+    "cluster_id": 16,
+    "representative": "i",
+    "cluster_label": "Phonetic_Group_i"
+  },
+  "j": {
+    "cluster_id": 17,
+    "representative": "j",
+    "cluster_label": "Phonetic_Group_j"
+  },
+  "jh": {
+    "cluster_id": 18,
+    "representative": "jh",
+    "cluster_label": "Phonetic_Group_jh"
+  },
+  "k": {
+    "cluster_id": 19,
+    "representative": "k",
+    "cluster_label": "Phonetic_Group_k"
+  },
+  "kh": {
+    "cluster_id": 20,
+    "representative": "kh",
+    "cluster_label": "Phonetic_Group_kh"
+  },
+  "khq": {
+    "cluster_id": 20,
+    "representative": "kh",
+    "cluster_label": "Phonetic_Group_kh"
+  },
+  "kq": {
+    "cluster_id": 19,
+    "representative": "k",
+    "cluster_label": "Phonetic_Group_k"
+  },
+  "l": {
+    "cluster_id": 21,
+    "representative": "l",
+    "cluster_label": "Phonetic_Group_l"
+  },
+  "lx": {
+    "cluster_id": 21,
+    "representative": "l",
+    "cluster_label": "Phonetic_Group_l"
+  },
+  "m": {
+    "cluster_id": 22,
+    "representative": "m",
+    "cluster_label": "Phonetic_Group_m"
+  },
+  "mq": {
+    "cluster_id": 23,
+    "representative": "q",
+    "cluster_label": "Phonetic_Group_q"
+  },
+  "n": {
+    "cluster_id": 24,
+    "representative": "n",
+    "cluster_label": "Phonetic_Group_n"
+  },
+  "ng": {
+    "cluster_id": 24,
+    "representative": "n",
+    "cluster_label": "Phonetic_Group_n"
+  },
+  "nj": {
+    "cluster_id": 24,
+    "representative": "n",
+    "cluster_label": "Phonetic_Group_n"
+  },
+  "nx": {
+    "cluster_id": 25,
+    "representative": "nx",
+    "cluster_label": "Phonetic_Group_nx"
+  },
+  "o": {
+    "cluster_id": 26,
+    "representative": "o",
+    "cluster_label": "Phonetic_Group_o"
+  },
+  "ou": {
+    "cluster_id": 27,
+    "representative": "ou",
+    "cluster_label": "Phonetic_Group_ou"
+  },
+  "p": {
+    "cluster_id": 28,
+    "representative": "p",
+    "cluster_label": "Phonetic_Group_p"
+  },
+  "ph": {
+    "cluster_id": 12,
+    "representative": "ph",
+    "cluster_label": "Phonetic_Group_ph"
+  },
+  "q": {
+    "cluster_id": 23,
+    "representative": "q",
+    "cluster_label": "Phonetic_Group_q"
+  },
+  "r": {
+    "cluster_id": 29,
+    "representative": "r",
+    "cluster_label": "Phonetic_Group_r"
+  },
+  "rq": {
+    "cluster_id": 29,
+    "representative": "r",
+    "cluster_label": "Phonetic_Group_r"
+  },
+  "s": {
+    "cluster_id": 30,
+    "representative": "s",
+    "cluster_label": "Phonetic_Group_s"
+  },
+  "sh": {
+    "cluster_id": 31,
+    "representative": "sh",
+    "cluster_label": "Phonetic_Group_sh"
+  },
+  "sx": {
+    "cluster_id": 31,
+    "representative": "sh",
+    "cluster_label": "Phonetic_Group_sh"
+  },
+  "t": {
+    "cluster_id": 32,
+    "representative": "t",
+    "cluster_label": "Phonetic_Group_t"
+  },
+  "th": {
+    "cluster_id": 33,
+    "representative": "th",
+    "cluster_label": "Phonetic_Group_th"
+  },
+  "tx": {
+    "cluster_id": 34,
+    "representative": "tx",
+    "cluster_label": "Phonetic_Group_tx"
+  },
+  "txh": {
+    "cluster_id": 35,
+    "representative": "txh",
+    "cluster_label": "Phonetic_Group_txh"
+  },
+  "u": {
+    "cluster_id": 36,
+    "representative": "u",
+    "cluster_label": "Phonetic_Group_u"
+  },
+  "uu": {
+    "cluster_id": 36,
+    "representative": "u",
+    "cluster_label": "Phonetic_Group_u"
+  },
+  "w": {
+    "cluster_id": 37,
+    "representative": "w",
+    "cluster_label": "Phonetic_Group_w"
+  },
+  "y": {
+    "cluster_id": 38,
+    "representative": "y",
+    "cluster_label": "Phonetic_Group_y"
+  },
+  "z": {
+    "cluster_id": 17,
+    "representative": "j",
+    "cluster_label": "Phonetic_Group_j"
+  }
+}
