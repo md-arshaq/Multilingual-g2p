@@ -60,7 +60,7 @@ A multilingual G2P system for Indian languages (Hindi, Gujarati, Marathi) that c
 ├── notebooks/                           # Jupyter/Colab notebooks
 │   ├── Samsung_Pipeline.ipynb           # Data preparation pipeline
 │   ├── Phase2_Baseline_G2P.ipynb        # Baseline Transformer training
-│   └── Month_3_task_2.ipynb             # Clustered model training (Colab)
+│   └── task2_clustered_g2p_training.ipynb# Clustered model training (Colab)
 │
 ├── results/                             # Evaluation outputs & reports
 │   ├── evaluation_report.md             # Baseline vs Clustered comparison
@@ -96,7 +96,7 @@ A multilingual G2P system for Indian languages (Hindi, Gujarati, Marathi) that c
 | Task | Description | Script |
 |------|-------------|--------|
 | 1 | **Replace phonemes with cluster labels** in dataset | `g2p/task1_cluster_substitution.py` |
-| 2 | **Retrain G2P** on clustered output (39 clusters) | `notebooks/Month_3_task_2.ipynb` |
+| 2 | **Retrain G2P** on clustered output (39 clusters) | `notebooks/task3_evaluation.ipynb` |
 | 3 | **Evaluation** — PER/WER comparison baseline vs clustered | Run on Colab (see `g2p/task3_evaluation.ipynb`) |
 | 4 | **TTS Model Selection** — Research & recommend | `docs/tts_model_selection.md` |
 | 5 | **TTS Data Preparation** | `g2p/task5_tts_data_prep.py` |
