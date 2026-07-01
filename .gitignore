@@ -15,5 +15,6 @@ desktop.ini
 .vscode/
 .idea/
 
-# Model weights (comment out if you want to include them)
-# models/*.h5
+# TTS training audio
+data/tts/
+
