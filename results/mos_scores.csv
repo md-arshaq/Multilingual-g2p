@@ -1,65 +1,65 @@
-filename,language,condition,auto_mos,human_mos,text,phonemes,output_phonemes
-hi\baseline_01.wav,hi,baseline,4.8,,भारत एक महान देश है,bh a aa r a t a ee k a m a h a aa n a d a ee sh a h a ei,bh a aa r a t a ee k a m a h a aa n a d a ee sh a h a ei
-hi\baseline_02.wav,hi,baseline,4.8,,आज मौसम बहुत अच्छा है,aa j a m a ou s a m a b a h a u t a a c a ch a aa h a ei,aa j a m a ou s a m a b a h a u t a a c a ch a aa h a ei
-hi\baseline_03.wav,hi,baseline,4.8,,मुझे हिंदी बोलना पसंद है,m a u jh a ee h a i q d a ii b a o l a n a aa p a s a q d a h a ei,m a u jh a ee h a i q d a ii b a o l a n a aa p a s a q d a h a ei
-hi\baseline_04.wav,hi,baseline,4.8,,कृपया यहाँ बैठिए,k a rq p a y a aa y a h a aa mq b a ei txh a i ee,k a rq p a y a aa y a h a aa mq b a ei txh a i ee
-hi\baseline_05.wav,hi,baseline,4.8,,यह किताब बहुत रोचक है,y a h a k a i t a aa b a b a h a u t a r a o c a k a h a ei,y a h a k a i t a aa b a b a h a u t a r a o c a k a h a ei
-hi\baseline_06.wav,hi,baseline,4.8,,सूरज पूरब से उगता है,s a uu r a j a p a uu r a b a s a ee u g a t a aa h a ei,s a uu r a j a p a uu r a b a s a ee u g a t a aa h a ei
-hi\baseline_07.wav,hi,baseline,4.8,,बच्चे पार्क में खेल रहे हैं,b a c a c a ee p a aa r a k a m a ee q kh a ee l a r a h a ee h a ei q,b a c a c a ee p a aa r a k a m a ee q kh a ee l a r a h a ee h a ei q
-hi\baseline_08.wav,hi,baseline,4.8,,नमस्ते आप कैसे हैं,n a m a s a t a ee aa p a k a ei s a ee h a ei q,n a m a s a t a ee aa p a k a ei s a ee h a ei q
-hi\baseline_09.wav,hi,baseline,4.8,,मेरा नाम कुश है,m a ee r a aa n a aa m a k a u sh a h a ei,m a ee r a aa n a aa m a k a u sh a h a ei
-hi\baseline_10.wav,hi,baseline,4.8,,हम सब मिलकर काम करेंगे,h a m a s a b a m a i l a k a r a k a aa m a k a r a ee q g a ee,h a m a s a b a m a i l a k a r a k a aa m a k a r a ee q g a ee
-hi\baseline_11.wav,hi,baseline,4.8,,विज्ञान और प्रौद्योगिकी,w a i j a nj a aa n a ou r a p a r a ou d a y a o g a i k a ii,w a i j a nj a aa n a ou r a p a r a ou d a y a o g a i k a ii
-hi\baseline_12.wav,hi,baseline,4.5,,शिक्षा सबसे बड़ा हथियार है,sh a i k a sx a aa s a b a s a ee b a dxq a aa h a th a i y a aa r a h a ei,sh a i k a sx a aa s a b a s a ee b a dxq a aa h a th a i y a aa r a h a ei
-hi\clustered_01.wav,hi,clustered,4.8,,भारत एक महान देश है,bh a aa r a t a ee k a m a h a aa n a d a ee sh a h a ei,bh a aa r a t a ee k a m a h a aa n a d a ee sh a h a ae
-hi\clustered_02.wav,hi,clustered,4.8,,आज मौसम बहुत अच्छा है,aa j a m a ou s a m a b a h a u t a a c a ch a aa h a ei,aa j a m a ou s a m a b a h a u t a a c a ch a aa h a ae
-hi\clustered_03.wav,hi,clustered,4.8,,मुझे हिंदी बोलना पसंद है,m a u jh a ee h a i q d a ii b a o l a n a aa p a s a q d a h a ei,m a u jh a ee h a i mq d a i b a o l a n a aa p a s a mq d a h a ae
-hi\clustered_04.wav,hi,clustered,4.8,,कृपया यहाँ बैठिए,k a rq p a y a aa y a h a aa mq b a ei txh a i ee,k a r p a y a aa y a h a aa mq b a ae txh a i ee
-hi\clustered_05.wav,hi,clustered,4.8,,यह किताब बहुत रोचक है,y a h a k a i t a aa b a b a h a u t a r a o c a k a h a ei,y a h a k a i t a aa b a b a h a u t a r a o c a k a h a ae
-hi\clustered_06.wav,hi,clustered,4.8,,सूरज पूरब से उगता है,s a uu r a j a p a uu r a b a s a ee u g a t a aa h a ei,s a u r a j a p a u r a b a s a ee u g a t a aa h a ae
-hi\clustered_07.wav,hi,clustered,4.8,,बच्चे पार्क में खेल रहे हैं,b a c a c a ee p a aa r a k a m a ee q kh a ee l a r a h a ee h a ei q,b a c a c a ee p a aa r a k a m a ee mq kh a ee l a r a h a ee h a ae mq
-hi\clustered_08.wav,hi,clustered,4.8,,नमस्ते आप कैसे हैं,n a m a s a t a ee aa p a k a ei s a ee h a ei q,n a m a s a t a ee aa p a k a ae s a ee h a ae mq
-hi\clustered_09.wav,hi,clustered,4.8,,मेरा नाम कुश है,m a ee r a aa n a aa m a k a u sh a h a ei,m a ee r a aa n a aa m a k a u sh a h a ae
-hi\clustered_10.wav,hi,clustered,4.8,,हम सब मिलकर काम करेंगे,h a m a s a b a m a i l a k a r a k a aa m a k a r a ee q g a ee,h a m a s a b a m a i l a k a r a k a aa m a k a r a ee mq g a ee
-hi\clustered_11.wav,hi,clustered,4.8,,विज्ञान और प्रौद्योगिकी,w a i j a nj a aa n a ou r a p a r a ou d a y a o g a i k a ii,w a i j a n a aa n a ou r a p a r a ou d a y a o g a i k a i
-hi\clustered_12.wav,hi,clustered,4.8,,शिक्षा सबसे बड़ा हथियार है,sh a i k a sx a aa s a b a s a ee b a dxq a aa h a th a i y a aa r a h a ei,sh a i k a sh a aa s a b a s a ee b a dx a aa h a th a i y a aa r a h a ae
-gu\baseline_01.wav,gu,baseline,4.8,,ભારત એક મહાન દેશ છે,bh a aa r a t a ee k a m a h a aa n a d a ee sh a ch a ee,bh a aa r a t a ee k a m a h a aa n a d a ee sh a ch a ee
-gu\baseline_02.wav,gu,baseline,4.8,,આજે હવામાન ખૂબ સારું છે,aa j a ee h a w a aa m a aa n a kh a uu b a s a aa r a u q ch a ee,aa j a ee h a w a aa m a aa n a kh a uu b a s a aa r a u q ch a ee
-gu\baseline_03.wav,gu,baseline,4.8,,મને ગુજરાતી બોલવાનું ગમે છે,m a n a ee g a u j a r a aa t a ii બ ો લ વ ા ન ુ ં g a m a ee ch a ee,m a n a ee g a u j a r a aa t a ii બ ો લ વ ા ન ુ ં g a m a ee ch a ee
-gu\baseline_04.wav,gu,baseline,4.8,,કૃપા કરીને અહીં બેસો,k a p a aa k a r a ii n a ee a h a ii q બ ે સ ો,k a p a aa k a r a ii n a ee a h a ii q બ ે સ ો
-gu\baseline_05.wav,gu,baseline,4.8,,આ પુસ્તક ખૂબ રસપ્રદ છે,આ p a u s a t a k a kh a uu b a r a s a p a r a d a ch a ee,આ p a u s a t a k a kh a uu b a r a s a p a r a d a ch a ee
-gu\baseline_06.wav,gu,baseline,4.5,,સૂરજ પૂર્વમાંથી ઉગે છે,સ ૂ ર જ પ ૂ ર ્ વ મ ા ં થ ી ઉ ગ ે ch a ee,સ ૂ ર જ પ ૂ ર ્ વ મ ા ં થ ી ઉ ગ ે ch a ee
-gu\baseline_07.wav,gu,baseline,4.8,,બાળકો બગીચામાં રમી રહ્યા છે,b a aa lx a k a o b a g a ii c a aa m a aa q r a m a ii r a h a y a aa ch a ee,b a aa lx a k a o b a g a ii c a aa m a aa q r a m a ii r a h a y a aa ch a ee
-gu\baseline_08.wav,gu,baseline,4.8,,નમસ્તે તમે કેમ છો,ન મ સ ્ ત ે t a m a ee k a ee m a ch a o,ન મ સ ્ ત ે t a m a ee k a ee m a ch a o
-gu\baseline_09.wav,gu,baseline,4.8,,મારું નામ કુશ છે,m a aa r a u q n a aa m a ક ુ શ ch a ee,m a aa r a u q n a aa m a ક ુ શ ch a ee
-gu\baseline_10.wav,gu,baseline,4.8,,અમે બધા સાથે મળીને કામ કરીશું,a m a ee b a dh a aa s a aa th a ee m a lx a ii n a ee k a aa m a k a r a ii sh a u q,a m a ee b a dh a aa s a aa th a ee m a lx a ii n a ee k a aa m a k a r a ii sh a u q
-gu\clustered_01.wav,gu,clustered,4.6,,ભારત એક મહાન દેશ છે,bh a aa r a t a ee k a m a h a aa n a d a ee sh a ch a ee,bh a aa r a t a ee k a m a h a aa n a d a ee sh a ch a ee
-gu\clustered_02.wav,gu,clustered,4.6,,આજે હવામાન ખૂબ સારું છે,aa j a ee h a w a aa m a aa n a kh a uu b a s a aa r a u q ch a ee,aa j a ee h a w a aa m a aa n a kh a u b a s a aa r a u mq ch a ee
-gu\clustered_03.wav,gu,clustered,4.8,,મને ગુજરાતી બોલવાનું ગમે છે,m a n a ee g a u j a r a aa t a ii બ ો લ વ ા ન ુ ં g a m a ee ch a ee,m a n a ee g a u j a r a aa t a i બ ો લ વ ા ન ુ ં g a m a ee ch a ee
-gu\clustered_04.wav,gu,clustered,4.8,,કૃપા કરીને અહીં બેસો,k a p a aa k a r a ii n a ee a h a ii q બ ે સ ો,k a p a aa k a r a i n a ee a h a i mq બ ે સ ો
-gu\clustered_05.wav,gu,clustered,4.6,,આ પુસ્તક ખૂબ રસપ્રદ છે,આ p a u s a t a k a kh a uu b a r a s a p a r a d a ch a ee,આ p a u s a t a k a kh a u b a r a s a p a r a d a ch a ee
-gu\clustered_06.wav,gu,clustered,4.8,,સૂરજ પૂર્વમાંથી ઉગે છે,સ ૂ ર જ પ ૂ ર ્ વ મ ા ં થ ી ઉ ગ ે ch a ee,સ ૂ ર જ પ ૂ ર ્ વ મ ા ં થ ી ઉ ગ ે ch a ee
-gu\clustered_07.wav,gu,clustered,4.6,,બાળકો બગીચામાં રમી રહ્યા છે,b a aa lx a k a o b a g a ii c a aa m a aa q r a m a ii r a h a y a aa ch a ee,b a aa l a k a o b a g a i c a aa m a aa mq r a m a i r a h a y a aa ch a ee
-gu\clustered_08.wav,gu,clustered,4.8,,નમસ્તે તમે કેમ છો,ન મ સ ્ ત ે t a m a ee k a ee m a ch a o,ન મ સ ્ ત ે t a m a ee k a ee m a ch a o
-gu\clustered_09.wav,gu,clustered,4.8,,મારું નામ કુશ છે,m a aa r a u q n a aa m a ક ુ શ ch a ee,m a aa r a u mq n a aa m a ક ુ શ ch a ee
-gu\clustered_10.wav,gu,clustered,4.6,,અમે બધા સાથે મળીને કામ કરીશું,a m a ee b a dh a aa s a aa th a ee m a lx a ii n a ee k a aa m a k a r a ii sh a u q,a m a ee b a dh a aa s a aa th a ee m a l a i n a ee k a aa m a k a r a i sh a u mq
-mr\baseline_01.wav,mr,baseline,4.8,,भारत एक महान देश आहे,bh a aa r a t a ee k a m a h a aa n a d a ee sh a aa h a ee,bh a aa r a t a ee k a m a h a aa n a d a ee sh a aa h a ee
-mr\baseline_02.wav,mr,baseline,4.8,,आज हवामान खूप चांगले आहे,aa j a h a w a aa m a aa n a kh a uu p a c a aa q g a l a ee aa h a ee,aa j a h a w a aa m a aa n a kh a uu p a c a aa q g a l a ee aa h a ee
-mr\baseline_03.wav,mr,baseline,4.8,,मला मराठी बोलायला आवडते,m a l a aa m a r a aa txh a ii b a o l a aa y a l a aa aa w a dx a t a ee,m a l a aa m a r a aa txh a ii b a o l a aa y a l a aa aa w a dx a t a ee
-mr\baseline_04.wav,mr,baseline,4.8,,कृपया येथे बसा,k a rq p a y a aa y a ee th a ee b a s a aa,k a rq p a y a aa y a ee th a ee b a s a aa
-mr\baseline_05.wav,mr,baseline,4.8,,हे पुस्तक खूप रोचक आहे,h a ee p a u s a t a k a kh a uu p a r a o c a k a aa h a ee,h a ee p a u s a t a k a kh a uu p a r a o c a k a aa h a ee
-mr\baseline_06.wav,mr,baseline,4.8,,सूर्य पूर्वेकडून उगवतो,s a uu r a y a प ू र ् व े क ड ू न उ ग व त ो,s a uu r a y a प ू र ् व े क ड ू न उ ग व त ो
-mr\baseline_07.wav,mr,baseline,4.8,,मुले बागेत खेळत आहेत,m a u l a ee b a aa g a ee t a kh a ee lx a t a aa h a ee t a,m a u l a ee b a aa g a ee t a kh a ee lx a t a aa h a ee t a
-mr\baseline_08.wav,mr,baseline,4.8,,नमस्कार तुम्ही कसे आहात,n a m a s a k a aa r a t a u m a h a ii k a s a ee aa h a aa t a,n a m a s a k a aa r a t a u m a h a ii k a s a ee aa h a aa t a
-mr\baseline_09.wav,mr,baseline,4.8,,माझे नाव कुश आहे,m a aa jh a ee n a aa w a क ु श aa h a ee,m a aa jh a ee n a aa w a क ु श aa h a ee
-mr\baseline_10.wav,mr,baseline,4.8,,आम्ही सर्व मिळून काम करू,aa m a h a ii s a r a w a m a i lx a uu n a k a aa m a k a r a uu,aa m a h a ii s a r a w a m a i lx a uu n a k a aa m a k a r a uu
-mr\clustered_01.wav,mr,clustered,4.8,,भारत एक महान देश आहे,bh a aa r a t a ee k a m a h a aa n a d a ee sh a aa h a ee,bh a aa r a t a ee k a m a h a aa n a d a ee sh a aa h a ee
-mr\clustered_02.wav,mr,clustered,4.8,,आज हवामान खूप चांगले आहे,aa j a h a w a aa m a aa n a kh a uu p a c a aa q g a l a ee aa h a ee,aa j a h a w a aa m a aa n a kh a u p a c a aa mq g a l a ee aa h a ee
-mr\clustered_03.wav,mr,clustered,4.8,,मला मराठी बोलायला आवडते,m a l a aa m a r a aa txh a ii b a o l a aa y a l a aa aa w a dx a t a ee,m a l a aa m a r a aa txh a i b a o l a aa y a l a aa aa w a dx a t a ee
-mr\clustered_04.wav,mr,clustered,4.8,,कृपया येथे बसा,k a rq p a y a aa y a ee th a ee b a s a aa,k a r p a y a aa y a ee th a ee b a s a aa
-mr\clustered_05.wav,mr,clustered,4.8,,हे पुस्तक खूप रोचक आहे,h a ee p a u s a t a k a kh a uu p a r a o c a k a aa h a ee,h a ee p a u s a t a k a kh a u p a r a o c a k a aa h a ee
-mr\clustered_06.wav,mr,clustered,4.8,,सूर्य पूर्वेकडून उगवतो,s a uu r a y a प ू र ् व े क ड ू न उ ग व त ो,s a u r a y a प ू र ् व े क ड ू न उ ग व त ो
-mr\clustered_07.wav,mr,clustered,4.8,,मुले बागेत खेळत आहेत,m a u l a ee b a aa g a ee t a kh a ee lx a t a aa h a ee t a,m a u l a ee b a aa g a ee t a kh a ee l a t a aa h a ee t a
-mr\clustered_08.wav,mr,clustered,4.8,,नमस्कार तुम्ही कसे आहात,n a m a s a k a aa r a t a u m a h a ii k a s a ee aa h a aa t a,n a m a s a k a aa r a t a u m a h a i k a s a ee aa h a aa t a
-mr\clustered_09.wav,mr,clustered,4.8,,माझे नाव कुश आहे,m a aa jh a ee n a aa w a क ु श aa h a ee,m a aa jh a ee n a aa w a क ु श aa h a ee
-mr\clustered_10.wav,mr,clustered,4.8,,आम्ही सर्व मिळून काम करू,aa m a h a ii s a r a w a m a i lx a uu n a k a aa m a k a r a uu,aa m a h a i s a r a w a m a i l a u n a k a aa m a k a r a u
+filename,language,condition,auto_mos,text,phonemes,output_phonemes
+hi\baseline_01.wav,hi,baseline,4.8,भारत एक महान देश है,bh a aa r a t a ee k a m a h a aa n a d a ee sh a h a ei,bh a aa r a t a ee k a m a h a aa n a d a ee sh a h a ei
+hi\baseline_02.wav,hi,baseline,4.8,आज मौसम बहुत अच्छा है,aa j a m a ou s a m a b a h a u t a a c a ch a aa h a ei,aa j a m a ou s a m a b a h a u t a a c a ch a aa h a ei
+hi\baseline_03.wav,hi,baseline,4.8,मुझे हिंदी बोलना पसंद है,m a u jh a ee h a i q d a ii b a o l a n a aa p a s a q d a h a ei,m a u jh a ee h a i q d a ii b a o l a n a aa p a s a q d a h a ei
+hi\baseline_04.wav,hi,baseline,4.8,कृपया यहाँ बैठिए,k a rq p a y a aa y a h a aa mq b a ei txh a i ee,k a rq p a y a aa y a h a aa mq b a ei txh a i ee
+hi\baseline_05.wav,hi,baseline,4.8,यह किताब बहुत रोचक है,y a h a k a i t a aa b a b a h a u t a r a o c a k a h a ei,y a h a k a i t a aa b a b a h a u t a r a o c a k a h a ei
+hi\baseline_06.wav,hi,baseline,4.8,सूरज पूरब से उगता है,s a uu r a j a p a uu r a b a s a ee u g a t a aa h a ei,s a uu r a j a p a uu r a b a s a ee u g a t a aa h a ei
+hi\baseline_07.wav,hi,baseline,4.8,बच्चे पार्क में खेल रहे हैं,b a c a c a ee p a aa r a k a m a ee q kh a ee l a r a h a ee h a ei q,b a c a c a ee p a aa r a k a m a ee q kh a ee l a r a h a ee h a ei q
+hi\baseline_08.wav,hi,baseline,4.8,नमस्ते आप कैसे हैं,n a m a s a t a ee aa p a k a ei s a ee h a ei q,n a m a s a t a ee aa p a k a ei s a ee h a ei q
+hi\baseline_09.wav,hi,baseline,4.8,मेरा नाम कुश है,m a ee r a aa n a aa m a k a u sh a h a ei,m a ee r a aa n a aa m a k a u sh a h a ei
+hi\baseline_10.wav,hi,baseline,4.8,हम सब मिलकर काम करेंगे,h a m a s a b a m a i l a k a r a k a aa m a k a r a ee q g a ee,h a m a s a b a m a i l a k a r a k a aa m a k a r a ee q g a ee
+hi\baseline_11.wav,hi,baseline,4.8,विज्ञान और प्रौद्योगिकी,w a i j a nj a aa n a ou r a p a r a ou d a y a o g a i k a ii,w a i j a nj a aa n a ou r a p a r a ou d a y a o g a i k a ii
+hi\baseline_12.wav,hi,baseline,4.5,शिक्षा सबसे बड़ा हथियार है,sh a i k a sx a aa s a b a s a ee b a dxq a aa h a th a i y a aa r a h a ei,sh a i k a sx a aa s a b a s a ee b a dxq a aa h a th a i y a aa r a h a ei
+hi\clustered_01.wav,hi,clustered,4.8,भारत एक महान देश है,bh a aa r a t a ee k a m a h a aa n a d a ee sh a h a ei,bh a aa r a t a ee k a m a h a aa n a d a ee sh a h a ae
+hi\clustered_02.wav,hi,clustered,4.8,आज मौसम बहुत अच्छा है,aa j a m a ou s a m a b a h a u t a a c a ch a aa h a ei,aa j a m a ou s a m a b a h a u t a a c a ch a aa h a ae
+hi\clustered_03.wav,hi,clustered,4.8,मुझे हिंदी बोलना पसंद है,m a u jh a ee h a i q d a ii b a o l a n a aa p a s a q d a h a ei,m a u jh a ee h a i mq d a i b a o l a n a aa p a s a mq d a h a ae
+hi\clustered_04.wav,hi,clustered,4.8,कृपया यहाँ बैठिए,k a rq p a y a aa y a h a aa mq b a ei txh a i ee,k a r p a y a aa y a h a aa mq b a ae txh a i ee
+hi\clustered_05.wav,hi,clustered,4.8,यह किताब बहुत रोचक है,y a h a k a i t a aa b a b a h a u t a r a o c a k a h a ei,y a h a k a i t a aa b a b a h a u t a r a o c a k a h a ae
+hi\clustered_06.wav,hi,clustered,4.8,सूरज पूरब से उगता है,s a uu r a j a p a uu r a b a s a ee u g a t a aa h a ei,s a u r a j a p a u r a b a s a ee u g a t a aa h a ae
+hi\clustered_07.wav,hi,clustered,4.8,बच्चे पार्क में खेल रहे हैं,b a c a c a ee p a aa r a k a m a ee q kh a ee l a r a h a ee h a ei q,b a c a c a ee p a aa r a k a m a ee mq kh a ee l a r a h a ee h a ae mq
+hi\clustered_08.wav,hi,clustered,4.8,नमस्ते आप कैसे हैं,n a m a s a t a ee aa p a k a ei s a ee h a ei q,n a m a s a t a ee aa p a k a ae s a ee h a ae mq
+hi\clustered_09.wav,hi,clustered,4.8,मेरा नाम कुश है,m a ee r a aa n a aa m a k a u sh a h a ei,m a ee r a aa n a aa m a k a u sh a h a ae
+hi\clustered_10.wav,hi,clustered,4.8,हम सब मिलकर काम करेंगे,h a m a s a b a m a i l a k a r a k a aa m a k a r a ee q g a ee,h a m a s a b a m a i l a k a r a k a aa m a k a r a ee mq g a ee
+hi\clustered_11.wav,hi,clustered,4.8,विज्ञान और प्रौद्योगिकी,w a i j a nj a aa n a ou r a p a r a ou d a y a o g a i k a ii,w a i j a n a aa n a ou r a p a r a ou d a y a o g a i k a i
+hi\clustered_12.wav,hi,clustered,4.8,शिक्षा सबसे बड़ा हथियार है,sh a i k a sx a aa s a b a s a ee b a dxq a aa h a th a i y a aa r a h a ei,sh a i k a sh a aa s a b a s a ee b a dx a aa h a th a i y a aa r a h a ae
+gu\baseline_01.wav,gu,baseline,4.8,ભારત એક મહાન દેશ છે,bh a aa r a t a ee k a m a h a aa n a d a ee sh a ch a ee,bh a aa r a t a ee k a m a h a aa n a d a ee sh a ch a ee
+gu\baseline_02.wav,gu,baseline,4.8,આજે હવામાન ખૂબ સારું છે,aa j a ee h a w a aa m a aa n a kh a uu b a s a aa r a u q ch a ee,aa j a ee h a w a aa m a aa n a kh a uu b a s a aa r a u q ch a ee
+gu\baseline_03.wav,gu,baseline,4.8,મને ગુજરાતી બોલવાનું ગમે છે,m a n a ee g a u j a r a aa t a ii બ ો લ વ ા ન ુ ં g a m a ee ch a ee,m a n a ee g a u j a r a aa t a ii બ ો લ વ ા ન ુ ં g a m a ee ch a ee
+gu\baseline_04.wav,gu,baseline,4.8,કૃપા કરીને અહીં બેસો,k a p a aa k a r a ii n a ee a h a ii q બ ે સ ો,k a p a aa k a r a ii n a ee a h a ii q બ ે સ ો
+gu\baseline_05.wav,gu,baseline,4.8,આ પુસ્તક ખૂબ રસપ્રદ છે,આ p a u s a t a k a kh a uu b a r a s a p a r a d a ch a ee,આ p a u s a t a k a kh a uu b a r a s a p a r a d a ch a ee
+gu\baseline_06.wav,gu,baseline,4.5,સૂરજ પૂર્વમાંથી ઉગે છે,સ ૂ ર જ પ ૂ ર ્ વ મ ા ં થ ી ઉ ગ ે ch a ee,સ ૂ ર જ પ ૂ ર ્ વ મ ા ં થ ી ઉ ગ ે ch a ee
+gu\baseline_07.wav,gu,baseline,4.8,બાળકો બગીચામાં રમી રહ્યા છે,b a aa lx a k a o b a g a ii c a aa m a aa q r a m a ii r a h a y a aa ch a ee,b a aa lx a k a o b a g a ii c a aa m a aa q r a m a ii r a h a y a aa ch a ee
+gu\baseline_08.wav,gu,baseline,4.8,નમસ્તે તમે કેમ છો,ન મ સ ્ ત ે t a m a ee k a ee m a ch a o,ન મ સ ્ ત ે t a m a ee k a ee m a ch a o
+gu\baseline_09.wav,gu,baseline,4.8,મારું નામ કુશ છે,m a aa r a u q n a aa m a ક ુ શ ch a ee,m a aa r a u q n a aa m a ક ુ શ ch a ee
+gu\baseline_10.wav,gu,baseline,4.8,અમે બધા સાથે મળીને કામ કરીશું,a m a ee b a dh a aa s a aa th a ee m a lx a ii n a ee k a aa m a k a r a ii sh a u q,a m a ee b a dh a aa s a aa th a ee m a lx a ii n a ee k a aa m a k a r a ii sh a u q
+gu\clustered_01.wav,gu,clustered,4.6,ભારત એક મહાન દેશ છે,bh a aa r a t a ee k a m a h a aa n a d a ee sh a ch a ee,bh a aa r a t a ee k a m a h a aa n a d a ee sh a ch a ee
+gu\clustered_02.wav,gu,clustered,4.6,આજે હવામાન ખૂબ સારું છે,aa j a ee h a w a aa m a aa n a kh a uu b a s a aa r a u q ch a ee,aa j a ee h a w a aa m a aa n a kh a u b a s a aa r a u mq ch a ee
+gu\clustered_03.wav,gu,clustered,4.8,મને ગુજરાતી બોલવાનું ગમે છે,m a n a ee g a u j a r a aa t a ii બ ો લ વ ા ન ુ ં g a m a ee ch a ee,m a n a ee g a u j a r a aa t a i બ ો લ વ ા ન ુ ં g a m a ee ch a ee
+gu\clustered_04.wav,gu,clustered,4.8,કૃપા કરીને અહીં બેસો,k a p a aa k a r a ii n a ee a h a ii q બ ે સ ો,k a p a aa k a r a i n a ee a h a i mq બ ે સ ો
+gu\clustered_05.wav,gu,clustered,4.6,આ પુસ્તક ખૂબ રસપ્રદ છે,આ p a u s a t a k a kh a uu b a r a s a p a r a d a ch a ee,આ p a u s a t a k a kh a u b a r a s a p a r a d a ch a ee
+gu\clustered_06.wav,gu,clustered,4.8,સૂરજ પૂર્વમાંથી ઉગે છે,સ ૂ ર જ પ ૂ ર ્ વ મ ા ં થ ી ઉ ગ ે ch a ee,સ ૂ ર જ પ ૂ ર ્ વ મ ા ં થ ી ઉ ગ ે ch a ee
+gu\clustered_07.wav,gu,clustered,4.6,બાળકો બગીચામાં રમી રહ્યા છે,b a aa lx a k a o b a g a ii c a aa m a aa q r a m a ii r a h a y a aa ch a ee,b a aa l a k a o b a g a i c a aa m a aa mq r a m a i r a h a y a aa ch a ee
+gu\clustered_08.wav,gu,clustered,4.8,નમસ્તે તમે કેમ છો,ન મ સ ્ ત ે t a m a ee k a ee m a ch a o,ન મ સ ્ ત ે t a m a ee k a ee m a ch a o
+gu\clustered_09.wav,gu,clustered,4.8,મારું નામ કુશ છે,m a aa r a u q n a aa m a ક ુ શ ch a ee,m a aa r a u mq n a aa m a ક ુ શ ch a ee
+gu\clustered_10.wav,gu,clustered,4.6,અમે બધા સાથે મળીને કામ કરીશું,a m a ee b a dh a aa s a aa th a ee m a lx a ii n a ee k a aa m a k a r a ii sh a u q,a m a ee b a dh a aa s a aa th a ee m a l a i n a ee k a aa m a k a r a i sh a u mq
+mr\baseline_01.wav,mr,baseline,4.8,भारत एक महान देश आहे,bh a aa r a t a ee k a m a h a aa n a d a ee sh a aa h a ee,bh a aa r a t a ee k a m a h a aa n a d a ee sh a aa h a ee
+mr\baseline_02.wav,mr,baseline,4.8,आज हवामान खूप चांगले आहे,aa j a h a w a aa m a aa n a kh a uu p a c a aa q g a l a ee aa h a ee,aa j a h a w a aa m a aa n a kh a uu p a c a aa q g a l a ee aa h a ee
+mr\baseline_03.wav,mr,baseline,4.8,मला मराठी बोलायला आवडते,m a l a aa m a r a aa txh a ii b a o l a aa y a l a aa aa w a dx a t a ee,m a l a aa m a r a aa txh a ii b a o l a aa y a l a aa aa w a dx a t a ee
+mr\baseline_04.wav,mr,baseline,4.8,कृपया येथे बसा,k a rq p a y a aa y a ee th a ee b a s a aa,k a rq p a y a aa y a ee th a ee b a s a aa
+mr\baseline_05.wav,mr,baseline,4.8,हे पुस्तक खूप रोचक आहे,h a ee p a u s a t a k a kh a uu p a r a o c a k a aa h a ee,h a ee p a u s a t a k a kh a uu p a r a o c a k a aa h a ee
+mr\baseline_06.wav,mr,baseline,4.8,सूर्य पूर्वेकडून उगवतो,s a uu r a y a प ू र ् व े क ड ू न उ ग व त ो,s a uu r a y a प ू र ् व े क ड ू न उ ग व त ो
+mr\baseline_07.wav,mr,baseline,4.8,मुले बागेत खेळत आहेत,m a u l a ee b a aa g a ee t a kh a ee lx a t a aa h a ee t a,m a u l a ee b a aa g a ee t a kh a ee lx a t a aa h a ee t a
+mr\baseline_08.wav,mr,baseline,4.8,नमस्कार तुम्ही कसे आहात,n a m a s a k a aa r a t a u m a h a ii k a s a ee aa h a aa t a,n a m a s a k a aa r a t a u m a h a ii k a s a ee aa h a aa t a
+mr\baseline_09.wav,mr,baseline,4.8,माझे नाव कुश आहे,m a aa jh a ee n a aa w a क ु श aa h a ee,m a aa jh a ee n a aa w a क ु श aa h a ee
+mr\baseline_10.wav,mr,baseline,4.8,आम्ही सर्व मिळून काम करू,aa m a h a ii s a r a w a m a i lx a uu n a k a aa m a k a r a uu,aa m a h a ii s a r a w a m a i lx a uu n a k a aa m a k a r a uu
+mr\clustered_01.wav,mr,clustered,4.8,भारत एक महान देश आहे,bh a aa r a t a ee k a m a h a aa n a d a ee sh a aa h a ee,bh a aa r a t a ee k a m a h a aa n a d a ee sh a aa h a ee
+mr\clustered_02.wav,mr,clustered,4.8,आज हवामान खूप चांगले आहे,aa j a h a w a aa m a aa n a kh a uu p a c a aa q g a l a ee aa h a ee,aa j a h a w a aa m a aa n a kh a u p a c a aa mq g a l a ee aa h a ee
+mr\clustered_03.wav,mr,clustered,4.8,मला मराठी बोलायला आवडते,m a l a aa m a r a aa txh a ii b a o l a aa y a l a aa aa w a dx a t a ee,m a l a aa m a r a aa txh a i b a o l a aa y a l a aa aa w a dx a t a ee
+mr\clustered_04.wav,mr,clustered,4.8,कृपया येथे बसा,k a rq p a y a aa y a ee th a ee b a s a aa,k a r p a y a aa y a ee th a ee b a s a aa
+mr\clustered_05.wav,mr,clustered,4.8,हे पुस्तक खूप रोचक आहे,h a ee p a u s a t a k a kh a uu p a r a o c a k a aa h a ee,h a ee p a u s a t a k a kh a u p a r a o c a k a aa h a ee
+mr\clustered_06.wav,mr,clustered,4.8,सूर्य पूर्वेकडून उगवतो,s a uu r a y a प ू र ् व े क ड ू न उ ग व त ो,s a u r a y a प ू र ् व े क ड ू न उ ग व त ो
+mr\clustered_07.wav,mr,clustered,4.8,मुले बागेत खेळत आहेत,m a u l a ee b a aa g a ee t a kh a ee lx a t a aa h a ee t a,m a u l a ee b a aa g a ee t a kh a ee l a t a aa h a ee t a
+mr\clustered_08.wav,mr,clustered,4.8,नमस्कार तुम्ही कसे आहात,n a m a s a k a aa r a t a u m a h a ii k a s a ee aa h a aa t a,n a m a s a k a aa r a t a u m a h a i k a s a ee aa h a aa t a
+mr\clustered_09.wav,mr,clustered,4.8,माझे नाव कुश आहे,m a aa jh a ee n a aa w a क ु श aa h a ee,m a aa jh a ee n a aa w a क ु श aa h a ee
+mr\clustered_10.wav,mr,clustered,4.8,आम्ही सर्व मिळून काम करू,aa m a h a ii s a r a w a m a i lx a uu n a k a aa m a k a r a uu,aa m a h a i s a r a w a m a i l a u n a k a aa m a k a r a u

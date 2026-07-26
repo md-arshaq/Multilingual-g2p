@@ -1,32 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Week 3 — Task 3: End-to-End Test
-=================================
-Full pipeline per language:
-  [Sample sentence]
-       ↓
-  [Your trained G2P model]  (loads weights from week 2)
-       ↓
-  [Post-processing: schwa deletion + stress]  (Task 2 rules)
-       ↓
-  [Parler-TTS: generate audio]
-       ↓
-  [Save .wav file + print phoneme analysis]
 
-Sample sentences:
-  Hindi   : "नमस्ते, आप कैसे हैं?"
-  Gujarati: "તમે કેમ છો?"
-  Marathi : "तुम्ही कसे आहात?"
-
-Run:
-  python week3_task3_e2e_test.py
-
-Outputs:
-  hindi_output.wav
-  gujarati_output.wav
-  marathi_output.wav
-  e2e_report.txt
-"""
 
 import os
 import sys
@@ -35,7 +8,6 @@ import time
 import tensorflow as tf
 import numpy as np
 
-# ── Import post-processing from Task 2 ────────────────────────────────────────
 # (Task 2 file must be in the same folder)
 try:
     from week3_task2_schwa_deletion import postprocess, G2P_TO_IPA, g2p_to_ipa
@@ -52,9 +24,7 @@ except ImportError:
         return " ".join(phonemes)
 
 
-# ─────────────────────────────────────────────────────────────────────────────
 # SECTION 1: LOAD YOUR WEEK 2 G2P MODEL
-# ─────────────────────────────────────────────────────────────────────────────
 
 WEIGHTS_PATH  = "best_g2p_transformer.weights.h5"
 SRC_TOK_PATH  = "src_tokenizer.json"
@@ -71,7 +41,7 @@ MAX_TGT_LEN  = 200
 
 
 class Tokenizer:
-    """Minimal tokenizer (same as week 2 — needed to load saved JSON)."""
+    
     def __init__(self):
         self.pad_token = "<pad>"
         self.unk_token = "<unk>"
@@ -114,7 +84,7 @@ class Tokenizer:
 
 
 def build_transformer_model(src_vocab, tgt_vocab):
-    """Re-create the same architecture as week 2."""
+    
     from tensorflow.keras import layers
 
     def get_positional_encoding(max_len, d_model):
@@ -286,7 +256,7 @@ def greedy_decode(model, src, tgt_tokenizer, max_len=50):
 
 
 def run_g2p(word, lang, model, src_tokenizer, tgt_tokenizer):
-    """Run a single word through the G2P model."""
+    
     src_seq  = [f"<{lang}>"] + list(word)
     src_enc  = src_tokenizer.encode(src_seq)
     src_enc  = tf.keras.preprocessing.sequence.pad_sequences(
@@ -296,15 +266,10 @@ def run_g2p(word, lang, model, src_tokenizer, tgt_tokenizer):
     return tgt_tokenizer.decode(ids, remove_special=True)
 
 
-# ─────────────────────────────────────────────────────────────────────────────
 # SECTION 2: PARLER-TTS AUDIO GENERATION
-# ─────────────────────────────────────────────────────────────────────────────
 
 def generate_audio_parler(text, description, out_path):
-    """
-    Generate audio using Parler-TTS and save to out_path.
-    Downloads ~1.5GB model on first run (cached after that).
-    """
+    
     try:
         from parler_tts import ParlerTTSForConditionalGeneration
         from transformers import AutoTokenizer
@@ -346,9 +311,7 @@ def generate_audio_parler(text, description, out_path):
     return True
 
 
-# ─────────────────────────────────────────────────────────────────────────────
 # SECTION 3: TEST SENTENCES PER LANGUAGE
-# ─────────────────────────────────────────────────────────────────────────────
 
 TEST_SENTENCES = {
     "HI": [
@@ -409,9 +372,7 @@ TEST_SENTENCES = {
 }
 
 
-# ─────────────────────────────────────────────────────────────────────────────
 # SECTION 4: MAIN E2E PIPELINE
-# ─────────────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
 
@@ -421,7 +382,6 @@ if __name__ == "__main__":
 
     report_lines = ["WEEK 3 END-TO-END REPORT", "=" * 70, ""]
 
-    # ── 4a. Load G2P model ────────────────────────────────────────────────────
     g2p_available = False
 
     if (os.path.exists(WEIGHTS_PATH)
@@ -448,7 +408,6 @@ if __name__ == "__main__":
         print("   Make sure you've run phase2_baseline_g2p.py first.")
         print("   G2P step will be skipped — TTS will still be tested.\n")
 
-    # ── 4b. Run per-language tests ────────────────────────────────────────────
     lang_names = {"HI": "Hindi", "GU": "Gujarati", "MR": "Marathi"}
     tts_success = 0
     tts_total   = 0
@@ -465,7 +424,6 @@ if __name__ == "__main__":
             print(f"  Roman    : {item['romanized']}")
             report_lines += [f"\nSentence : {item['script']}", f"Roman    : {item['romanized']}"]
 
-            # ── Step 1: G2P per word ──────────────────────────────────────────
             all_phonemes = []
             print(f"\n  STEP 1 — G2P phoneme prediction:")
 
@@ -484,7 +442,6 @@ if __name__ == "__main__":
 
             report_lines.append(f"  Raw G2P  : {' '.join(all_phonemes)}")
 
-            # ── Step 2: Post-processing ───────────────────────────────────────
             print(f"\n  STEP 2 — Post-processing (schwa deletion + stress):")
             print(f"    Before : {' '.join(all_phonemes)}")
 
@@ -492,14 +449,12 @@ if __name__ == "__main__":
             print(f"    After  : {' '.join(processed)}")
             report_lines.append(f"  Processed: {' '.join(processed)}")
 
-            # ── Step 3: IPA conversion ────────────────────────────────────────
             if POSTPROCESS_AVAILABLE:
                 from week3_task2_schwa_deletion import g2p_to_ipa
                 ipa = g2p_to_ipa([p for p in processed if p != "ˈ"])
                 print(f"    IPA    : [{ipa}]")
                 report_lines.append(f"  IPA      : [{ipa}]")
 
-            # ── Step 4: TTS audio generation ─────────────────────────────────
             print(f"\n  STEP 3 — Parler-TTS audio generation:")
             tts_total += 1
             success = generate_audio_parler(
@@ -515,7 +470,6 @@ if __name__ == "__main__":
 
             print()
 
-    # ── 4c. Summary ───────────────────────────────────────────────────────────
     print("\n" + "=" * 70)
     print("📊 E2E TEST SUMMARY")
     print("=" * 70)
@@ -532,7 +486,6 @@ if __name__ == "__main__":
         status = "✅" if os.path.exists(wf) else "❌"
         print(f"    {status}  {wf}")
 
-    # ── 4d. Save report ───────────────────────────────────────────────────────
     report_lines += [
         "",
         "=" * 70,

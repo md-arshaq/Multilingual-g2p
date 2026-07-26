@@ -5,7 +5,6 @@
 Automated MOS was used to score all audio samples. A neural MOS predictor
 assigns a predicted quality score (1-5) to each audio file.
 
-> **Note:** For final paper results, supplement with human MOS ratings from ≥4 listeners.
 
 ## MOS Scale
 

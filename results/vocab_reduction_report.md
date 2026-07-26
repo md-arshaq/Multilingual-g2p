@@ -9,15 +9,15 @@
 | **Vocab reduction** | **31.6%** |
 | Total phoneme tokens | 541,757 |
 | Dataset lines | 54,753 |
-| Languages | <GU>, <HI>, <MR> |
+| Languages | GU, HI, MR |
 
 ## Language Distribution
 
 | Language | Entries |
 |----------|---------|
-| <GU> | 16,676 |
-| <HI> | 15,623 |
-| <MR> | 22,454 |
+| GU | 16,676 |
+| HI | 15,623 |
+| MR | 22,454 |
 
 ## Cluster Detail
 

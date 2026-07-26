@@ -1,22 +1,16 @@
-"""
-Month 2 Pipeline: Phoneme Extraction → Embeddings → Dimensionality Reduction
-Dataset format: <LANG_TAG> grapheme\tphonemized_sequence
-"""
+
 
 import json
 import numpy as np
 import matplotlib.pyplot as plt
 from collections import Counter
 
-# ─────────────────────────────────────────────
-# STEP 1: EXTRACT PHONEMES
-# ─────────────────────────────────────────────
 
 DATASET_PATH = "multilingual_g2p_dataset.txt"
 TGT_TOKENIZER_PATH = "tgt_tokenizer.json"
 
 def load_dataset(path):
-    """Load multilingual G2P dataset. Returns list of (lang, grapheme, phonemes)."""
+    
     records = []
     with open(path, "r", encoding="utf-8") as f:
         for line in f:
@@ -58,7 +52,6 @@ unique_phonemes  = sorted(phoneme_counts.keys())  # sorted for reproducibility
 print(f"\nTotal unique phonemes: {len(unique_phonemes)}")
 print("Phoneme vocabulary:", unique_phonemes)
 
-# ── Save phoneme vocabulary ──────────────────
 phoneme_vocab = {
     "phoneme_to_id": {p: i for i, p in enumerate(unique_phonemes)},
     "id_to_phoneme": {i: p for i, p in enumerate(unique_phonemes)},
@@ -72,14 +65,9 @@ with open("phoneme_vocab.json", "w", encoding="utf-8") as f:
 print("\n✅ Step 1 done → phoneme_vocab.json saved")
 
 
-# ─────────────────────────────────────────────
-# STEP 2: CREATE PHONEME EMBEDDINGS
-# ─────────────────────────────────────────────
-
 phoneme_to_id = phoneme_vocab["phoneme_to_id"]
 VOCAB_SIZE    = phoneme_vocab["vocab_size"]
 
-# ── Option A: One-Hot (Baseline) ─────────────
 def one_hot_embeddings(phoneme_to_id):
     vocab_size = len(phoneme_to_id)
     embeddings = {}
@@ -93,13 +81,8 @@ one_hot_emb = one_hot_embeddings(phoneme_to_id)
 print(f"\nOne-Hot embedding shape: {one_hot_emb['a'].shape}")
 
 
-# ── Option B: Learned Embeddings (Better) ─────
-
 def build_cooccurrence_embeddings(records, phoneme_to_id, window=2):
-    """
-    For each phoneme, build a context vector based on neighbouring phonemes.
-    This is a lightweight 'learned' embedding without a neural network.
-    """
+    
     vocab_size = len(phoneme_to_id)
     cooc_matrix = np.zeros((vocab_size, vocab_size), dtype=np.float32)
 
@@ -140,13 +123,8 @@ np.save("phoneme_embeddings_learned.npy", learned_matrix)
 print("✅ Step 2 done → phoneme_embeddings_onehot.npy & phoneme_embeddings_learned.npy saved")
 
 
-# ─────────────────────────────────────────────
-# STEP 3: DIMENSIONALITY REDUCTION
-# ─────────────────────────────────────────────
-
 embedding_matrix = learned_matrix
 
-# ── Option A: UMAP (Preferred) ───────────────
 try:
     import umap
     print("\nRunning UMAP...")
@@ -160,7 +138,6 @@ try:
 except ImportError:
     print("UMAP not installed → falling back to PCA")
 
-    # ── Option B: PCA (Backup) ───────────────────
     from sklearn.decomposition import PCA
     print("Running PCA...")
     pca = PCA(n_components=2, random_state=42)
@@ -171,9 +148,7 @@ except ImportError:
     print("✅ PCA done → phoneme_2d_pca.npy saved")
 
 
-# ─────────────────────────────────────────────
 # VISUALIZE: 2D Phoneme Cluster Plot
-# ─────────────────────────────────────────────
 
 # Load tgt_tokenizer to cross-check our vocab
 with open(TGT_TOKENIZER_PATH, "r") as f:
@@ -200,9 +175,7 @@ plt.show()
 print("✅ Plot saved → phoneme_clusters.png")
 
 
-# ─────────────────────────────────────────────
 # SUMMARY
-# ─────────────────────────────────────────────
 print("\n" + "="*50)
 print("MONTH 2 PIPELINE SUMMARY")
 print("="*50)

@@ -1,25 +1,4 @@
-"""
-Task 5: Prepare TTS Training Data in LJ-Speech Format
-──────────────────────────────────────────────────────
-Takes IndicTTS-format audio + transcript data and normalizes it
-into the LJ-Speech format required for Coqui VITS training.
 
-Expected input structure (IndicTTS):
-  <lang>/wav/    → audio files (*.wav)
-  <lang>/txt/    → transcript files (*.txt) — or a single metadata file
-
-Outputs:
-  data/tts/hi/train/  data/tts/hi/val/  data/tts/hi/test/
-  data/tts/gu/train/  data/tts/gu/val/  data/tts/gu/test/
-  data/tts/mr/train/  data/tts/mr/val/  data/tts/mr/test/
-
-Each split directory contains:
-  metadata.csv  — "filename|raw_text|phoneme_sequence"
-  wavs/         — normalized WAV files (22050 Hz, mono)
-
-USAGE:
-  python task5_tts_data_prep.py --input_dir /path/to/indictts --output_dir data/tts
-"""
 
 import os
 import csv
@@ -77,7 +56,7 @@ def load_g2p_dictionary(dataset_path):
 
 
 def load_cluster_mapping(mapping_path):
-    """Load phoneme→cluster mapping."""
+    
     with open(mapping_path, "r", encoding="utf-8") as f:
         mapping = json.load(f)
     return {p: f"C{info['cluster_id']}" for p, info in mapping.items()}
@@ -159,7 +138,7 @@ def split_data(pairs, train_ratio=0.90, val_ratio=0.05, test_ratio=0.05, seed=42
 
 
 def create_split_directory(pairs, output_dir, lang, split_name, g2p_dict, cluster_map, normalize=True):
-    """Create a split directory with wavs/ and metadata.csv."""
+    
     split_dir = os.path.join(output_dir, lang, split_name)
     wavs_dir  = os.path.join(split_dir, "wavs")
     os.makedirs(wavs_dir, exist_ok=True)

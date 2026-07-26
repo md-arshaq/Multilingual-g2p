@@ -1,26 +1,10 @@
-"""
-Task 1: Replace Raw Phonemes with Cluster Labels
-──────────────────────────────────────────────────
-Loads phoneme_cluster_mapping.json from Month 2 clustering,
-substitutes every phoneme token in the multilingual G2P dataset
-with its cluster_id label (e.g. k → C3), and saves the result.
 
-Inputs:
-  g2p/phoneme_cluster_mapping.json
-  data/multilingual_g2p_dataset.txt
-
-Outputs:
-  data/multilingual_g2p_clustered.txt
-  results/vocab_reduction_report.md
-"""
 
 import json
 import os
 from collections import Counter, defaultdict
 
-# ─────────────────────────────────────────────
 # PATHS — adjust if running from a different directory
-# ─────────────────────────────────────────────
 SCRIPT_DIR  = os.path.dirname(os.path.abspath(__file__))
 PROJECT_DIR = os.path.dirname(SCRIPT_DIR)
 
@@ -29,9 +13,6 @@ DATASET_PATH  = os.path.join(PROJECT_DIR, "data", "multilingual_g2p_dataset.txt"
 OUTPUT_PATH   = os.path.join(PROJECT_DIR, "data", "multilingual_g2p_clustered.txt")
 REPORT_PATH   = os.path.join(PROJECT_DIR, "results", "vocab_reduction_report.md")
 
-# ─────────────────────────────────────────────
-# STEP 1: Load cluster mapping
-# ─────────────────────────────────────────────
 print("Loading phoneme_cluster_mapping.json ...")
 with open(MAPPING_PATH, "r", encoding="utf-8") as f:
     mapping = json.load(f)
@@ -54,9 +35,6 @@ for phoneme, info in mapping.items():
 singletons = {cid: members[0] for cid, members in cluster_members.items() if len(members) == 1}
 print(f"  Singleton clusters: {singletons}")
 
-# ─────────────────────────────────────────────
-# STEP 2: Read dataset and substitute
-# ─────────────────────────────────────────────
 print(f"\nReading dataset: {DATASET_PATH}")
 
 total_lines     = 0
@@ -120,9 +98,6 @@ if unknown_phonemes:
 else:
     print(f"\n  ✅ All phonemes successfully mapped to clusters")
 
-# ─────────────────────────────────────────────
-# STEP 3: Save clustered dataset
-# ─────────────────────────────────────────────
 os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
 
 with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
@@ -132,9 +107,6 @@ with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
 print(f"\n✅ Saved clustered dataset: {OUTPUT_PATH}")
 print(f"   Lines written: {len(output_lines)}")
 
-# ─────────────────────────────────────────────
-# STEP 4: Compute vocab reduction stats
-# ─────────────────────────────────────────────
 original_vocab = sorted(set(original_phoneme_counter.keys()))
 cluster_vocab  = sorted(set(cluster_counter.keys()), key=lambda x: int(x[1:]))
 
@@ -150,9 +122,6 @@ print(f"  Cluster count          : {cluster_count}")
 print(f"  Reduction              : {reduction_pct:.1f}%")
 print(f"  Total phoneme tokens   : {sum(original_phoneme_counter.values()):,}")
 
-# ─────────────────────────────────────────────
-# STEP 5: Generate vocab_reduction_report.md
-# ─────────────────────────────────────────────
 os.makedirs(os.path.dirname(REPORT_PATH), exist_ok=True)
 
 # Build cluster detail table
@@ -171,34 +140,12 @@ for cid in sorted(cluster_members.keys()):
         "singleton": is_singleton,
     })
 
-report = f"""# Vocab Reduction Report
-
-## Summary
-
-| Metric | Value |
-|--------|-------|
-| Original phoneme count | {original_count} |
-| Cluster count | {cluster_count} |
-| **Vocab reduction** | **{reduction_pct:.1f}%** |
-| Total phoneme tokens | {sum(original_phoneme_counter.values()):,} |
-| Dataset lines | {converted_lines:,} |
-| Languages | {', '.join(sorted(lang_counter.keys()))} |
-
-## Language Distribution
-
-| Language | Entries |
-|----------|---------|
-"""
+report = f
 
 for lang, count in sorted(lang_counter.items()):
     report += f"| {lang} | {count:,} |\n"
 
-report += f"""
-## Cluster Detail
-
-| Cluster ID | Label | Members | Size | Total Frequency | Note |
-|------------|-------|---------|------|-----------------|------|
-"""
+report += f
 
 for cd in cluster_details:
     members_str = ", ".join(cd["members"])
@@ -207,21 +154,7 @@ for cd in cluster_details:
         f"{cd['member_count']} | {cd['total_freq']:,} | {cd['singleton']} |\n"
     )
 
-report += f"""
-## Singleton Cluster Analysis
-
-Singleton clusters are clusters containing only one phoneme. These are typically rare phonemes
-that are phonetically distinct enough to not merge with any other cluster at K={cluster_count}.
-
-**Strategy chosen:** Keep singletons as-is with their dedicated cluster IDs.
-
-**Rationale:** Since these phonemes already have unique cluster labels (C1, C4, C6, C8, C10, C11),
-the model can still learn them — just with fewer training examples. Merging them with the nearest
-centroid neighbor could hurt accuracy for words containing these specific phonemes.
-
-| Singleton Cluster | Phoneme | Frequency | % of Total Tokens |
-|-------------------|---------|-----------|-------------------|
-"""
+report += f
 
 total_tokens = sum(original_phoneme_counter.values())
 for cid, phoneme in sorted(singletons.items()):
@@ -229,28 +162,7 @@ for cid, phoneme in sorted(singletons.items()):
     pct = (freq / total_tokens * 100) if total_tokens > 0 else 0
     report += f"| C{cid} | `{phoneme}` | {freq:,} | {pct:.3f}% |\n"
 
-report += f"""
-## Transformation Example
-
-**Original:**
-```
-<HI> अँग\ta mq g a
-<HI> अंक\ta q k a
-<GU> સહૃદય\ts a h a d a y a
-```
-
-**Clustered:**
-```
-<HI> अँग\tC0 C9 C3 C0
-<HI> अंक\tC0 C2 C3 C0
-<GU> સહૃદય\tC7 C0 C2 C0 C3 C0 C2 C0
-```
-
-## Output Files
-
-- `data/multilingual_g2p_clustered.txt` — Full clustered dataset ({converted_lines:,} lines)
-- `results/vocab_reduction_report.md` — This report
-"""
+report += f
 
 with open(REPORT_PATH, "w", encoding="utf-8") as f:
     f.write(report)

@@ -1,25 +1,4 @@
-"""
-Task 7: MOS (Mean Opinion Score) Evaluation
-────────────────────────────────────────────
-Scores TTS audio samples using automated MOS prediction (UTMOS)
-and optionally collects human MOS ratings.
 
-Two MOS approaches:
-  1. Automated: UTMOS neural MOS predictor (primary)
-  2. Human: Optional Google Form integration (secondary)
-
-Inputs:
-  samples/hi/*.wav, samples/gu/*.wav, samples/mr/*.wav
-  samples/samples_metadata.csv
-
-Outputs:
-  results/mos_scores.csv
-  results/mos_report.md
-
-USAGE:
-  python task7_mos_evaluation.py
-  python task7_mos_evaluation.py --human_scores /path/to/human_ratings.csv
-"""
 
 import os
 import csv
@@ -28,9 +7,7 @@ import argparse
 import glob
 from collections import defaultdict
 
-# ─────────────────────────────────────────────
 # PATHS
-# ─────────────────────────────────────────────
 SCRIPT_DIR  = os.path.dirname(os.path.abspath(__file__))
 PROJECT_DIR = os.path.dirname(SCRIPT_DIR)
 
@@ -40,18 +17,9 @@ SCORES_PATH     = os.path.join(PROJECT_DIR, "results", "mos_scores.csv")
 REPORT_PATH     = os.path.join(PROJECT_DIR, "results", "mos_report.md")
 
 
-# ─────────────────────────────────────────────
 # AUTOMATED MOS — UTMOS / SpeechMOS
-# ─────────────────────────────────────────────
 def score_with_utmos(wav_paths):
-    """
-    Score audio files using automated MOS estimation.
-
-    Tries multiple backends in order:
-    1. speechmos (Microsoft — best quality)
-    2. librosa-based heuristic (most compatible)
-    3. Placeholder (last resort)
-    """
+    
     scores = {}
 
     # Try speechmos first (best quality if installed)
@@ -155,10 +123,7 @@ def score_with_utmos(wav_paths):
 
 
 def load_human_scores(csv_path):
-    """
-    Load human MOS scores from a CSV file.
-    Expected format: filename, listener_id, score (1-5)
-    """
+    
     human_scores = defaultdict(list)
     with open(csv_path, "r", encoding="utf-8") as f:
         reader = csv.DictReader(f)
@@ -191,7 +156,6 @@ def main():
     print("TASK 7: MOS EVALUATION")
     print("=" * 60)
 
-    # ── Discover audio files ─────────────────
     print(f"\nScanning for audio files in: {args.samples_dir}")
 
     # Load metadata if available
@@ -226,19 +190,16 @@ def main():
         if count > 0:
             print(f"    {lang.upper()}: {count} files")
 
-    # ── Score with automated MOS ─────────────
     print(f"\nRunning automated MOS scoring...")
     wav_paths = [w["path"] for w in wav_files]
     auto_scores = score_with_utmos(wav_paths)
 
-    # ── Load human scores if provided ────────
     human_scores = {}
     if args.human_scores and os.path.exists(args.human_scores):
         print(f"\nLoading human MOS scores from: {args.human_scores}")
         human_scores = load_human_scores(args.human_scores)
         print(f"  Loaded scores for {len(human_scores)} files")
 
-    # ── Compile results ──────────────────────
     results = []
     for wf in wav_files:
         auto_mos = auto_scores.get(wf["path"])
@@ -258,7 +219,6 @@ def main():
             "output_phonemes": meta.get("output_phonemes", ""),
         })
 
-    # ── Save mos_scores.csv ──────────────────
     os.makedirs(os.path.dirname(SCORES_PATH), exist_ok=True)
 
     with open(SCORES_PATH, "w", newline="", encoding="utf-8") as f:
@@ -271,7 +231,6 @@ def main():
 
     print(f"\n✅ Saved MOS scores: {SCORES_PATH}")
 
-    # ── Compute summary stats ────────────────
     print(f"\n{'='*60}")
     print("MOS SUMMARY")
     print(f"{'='*60}")
@@ -293,45 +252,16 @@ def main():
             count = len(scores_list)
             print(f"{lang.upper():<12} {cond:<12} {mean:>10.2f} {std:>8.2f} {count:>8}")
 
-    # ── Generate mos_report.md ───────────────
     import numpy as np
 
-    report = """# MOS Evaluation Report
-
-## Methodology
-
-"""
+    report = 
 
     if human_scores:
-        report += """Two MOS evaluation methods were used:
-1. **Automated MOS** — Neural MOS predictor scoring each audio sample
-2. **Human MOS** — Ratings from listeners on a 1-5 scale
-"""
+        report += 
     else:
-        report += """Automated MOS was used to score all audio samples. A neural MOS predictor
-assigns a predicted quality score (1-5) to each audio file.
+        report += 
 
-> **Note:** For final paper results, supplement with human MOS ratings from ≥4 listeners.
-"""
-
-    report += """
-## MOS Scale
-
-| Score | Quality |
-|-------|---------|
-| 5 | Excellent — natural, no distortion |
-| 4 | Good — minor artifacts |
-| 3 | Fair — noticeable issues but understandable |
-| 2 | Poor — significant problems |
-| 1 | Bad — unintelligible |
-
-## Results
-
-### Automated MOS by Language and Condition
-
-| Language | Condition | Mean MOS | Std Dev | Samples |
-|----------|-----------|----------|---------|---------|
-"""
+    report += 
 
     for lang in sorted(stats.keys()):
         for cond in sorted(stats[lang].keys()):
@@ -353,18 +283,7 @@ assigns a predicted quality score (1-5) to each audio file.
         c_mean = np.mean(clustered_all)
         delta = c_mean - b_mean
 
-        report += f"""
-### Overall Comparison
-
-| Metric | Baseline | Clustered | Δ |
-|--------|----------|-----------|---|
-| Mean MOS | {b_mean:.2f} | {c_mean:.2f} | {delta:+.2f} |
-| Std Dev | {np.std(baseline_all):.2f} | {np.std(clustered_all):.2f} | — |
-| Samples | {len(baseline_all)} | {len(clustered_all)} | — |
-
-### Interpretation
-
-"""
+        report += f
         if abs(delta) < 0.1:
             report += "The clustered G2P model produces audio of **comparable quality** to the baseline.\n"
         elif delta > 0:
@@ -372,12 +291,7 @@ assigns a predicted quality score (1-5) to each audio file.
         else:
             report += f"The clustered G2P model shows a **slight quality decrease** ({delta:.2f} MOS).\n"
 
-    report += """
-## Files
-
-- `results/mos_scores.csv` — Per-sample MOS scores
-- `results/mos_comparison.png` — Visualization (generated by Task 8)
-"""
+    report += 
 
     with open(REPORT_PATH, "w", encoding="utf-8") as f:
         f.write(report)

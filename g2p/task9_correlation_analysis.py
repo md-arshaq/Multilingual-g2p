@@ -1,21 +1,4 @@
-"""
-Task 9: PER ↔ MOS Correlation Analysis
-───────────────────────────────────────
-Analyzes whether lower PER leads to higher MOS, and whether
-singleton clusters hurt perceived audio quality.
 
-Inputs:
-  results/mos_scores.csv
-  results/comparison_table.csv  (or inline PER values)
-  g2p/phoneme_cluster_mapping.json
-
-Outputs:
-  results/correlation_analysis.md
-  results/per_vs_mos_scatter.png
-
-USAGE:
-  python task9_correlation_analysis.py
-"""
 
 import os
 import csv
@@ -28,9 +11,7 @@ from collections import defaultdict
 matplotlib.rcParams['font.family'] = 'sans-serif'
 matplotlib.rcParams['font.size'] = 11
 
-# ─────────────────────────────────────────────
 # PATHS
-# ─────────────────────────────────────────────
 SCRIPT_DIR  = os.path.dirname(os.path.abspath(__file__))
 PROJECT_DIR = os.path.dirname(SCRIPT_DIR)
 
@@ -42,7 +23,7 @@ OUTPUT_SCATTER      = os.path.join(PROJECT_DIR, "results", "per_vs_mos_scatter.p
 
 
 def load_mos_scores(csv_path):
-    """Load MOS scores from CSV."""
+    
     data = []
     with open(csv_path, "r", encoding="utf-8") as f:
         reader = csv.DictReader(f)
@@ -68,7 +49,7 @@ def load_mos_scores(csv_path):
 
 
 def load_comparison_table(csv_path):
-    """Load PER values from the comparison table."""
+    
     per_values = {}
     if not os.path.exists(csv_path):
         return per_values
@@ -84,7 +65,7 @@ def load_comparison_table(csv_path):
 
 
 def load_singletons(mapping_path):
-    """Load singleton phonemes from cluster mapping."""
+    
     with open(mapping_path, "r", encoding="utf-8") as f:
         mapping = json.load(f)
 
@@ -104,7 +85,7 @@ def load_singletons(mapping_path):
 
 
 def has_singleton_phonemes(phoneme_str, singletons, singleton_clusters):
-    """Check if a phoneme/cluster sequence contains singleton phonemes."""
+    
     tokens = phoneme_str.split()
     for token in tokens:
         if token in singletons or token in singleton_clusters:
@@ -117,7 +98,6 @@ def main():
     print("TASK 9: PER ↔ MOS CORRELATION ANALYSIS")
     print("=" * 60)
 
-    # ── Load data ────────────────────────────
     if not os.path.exists(MOS_SCORES_PATH):
         print(f"  ❌ MOS scores not found: {MOS_SCORES_PATH}")
         print("     Run Task 7 first!")
@@ -138,12 +118,10 @@ def main():
     singletons, singleton_clusters = load_singletons(CLUSTER_MAPPING)
     print(f"  Singleton phonemes: {singletons}")
 
-    # ── Compute per-condition MOS stats ──────
     stats = defaultdict(lambda: defaultdict(list))
     for d in mos_data:
         stats[d["language"]][d["condition"]].append(d["mos"])
 
-    # ── Singleton analysis ───────────────────
     print("\n  Analyzing singleton impact on MOS...")
 
     with_singletons = []
@@ -161,16 +139,13 @@ def main():
     if without_singletons:
         print(f"    Samples without singletons: {len(without_singletons)} (mean MOS: {np.mean(without_singletons):.2f})")
 
-    # ─────────────────────────────────────────
     # VISUALIZATION
-    # ─────────────────────────────────────────
     fig, axes = plt.subplots(1, 3, figsize=(20, 6))
 
     # Colors
     LANG_COLORS = {"hi": "#E85D75", "gu": "#4A90D9", "mr": "#50C878"}
     COND_COLORS = {"baseline": "#4A90D9", "clustered": "#E85D75"}
 
-    # ── Plot 1: PER vs. MOS scatter ──────────
     ax1 = axes[0]
 
     for lang in sorted(stats.keys()):
@@ -209,7 +184,6 @@ def main():
     ax1.legend(fontsize=8, loc='best')
     ax1.grid(alpha=0.3)
 
-    # ── Plot 2: Singleton impact box plot ────
     ax2 = axes[1]
 
     box_data = []
@@ -293,9 +267,7 @@ def main():
     plt.savefig(OUTPUT_SCATTER, dpi=150, bbox_inches='tight')
     print(f"\n✅ Saved correlation plots: {OUTPUT_SCATTER}")
 
-    # ─────────────────────────────────────────
     # CORRELATION METRICS
-    # ─────────────────────────────────────────
     correlation_results = {}
 
     if len(all_per) >= 3 and len(set(all_per)) > 1:
@@ -317,36 +289,8 @@ def main():
     else:
         print("  ℹ️  Not enough data points for correlation analysis")
 
-    # ─────────────────────────────────────────
     # GENERATE REPORT
-    # ─────────────────────────────────────────
-    report = f"""# Correlation Analysis — PER ↔ MOS
-
-## Research Questions
-
-1. **Does lower PER lead to higher MOS?** — If the clustered G2P model has lower PER, does the synthesized speech sound better?
-2. **Do singleton clusters hurt MOS?** — Are audio samples containing rare phonemes (singletons) rated lower?
-
-## Data Summary
-
-| Dataset | Count |
-|---------|-------|
-| Total MOS samples | {len(mos_data)} |
-| Baseline samples | {sum(1 for d in mos_data if d['condition'] == 'baseline')} |
-| Clustered samples | {sum(1 for d in mos_data if d['condition'] == 'clustered')} |
-
-### PER Values (from Task 3)
-
-| Condition | PER |
-|-----------|-----|
-| Baseline | {per_values.get('baseline', 'N/A')} |
-| Clustered | {per_values.get('clustered', 'N/A')} |
-
-### MOS Summary
-
-| Language | Baseline MOS | Clustered MOS | Δ |
-|----------|-------------|---------------|---|
-"""
+    report = f
 
     for lang in sorted(stats.keys()):
         b_mos = stats[lang].get("baseline", [])
@@ -357,18 +301,10 @@ def main():
         report += f"| {lang.upper()} | {b_mean:.2f} | {c_mean:.2f} | {delta:+.2f} |\n"
 
     # Correlation section
-    report += """
-## PER ↔ MOS Correlation
-
-"""
+    report += 
 
     if correlation_results:
-        report += f"""| Metric | Value | p-value | Interpretation |
-|--------|-------|---------|----------------|
-| Pearson r | {correlation_results['pearson_r']:.4f} | {correlation_results['pearson_p']:.4f} | {'Significant' if correlation_results['pearson_p'] < 0.05 else 'Not significant'} |
-| Spearman ρ | {correlation_results['spearman_r']:.4f} | {correlation_results['spearman_p']:.4f} | {'Significant' if correlation_results['spearman_p'] < 0.05 else 'Not significant'} |
-
-"""
+        report += f
         if correlation_results['pearson_r'] < -0.3:
             report += "**Finding:** There is a negative correlation between PER and MOS — lower PER tends to produce higher MOS scores, confirming that G2P accuracy positively impacts perceived speech quality.\n"
         elif correlation_results['pearson_r'] > 0.3:
@@ -379,23 +315,14 @@ def main():
         report += "Insufficient data for statistical correlation analysis. Run Tasks 2-3 and 6-7 to generate PER and MOS data.\n"
 
     # Singleton section
-    report += """
-## Singleton Cluster Impact
-
-"""
+    report += 
 
     if with_singletons and without_singletons:
         sing_mean = np.mean(with_singletons)
         no_sing_mean = np.mean(without_singletons)
         delta = sing_mean - no_sing_mean
 
-        report += f"""| Category | Mean MOS | Std Dev | Count |
-|----------|----------|---------|-------|
-| With singletons | {sing_mean:.2f} | {np.std(with_singletons):.2f} | {len(with_singletons)} |
-| Without singletons | {no_sing_mean:.2f} | {np.std(without_singletons):.2f} | {len(without_singletons)} |
-| **Difference** | **{delta:+.2f}** | — | — |
-
-"""
+        report += f
         if abs(delta) < 0.2:
             report += "**Finding:** Singleton phonemes do not significantly impact MOS scores. The dedicated cluster IDs for rare phonemes appear to preserve synthesis quality.\n"
         elif delta < -0.2:
@@ -406,29 +333,7 @@ def main():
         report += "Insufficient singleton vs. non-singleton samples for analysis. This will be populated after Task 6 generates audio with varied phoneme content.\n"
 
     # Key findings
-    report += f"""
-## Key Findings for Milestone Presentation
-
-1. **Vocabulary Reduction:** Phoneme vocabulary reduced from 57 to 12 clusters (78.9% reduction) without {'significant quality degradation' if not correlation_results or abs(correlation_results.get('pearson_r', 0)) < 0.3 else 'proportional quality impact'}.
-
-2. **PER Impact:** {'Lower PER correlates with higher MOS' if correlation_results and correlation_results.get('pearson_r', 0) < -0.3 else 'PER and MOS show limited direct correlation — TTS quality depends on multiple factors beyond G2P accuracy'}.
-
-3. **Singleton Strategy:** Keeping rare phonemes as dedicated singleton clusters {'is effective' if not with_singletons or not without_singletons or abs(np.mean(with_singletons) - np.mean(without_singletons)) < 0.2 else 'may need reconsideration'} — {'no significant quality impact observed' if not with_singletons else f'MOS delta: {np.mean(with_singletons) - np.mean(without_singletons):+.2f}'}.
-
-4. **Cross-Language Generalization:** The unified multilingual G2P model with phoneme clustering enables a single model to serve Hindi, Gujarati, and Marathi with a compact 12-token output vocabulary.
-
-## Recommendations for Future Work
-
-- **Re-clustering:** Experiment with K=8 and K=16 to find the optimal cluster count
-- **Contextual clusters:** Use bigram context to create position-aware cluster assignments
-- **TTS-aware clustering:** Optimize cluster boundaries using TTS quality as the objective (MOS-guided clustering)
-- **More listeners:** Collect human MOS from ≥10 listeners per sample for statistical power
-
-## Output Files
-
-- `results/per_vs_mos_scatter.png` — Correlation visualizations
-- `results/correlation_analysis.md` — This report
-"""
+    report += f
 
     os.makedirs(os.path.dirname(OUTPUT_REPORT), exist_ok=True)
     with open(OUTPUT_REPORT, "w", encoding="utf-8") as f:

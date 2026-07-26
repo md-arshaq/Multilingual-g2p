@@ -1,18 +1,4 @@
-"""
-Task 8: MOS Visualization
-─────────────────────────
-Creates publication-quality charts comparing MOS scores
-across conditions (baseline vs. clustered) and languages.
 
-Inputs:
-  results/mos_scores.csv
-
-Outputs:
-  results/mos_comparison.png
-
-USAGE:
-  python task8_mos_visualization.py
-"""
 
 import os
 import csv
@@ -24,9 +10,7 @@ from collections import defaultdict
 matplotlib.rcParams['font.family'] = 'sans-serif'
 matplotlib.rcParams['font.size'] = 11
 
-# ─────────────────────────────────────────────
 # PATHS
-# ─────────────────────────────────────────────
 SCRIPT_DIR  = os.path.dirname(os.path.abspath(__file__))
 PROJECT_DIR = os.path.dirname(SCRIPT_DIR)
 
@@ -35,7 +19,7 @@ OUTPUT_PATH = os.path.join(PROJECT_DIR, "results", "mos_comparison.png")
 
 
 def load_scores(csv_path):
-    """Load MOS scores from CSV."""
+    
     data = []
     with open(csv_path, "r", encoding="utf-8") as f:
         reader = csv.DictReader(f)
@@ -92,12 +76,9 @@ def main():
     BASELINE_COLOR  = "#4A90D9"   # Blue
     CLUSTERED_COLOR = "#E85D75"   # Red/Pink
 
-    # ─────────────────────────────────────────
     # Create figure with 2 subplots
-    # ─────────────────────────────────────────
     fig, axes = plt.subplots(1, 2, figsize=(16, 7))
 
-    # ── Plot 1: Grouped Bar Chart ────────────
     ax1 = axes[0]
     x = np.arange(len(languages))
     width = 0.35
@@ -142,7 +123,6 @@ def main():
     ax1.grid(axis='y', alpha=0.3)
     ax1.axhline(y=3.0, color='gray', linestyle='--', alpha=0.5, label='Neutral (3.0)')
 
-    # ── Plot 2: Box Plot ─────────────────────
     ax2 = axes[1]
 
     box_data = []
@@ -178,7 +158,6 @@ def main():
     ax2.grid(axis='y', alpha=0.3)
     ax2.axhline(y=3.0, color='gray', linestyle='--', alpha=0.5)
 
-    # ── Add legend for box plot ──────────────
     from matplotlib.patches import Patch
     legend_elements = [
         Patch(facecolor=BASELINE_COLOR, alpha=0.7, label='Baseline'),
@@ -186,7 +165,6 @@ def main():
     ]
     ax2.legend(handles=legend_elements, fontsize=11, loc='upper right')
 
-    # ── Final touches ────────────────────────
     mos_type = data[0]["mos_type"] if data else "auto"
     fig.suptitle(
         f"Multilingual G2P — MOS Comparison ({'Automated' if mos_type == 'auto' else 'Human'} Scores)\n"

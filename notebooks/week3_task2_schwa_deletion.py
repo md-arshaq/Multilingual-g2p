@@ -1,29 +1,12 @@
 # -*- coding: utf-8 -*-
-"""
-Week 3 — Task 2: Stress / Tone / Schwa Deletion Rules
-======================================================
-G2P alone does NOT handle Hindi schwa deletion correctly.
-This script adds post-processing rules on top of your G2P output.
 
-Covers:
-  1. Hindi schwa deletion  (the most critical rule)
-  2. Gujarati schwa deletion (slightly different pattern)
-  3. Marathi schwa deletion
-  4. Stress assignment (all three languages)
-  5. Nasalization normalisation
-
-Run:
-  python week3_task2_schwa_deletion.py
-"""
 
 import re
 from dataclasses import dataclass, field
 from typing import List, Tuple, Optional
 
 
-# ─────────────────────────────────────────────────────────────────────────────
 # SHARED PHONEME SETS
-# ─────────────────────────────────────────────────────────────────────────────
 
 # Your G2P "a" token = the schwa (inherent vowel)
 SCHWA = "a"
@@ -45,37 +28,11 @@ NASALIZATION     = "mq"  # anusvara / chandrabindu
 SYLLABLE_SEP     = "."   # dot used for syllable boundary (internal only)
 
 
-# ─────────────────────────────────────────────────────────────────────────────
 # SECTION 1: HINDI SCHWA DELETION
-# ─────────────────────────────────────────────────────────────────────────────
-"""
-The Hindi schwa deletion rule (Ohala 1983, Pandey 2014):
-
-A word-final schwa is ALWAYS deleted.
-An internal schwa is deleted when:
-  - It is in an even-numbered syllable AND
-  - It is followed by a CV sequence (consonant + vowel)
-
-Simplified practical rule (used here):
-  • Delete schwa at word end (most impactful)
-  • Delete schwa between two consonants when followed by a vowel-bearing syllable
-    i.e.: C [a] C V  →  C C V  (the [a] drops out)
-
-Example:
-  k a m a l a  →  k a m l a   (कमल: /kəməl/ → /kəml/ ≈ "kamal" not "kamala")
-  s a m a j a  →  s a m dʒ a  (समझ)
-  k a h a n aa →  k a h n aa  (कहना)
-"""
 
 
 def apply_hindi_schwa_deletion(phonemes: List[str]) -> List[str]:
-    """
-    Apply Hindi schwa deletion rules to a list of phoneme tokens.
-
-    Rules applied in order:
-      R1. Delete word-final schwa.
-      R2. Delete schwa in C_a_C_V context (internal deletion).
-    """
+    
     result = phonemes.copy()
 
     # R1: Delete word-final schwa
@@ -105,15 +62,7 @@ def apply_hindi_schwa_deletion(phonemes: List[str]) -> List[str]:
     return new
 
 
-# ─────────────────────────────────────────────────────────────────────────────
 # SECTION 2: GUJARATI SCHWA DELETION
-# ─────────────────────────────────────────────────────────────────────────────
-"""
-Gujarati has similar schwa deletion to Hindi but with one difference:
-  • The schwa is retained in word-final position when followed by anusvara.
-  • Otherwise, word-final schwa is deleted.
-  • Internal rule same as Hindi.
-"""
 
 
 def apply_gujarati_schwa_deletion(phonemes: List[str]) -> List[str]:
@@ -148,13 +97,7 @@ def apply_gujarati_schwa_deletion(phonemes: List[str]) -> List[str]:
     return new
 
 
-# ─────────────────────────────────────────────────────────────────────────────
 # SECTION 3: MARATHI SCHWA DELETION
-# ─────────────────────────────────────────────────────────────────────────────
-"""
-Marathi schwa deletion is similar to Hindi.
-Additional rule: schwa before a sonorant cluster is also deleted.
-"""
 
 
 def apply_marathi_schwa_deletion(phonemes: List[str]) -> List[str]:
@@ -198,17 +141,7 @@ def apply_marathi_schwa_deletion(phonemes: List[str]) -> List[str]:
     return final
 
 
-# ─────────────────────────────────────────────────────────────────────────────
 # SECTION 4: STRESS ASSIGNMENT
-# ─────────────────────────────────────────────────────────────────────────────
-"""
-Hindi/Urdu stress (Kelkar 1968, Hayes 1991):
-  • Stress falls on the LAST heavy syllable.
-  • Heavy syllable = contains a long vowel OR a short vowel followed by ≥2 consonants.
-  • If no heavy syllable, stress falls on the first syllable.
-
-This function inserts "ˈ" before the stressed vowel token.
-"""
 
 
 def is_long_vowel(token: str) -> bool:
@@ -216,11 +149,7 @@ def is_long_vowel(token: str) -> bool:
 
 
 def find_syllables(phonemes: List[str]) -> List[Tuple[int, str, bool]]:
-    """
-    Walk the phoneme list and identify vowel nuclei.
-    Returns list of (index_in_phonemes, vowel_token, is_heavy).
-    Heaviness = long vowel OR short vowel followed by 2+ consonants.
-    """
+    
     syllables = []
     for i, tok in enumerate(phonemes):
         if tok in VOWELS:
@@ -238,10 +167,7 @@ def find_syllables(phonemes: List[str]) -> List[Tuple[int, str, bool]]:
 
 
 def assign_stress(phonemes: List[str], lang: str = "HI") -> List[str]:
-    """
-    Insert a stress marker 'ˈ' before the nucleus of the stressed syllable.
-    Works for Hindi, Gujarati, Marathi (all follow similar stress patterns).
-    """
+    
     syllables = find_syllables(phonemes)
     if not syllables:
         return phonemes
@@ -262,23 +188,11 @@ def assign_stress(phonemes: List[str], lang: str = "HI") -> List[str]:
     return result
 
 
-# ─────────────────────────────────────────────────────────────────────────────
 # SECTION 5: NASALIZATION NORMALISATION
-# ─────────────────────────────────────────────────────────────────────────────
-"""
-Your dataset uses "mq" for nasalization (anusvara ं / chandrabindu ँ).
-Rule: the "mq" token should be placed AFTER the vowel it nasalises.
-The dataset already does this, but this function validates and
-converts it to a tilde diacritic representation for IPA output.
-"""
 
 
 def normalise_nasalization(phonemes: List[str]) -> List[str]:
-    """
-    Ensure 'mq' always directly follows a vowel.
-    If 'mq' appears at the start or after a consonant, flag it.
-    Returns a cleaned list (no change in valid cases).
-    """
+    
     cleaned = []
     for i, tok in enumerate(phonemes):
         if tok == NASALIZATION:
@@ -290,17 +204,10 @@ def normalise_nasalization(phonemes: List[str]) -> List[str]:
     return cleaned
 
 
-# ─────────────────────────────────────────────────────────────────────────────
 # SECTION 6: FULL POST-PROCESSING PIPELINE
-# ─────────────────────────────────────────────────────────────────────────────
 
 def postprocess(phonemes: List[str], lang: str) -> List[str]:
-    """
-    Apply all post-processing in order:
-      1. Nasalization normalisation
-      2. Schwa deletion (language-specific)
-      3. Stress assignment
-    """
+    
     phonemes = normalise_nasalization(phonemes)
 
     if lang == "HI":
@@ -314,9 +221,7 @@ def postprocess(phonemes: List[str], lang: str) -> List[str]:
     return phonemes
 
 
-# ─────────────────────────────────────────────────────────────────────────────
 # SECTION 7: MAIN — DEMO + BATCH TEST
-# ─────────────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
 
@@ -324,7 +229,6 @@ if __name__ == "__main__":
     print("WEEK 3 — TASK 2: SCHWA DELETION + STRESS RULES")
     print("=" * 65)
 
-    # ── 7a. Hindi schwa deletion demo ────────────────────────────────────────
     print("\n🔤 HINDI SCHWA DELETION EXAMPLES")
     print("-" * 50)
 
@@ -347,7 +251,6 @@ if __name__ == "__main__":
         print(f"  After ∅  : {' '.join(processed)}   ({note})")
         print(f"  + Stress : {' '.join(stressed)}")
 
-    # ── 7b. Gujarati demo ─────────────────────────────────────────────────────
     print("\n\n🔤 GUJARATI SCHWA DELETION EXAMPLES")
     print("-" * 50)
 
@@ -365,7 +268,6 @@ if __name__ == "__main__":
         print(f"  After ∅  : {' '.join(processed)}   ({note})")
         print(f"  + Stress : {' '.join(stressed)}")
 
-    # ── 7c. Marathi demo ─────────────────────────────────────────────────────
     print("\n\n🔤 MARATHI SCHWA DELETION EXAMPLES")
     print("-" * 50)
 
@@ -383,7 +285,6 @@ if __name__ == "__main__":
         print(f"  After ∅  : {' '.join(processed)}   ({note})")
         print(f"  + Stress : {' '.join(stressed)}")
 
-    # ── 7d. Batch test against dataset ───────────────────────────────────────
     print("\n\n📊 BATCH TEST — FIRST 10 WORDS FROM DATASET (with post-processing)")
     print("-" * 65)
 

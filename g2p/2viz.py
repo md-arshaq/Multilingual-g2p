@@ -1,15 +1,4 @@
-"""
-Month 2  |  Tasks 7-9: Visualization, Validation & Documentation
- 
 
-Outputs:
-  viz_cluster_map.png    ← Presentation-quality 2D cluster map
-  viz_validation.png     ← 5-panel validation dashboard
-  month2_documentation.md
-  emb2d.npy              ← alias copy for downstream compatibility
-  labels.npy             ← derived from mapping JSON
-  clusters.json          ← derived from mapping JSON
-"""
 
 import json, os, warnings
 import numpy as np
@@ -29,11 +18,8 @@ except ImportError:
 DARK = "#0F1117"; CARD = "#1A1D27"; WHITE = "white"; GRID = "#222"
 
 
-# STEP 0: LOAD ALL INPUTS
-
 print("Loading inputs...")
 
-# ── 2D embeddings ─────────────────────────────────────────────────────────────
 if os.path.exists("phoneme_2d_umap.npy"):
     emb2d = np.load("phoneme_2d_umap.npy")
     dim_method = "UMAP"
@@ -47,14 +33,12 @@ else:
     )
 print(f"  2D embeddings loaded from phoneme_2d_{dim_method.lower()}.npy  shape={emb2d.shape}")
 
-# ── Vocab ─────────────────────────────────────────────────────────────────────
 with open("phoneme_vocab.json") as f:
     vocab = json.load(f)
 
 unique_phonemes = [vocab["id_to_phoneme"][str(i)] for i in range(vocab["vocab_size"])]
 phoneme_counts  = vocab["phoneme_counts"]
 
-# ── Cluster mapping (single source of truth) ──────────────────────────────────
 with open("phoneme_cluster_mapping.json") as f:
     mapping = json.load(f)
 
@@ -77,7 +61,6 @@ cluster_label_str: dict[int, str] = {
 
 print(f"  Phonemes: {len(unique_phonemes)}   Clusters: {len(clusters)}")
 
-# ── Save compatibility aliases (so other scripts can load emb2d.npy etc.) ─────
 np.save("emb2d.npy",   emb2d)
 np.save("labels.npy",  labels)
 with open("clusters.json", "w") as f:
@@ -161,7 +144,6 @@ for cid, phones in clusters.items():
                       linewidth=1.0, linestyle="--", zorder=1)
     ax.add_patch(ellipse)
 
-# ── Scatter points ────────────────────────────────────────────────────────────
 for cid, phones in clusters.items():
     idxs = [unique_phonemes.index(p) for p in phones if p in unique_phonemes]
     xs, ys = emb2d[idxs, 0], emb2d[idxs, 1]
@@ -172,7 +154,6 @@ for cid, phones in clusters.items():
     ax.scatter(xs, ys, s=sz, c=color, marker=marker,
                edgecolors="white", linewidths=0.7, alpha=0.92, zorder=4)
 
-# ── Phoneme labels ────────────────────────────────────────────────────────────
 texts = []
 for i, p in enumerate(unique_phonemes):
     cid = int(labels[i])
@@ -187,7 +168,6 @@ if HAS_ADJUST_TEXT:
     adjust_text(texts, ax=ax, expand_text=(1.2, 1.3),
                 arrowprops=dict(arrowstyle="-", color="#555", lw=0.4))
 
-# ── Cluster banners for larger clusters (≥ 4 phonemes) ───────────────────────
 banner_offsets = [(-0.7, 0.6), (0.5, 0.45), (0.4, -0.55),
                   (-0.3, -0.55), (-0.5, 0.5), (-0.5, -0.42)]
 large_clusters = [cid for cid, phones in sorted(clusters.items())
@@ -251,7 +231,6 @@ def style_ax(a, title):
         sp.set_edgecolor("#333")
     a.grid(True, color=GRID, linewidth=0.5)
 
-# ── Panel A: Before vs After ──────────────────────────────────────────────────
 ax_a = fig2.add_subplot(gs[0, 0])
 style_ax(ax_a, "A  Reduction: Phonemes → Clusters")
 vals = [len(unique_phonemes), len(clusters)]
@@ -268,7 +247,6 @@ pct = (1 - vals[1] / vals[0]) * 100
 ax_a.text(0.5, 0.88, f"↓ {pct:.0f}% reduction", transform=ax_a.transAxes,
           ha="center", color="#55EFC4", fontsize=11, fontweight="bold")
 
-# ── Panel B: Cluster size distribution ───────────────────────────────────────
 ax_b = fig2.add_subplot(gs[0, 1])
 style_ax(ax_b, "B  Cluster Size Distribution")
 cids   = sorted(clusters.keys())
@@ -279,7 +257,6 @@ ax_b.bar([f"C{c}" for c in cids], sizes, color=bcolors,
 ax_b.tick_params(axis="x", rotation=45, labelsize=7.5)
 ax_b.set_ylabel("Number of Phonemes", color="#888")
 
-# ── Panel C: Frequency per cluster ───────────────────────────────────────────
 ax_c = fig2.add_subplot(gs[0, 2])
 style_ax(ax_c, "C  Total Frequency per Cluster")
 freq_sums   = {cid: sum(phoneme_counts.get(p, 0) for p in phones)
@@ -293,7 +270,6 @@ ax_c.set_xlabel("Total phoneme occurrences", color="#888", fontsize=9)
 ax_c.tick_params(axis="y", labelsize=8, labelcolor=WHITE)
 ax_c.invert_yaxis()
 
-# ── Panel D: Type pie — counts derived from CLUSTER_INFO type tags ────────────
 ax_d = fig2.add_subplot(gs[1, 0])
 ax_d.set_facecolor(CARD)
 ax_d.set_title("D  Phoneme Type Distribution",
@@ -323,7 +299,6 @@ wedges, texts_pie, pcts = ax_d.pie(
 for pct in pcts:
     pct.set_color(WHITE)
 
-# ── Panel E: Top-10 frequency bar ────────────────────────────────────────────
 ax_e = fig2.add_subplot(gs[1, 1:])
 ax_e.set_facecolor(CARD)
 ax_e.set_title("E  Top 10 Phonemes by Frequency (coloured by cluster)",
@@ -352,7 +327,6 @@ fig2.suptitle(
 plt.savefig("viz_validation.png", dpi=180, bbox_inches="tight", facecolor=DARK)
 print("✅ viz_validation.png saved")
 
-# ── Validation numbers to stdout ─────────────────────────────────────────────
 singletons = [cid for cid, phones in clusters.items() if len(phones) == 1]
 largest_cid = max(clusters, key=lambda c: len(clusters[c]))
 
@@ -391,112 +365,7 @@ singleton_notes = "\n".join(
     for cid in singletons
 ) if singletons else "_None — all clusters have ≥ 2 members._"
 
-doc = f"""# Month 2 — Phoneme Clustering Documentation
-## Project: Multilingual G2P System  |  Hindi · Gujarati · Marathi
-
----
-
-## 1. Method Used
-
-### 1.1 Embedding — Co-occurrence PPMI
-Each phoneme was represented as a co-occurrence vector over a ±2 phoneme sliding window
-across all records in the multilingual dataset. Raw counts were transformed using
-Positive Pointwise Mutual Information (PPMI) to highlight meaningful phonological patterns.
-
-- Input vocabulary : {len(unique_phonemes)} unique phonemes (Hindi + Gujarati + Marathi combined)
-- Embedding shape  : {len(unique_phonemes)} × {len(unique_phonemes)}
-
-### 1.2 Dimensionality Reduction — {dim_method}
-{dim_method} reduced the {len(unique_phonemes)}-dimensional vectors to 2D for visualization.
-
-| Parameter    | Value |
-|-------------|-------|
-| n_components | 2     |
-| n_neighbors  | 5     |
-| min_dist     | 0.3   |
-| random_state | 42    |
-
-{dim_method} was preferred over PCA because it preserves local neighbourhood structure —
-phonemes that appear in similar contexts cluster tightly in the 2D projection.
-
-### 1.3 Clustering — K-Means
-K-Means was applied on the full {len(unique_phonemes)}-dim PPMI embeddings (not the 2D {dim_method}).
-
-| Parameter    | Value |
-|-------------|-------|
-| K (clusters) | {len(clusters)}    |
-| n_init       | 20    |
-| random_state | 42    |
-
-K={len(clusters)} was selected via silhouette score evaluation across K=5 to K=50.
-
-**Note on cluster ID stability:** K-Means cluster IDs are not deterministic across runs.
-All downstream scripts should look up cluster semantics via `phoneme_cluster_mapping.json`
-(phoneme → cluster_id + label) rather than hardcoding numeric IDs.
-
----
-
-## 2. Why Clustering Helps
-
-1. Reduced output complexity — {len(unique_phonemes)} phonemes → {len(clusters)} groups ({pct:.0f}% reduction)
-2. Better generalisation — rare phonemes grouped with similar sounds reduce sparsity
-3. Linguistic interpretability — clusters align with classical categories (vowels, stops, nasals)
-4. Useful for prosody modelling — phoneme clusters can share acoustic duration parameters
-
----
-
-## 3. Cluster Summary
-
-| ID  | Label                          |  N | Frequency | Members |
-|-----|--------------------------------|----|-----------|---------|
-{cluster_table_rows}
-
-### Singleton clusters (potential issues)
-{singleton_notes}
-
-### Cross-language note
-Clustering is done on combined HI+GU+MR phoneme usage, so clusters represent
-language-agnostic phoneme behaviour — a strength for multilingual TTS systems.
-
----
-
-## 4. Output Files
-
-| File                          | Description                                   |
-|-------------------------------|-----------------------------------------------|
-| phoneme_cluster_mapping.json  | phoneme → cluster_id, label, members          |
-| phoneme_cluster_mapping.csv   | Flat CSV version                              |
-| viz_cluster_map.png           | 2D {dim_method} scatter plot (presentation)         |
-| viz_validation.png            | 5-panel validation dashboard                  |
-| silhouette_scores.png         | K selection chart                             |
-| phoneme_embeddings_learned.npy| PPMI matrix ({len(unique_phonemes)}×{len(unique_phonemes)})                      |
-| emb2d.npy                     | Alias copy of phoneme_2d_{dim_method.lower()}.npy (compatibility) |
-| labels.npy                    | Per-phoneme cluster ID array                  |
-| clusters.json                 | cluster_id → [phonemes] dict                  |
-
----
-
-## 5. Known Issues & Recommendations
-
-### Label assignment (fixed in this version)
-The original `get_label()` used raw overlap count, causing large mixed clusters to
-inherit misleading labels. The fix uses Jaccard similarity (overlap/union) so label
-assignment is proportional — a 15-phoneme cluster sharing 3 members with "Stops" no
-longer outscores a 4-phoneme cluster sharing 3 members.
-
-### ID-hardcoding risk
-Any script that references cluster IDs numerically (e.g. `clusters[0]`) will silently
-break if K-Means assigns different IDs on a new run. Always resolve through
-`phoneme_cluster_mapping.json`.
-
----
-
-## 6. Next Steps (Month 3)
-- Use cluster IDs as auxiliary features in the seq2seq G2P model
-- Evaluate if clustered output improves word error rate on held-out words
-- Extend clustering to the grapheme (source) side
-- Merge singleton clusters with their nearest centroid neighbour
-"""
+doc = f
 
 with open("month2_documentation.md", "w", encoding="utf-8") as f:
     f.write(doc)

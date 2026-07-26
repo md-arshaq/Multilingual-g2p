@@ -5,12 +5,10 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 VOCAB_PATH = os.path.join(SCRIPT_DIR, "phoneme_vocab.json")
 OUT_MAPPING_PATH = os.path.join(SCRIPT_DIR, "phoneme_cluster_mapping.json")
 
-# ─────────────────────────────────────────────
 # ACOUSTIC PHONETIC FOLDING RULES
 # Only merge sounds that are acoustically near-identical
 # or represent fine-grained distinctions not strictly
 # necessary for intelligible TTS.
-# ─────────────────────────────────────────────
 FOLDING_RULES = {
     # 1. Long/Short Vowel folding
     "ii": "i",

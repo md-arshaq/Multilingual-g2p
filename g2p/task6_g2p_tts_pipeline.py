@@ -1,32 +1,4 @@
-"""
-Task 6: Integrate Clustered G2P Output into TTS Pipeline
-─────────────────────────────────────────────────────────
-End-to-end pipeline: grapheme input → G2P → phonemes/clusters → TTS → audio
 
-This script uses Coqui TTS (VITS) for synthesis.
-It supports two modes:
-  1. Baseline: G2P → raw phonemes → TTS
-  2. Clustered: G2P → cluster IDs → decode to phonemes → TTS
-
-Generates ≥10 test sentences per language under both conditions.
-
-USAGE:
-  python task6_g2p_tts_pipeline.py --tts_model_path /path/to/vits/model
-  
-  # Or use pre-trained Coqui model for quick demo:
-  python task6_g2p_tts_pipeline.py --use_pretrained
-
-Inputs:
-  models/best_g2p_transformer.weights.h5    (baseline G2P)
-  models/g2p_clustered_model.weights.h5     (clustered G2P)
-  g2p/phoneme_cluster_mapping.json          (cluster→phoneme mapping)
-
-Outputs:
-  samples/hi/baseline_*.wav
-  samples/hi/clustered_*.wav
-  samples/gu/baseline_*.wav  ...
-  samples/mr/baseline_*.wav  ...
-"""
 
 import os
 import json
@@ -34,18 +6,14 @@ import argparse
 import csv
 import numpy as np
 
-# ─────────────────────────────────────────────
 # PATHS
-# ─────────────────────────────────────────────
 SCRIPT_DIR  = os.path.dirname(os.path.abspath(__file__))
 PROJECT_DIR = os.path.dirname(SCRIPT_DIR)
 
 CLUSTER_MAPPING_PATH = os.path.join(SCRIPT_DIR, "phoneme_cluster_mapping.json")
 SAMPLES_DIR = os.path.join(PROJECT_DIR, "samples")
 
-# ─────────────────────────────────────────────
 # TEST SENTENCES — ≥10 per language
-# ─────────────────────────────────────────────
 TEST_SENTENCES = {
     "hi": [
         "भारत एक महान देश है",
@@ -89,7 +57,7 @@ TEST_SENTENCES = {
 
 
 def load_cluster_mapping(path):
-    """Load cluster mapping and build cluster→representative phoneme map."""
+    
     with open(path, "r", encoding="utf-8") as f:
         mapping = json.load(f)
 
@@ -114,7 +82,7 @@ def load_cluster_mapping(path):
 
 
 def word_to_phonemes_from_dict(word, lang, g2p_dict):
-    """Look up a word in the G2P dictionary."""
+    
     key = (lang, word)
     if key in g2p_dict:
         return g2p_dict[key].split()
@@ -122,7 +90,7 @@ def word_to_phonemes_from_dict(word, lang, g2p_dict):
 
 
 def sentence_to_phonemes(sentence, lang, g2p_dict):
-    """Convert a sentence to phonemes using the G2P dictionary (word by word)."""
+    
     words = sentence.strip().split()
     all_phonemes = []
     unknown_words = []
@@ -140,22 +108,17 @@ def sentence_to_phonemes(sentence, lang, g2p_dict):
 
 
 def phonemes_to_clusters(phonemes, phoneme_to_cluster):
-    """Convert phoneme sequence to cluster IDs."""
+    
     return [phoneme_to_cluster.get(p, p) for p in phonemes]
 
 
 def clusters_to_phonemes(clusters, cluster_to_phoneme):
-    """Convert cluster IDs back to representative phonemes."""
+    
     return [cluster_to_phoneme.get(c, c) for c in clusters]
 
 
 def synthesize_with_coqui(phoneme_sequence, output_path, tts_model=None, lang="hi"):
-    """
-    Synthesize audio using Coqui TTS.
-
-    If tts_model is provided, use it directly.
-    Otherwise, use the default pre-trained model.
-    """
+    
     try:
         from TTS.api import TTS
 
@@ -179,12 +142,10 @@ def synthesize_with_coqui(phoneme_sequence, output_path, tts_model=None, lang="h
         return False
 
 
-# ─────────────────────────────────────────────
 # PHONEME → APPROXIMATE GRAPHEME MAPPING
 # Maps our romanized phonemes back to Devanagari/Gujarati
 # approximations so gTTS produces audibly different speech
 # when phonemes change due to clustering.
-# ─────────────────────────────────────────────
 PHONEME_TO_DEVANAGARI = {
     "a": "अ", "aa": "आ", "i": "इ", "ii": "ई", "u": "उ", "uu": "ऊ",
     "e": "ए", "ee": "ई", "o": "ओ", "ou": "औ", "ei": "ऐ", "ae": "ऐ",
@@ -202,12 +163,7 @@ PHONEME_TO_DEVANAGARI = {
 
 
 def phonemes_to_grapheme_text(phoneme_list, lang="hi"):
-    """
-    Convert a phoneme sequence back to approximate grapheme text.
-    This produces readable text that gTTS can synthesize, and
-    crucially, cluster-decoded phonemes will produce DIFFERENT text
-    than the original (because clustering collapses distinctions).
-    """
+    
     graphemes = []
     for p in phoneme_list:
         if p in PHONEME_TO_DEVANAGARI:
@@ -218,7 +174,7 @@ def phonemes_to_grapheme_text(phoneme_list, lang="hi"):
 
 
 def synthesize_with_gtts(text, output_path, lang_code="hi"):
-    """Synthesize using Google TTS from text."""
+    
     try:
         from gtts import gTTS
 
@@ -235,7 +191,7 @@ def synthesize_with_gtts(text, output_path, lang_code="hi"):
 
 
 def generate_silent_wav(output_path, duration=1.0, sr=22050):
-    """Generate a silent WAV file as placeholder."""
+    
     try:
         import soundfile as sf
         samples = np.zeros(int(sr * duration), dtype=np.float32)
@@ -345,7 +301,6 @@ def main():
             os.makedirs(condition_dir, exist_ok=True)
 
             for idx, sentence in enumerate(sentences):
-                # Step 1: Sentence → phonemes (word by word)
                 phonemes, unknown = sentence_to_phonemes(sentence, lang, g2p_dict)
 
                 if condition == "baseline":
@@ -356,7 +311,6 @@ def main():
                     clusters = phonemes_to_clusters(phonemes, phoneme_to_cluster)
                     output_phonemes = clusters_to_phonemes(clusters, cluster_to_phoneme)
 
-                # Step 2: Synthesize
                 filename = f"{condition}_{idx+1:02d}.wav"
                 output_path = os.path.join(condition_dir, filename)
 

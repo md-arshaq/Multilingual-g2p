@@ -1,15 +1,4 @@
-"""
-Month 2 Tasks 4-6: Phoneme Clustering, Analysis & Mapping
-─────────────────────────────────────────────────────────
-Run AFTER month2_phoneme_pipeline.py
-Requires: phoneme_embeddings_learned.npy, phoneme_vocab.json
 
-Outputs:
-  phoneme_clusters.png          ← UMAP scatter + cluster table
-  silhouette_scores.png         ← K selection chart
-  phoneme_cluster_mapping.json  ← phoneme → cluster_id + label
-  phoneme_cluster_mapping.csv   ← flat CSV version
-"""
 
 import json, csv, warnings
 import numpy as np
@@ -23,9 +12,6 @@ EMBEDDINGS_PATH = "phoneme_embeddings_learned.npy"
 VOCAB_PATH      = "phoneme_vocab.json"
 CHOSEN_K        = 12    # best by silhouette score
 
-# ─────────────────────────────────────────────
-# STEP 4: K-MEANS CLUSTERING
-# ─────────────────────────────────────────────
 print("Loading embeddings...")
 embeddings = np.load(EMBEDDINGS_PATH)
 
@@ -35,7 +21,6 @@ with open(VOCAB_PATH) as f:
 unique_phonemes = [vocab["id_to_phoneme"][str(i)] for i in range(vocab["vocab_size"])]
 phoneme_counts  = vocab["phoneme_counts"]
 
-# ── Find best K using silhouette score ────────
 print("Evaluating silhouette scores for K = 5 to 50...")
 ks, scores = [], []
 for k in range(5, 51, 5):
@@ -48,7 +33,6 @@ for k in range(5, 51, 5):
 best_k = ks[scores.index(max(scores))]
 print(f"\n→ Best K by silhouette: {best_k}  |  Chosen K: {CHOSEN_K}")
 
-# ── Run final clustering ──────────────────────
 km     = KMeans(n_clusters=CHOSEN_K, random_state=42, n_init=20)
 labels = km.fit_predict(embeddings)
 
@@ -56,9 +40,6 @@ clusters = {}
 for p, l in zip(unique_phonemes, labels):
     clusters.setdefault(int(l), []).append(p)
 
-# ─────────────────────────────────────────────
-# STEP 5: ANALYZE CLUSTERS
-# ─────────────────────────────────────────────
 
 # Linguistic category heuristics — maps known phoneme sets to names
 LINGUISTIC_LABELS = {
@@ -111,13 +92,10 @@ if issues:
     for iss in issues:
         print(f"   • {iss}")
 
-# ─────────────────────────────────────────────
 # VISUALIZATIONS
-# ─────────────────────────────────────────────
 
 COLORS = plt.cm.get_cmap("tab20", CHOSEN_K)
 
-# ── Fig 1: Silhouette Score plot ──────────────
 fig1, ax1 = plt.subplots(figsize=(9, 4))
 ax1.plot(ks, scores, "o-", color="steelblue", linewidth=2, markersize=8)
 ax1.axvline(CHOSEN_K, color="red", linestyle="--", linewidth=1.5, label=f"Chosen K={CHOSEN_K}")
@@ -131,7 +109,6 @@ plt.tight_layout()
 plt.savefig("silhouette_scores.png", dpi=150)
 print("\n✅ silhouette_scores.png saved")
 
-# ── Fig 2: UMAP scatter + cluster table ───────
 try:
     import umap
     reducer = umap.UMAP(n_components=2, random_state=42, n_neighbors=15, min_dist=0.1)
@@ -194,11 +171,7 @@ plt.tight_layout()
 plt.savefig("phoneme_clusters.png", dpi=150, bbox_inches="tight")
 print("✅ phoneme_clusters.png saved")
 
-# ─────────────────────────────────────────────
-# STEP 6: CREATE MAPPING FILES
-# ─────────────────────────────────────────────
 
-# ── JSON ──────────────────────────────────────
 phoneme_mapping = {}
 for p, lbl in zip(unique_phonemes, labels):
     cid = int(lbl)
@@ -213,7 +186,6 @@ with open("phoneme_cluster_mapping.json", "w", encoding="utf-8") as f:
     json.dump(phoneme_mapping, f, indent=2, ensure_ascii=False)
 print("✅ phoneme_cluster_mapping.json saved")
 
-# ── CSV ───────────────────────────────────────
 fieldnames = ["phoneme", "cluster_id", "cluster_label", "cluster_members", "frequency"]
 with open("phoneme_cluster_mapping.csv", "w", newline="", encoding="utf-8") as f:
     writer = csv.DictWriter(f, fieldnames=fieldnames)
@@ -228,7 +200,6 @@ with open("phoneme_cluster_mapping.csv", "w", newline="", encoding="utf-8") as f
         })
 print("✅ phoneme_cluster_mapping.csv saved")
 
-# ── Final summary ─────────────────────────────
 print("\n" + "="*60)
 print("ALL OUTPUTS SAVED")
 print("="*60)
