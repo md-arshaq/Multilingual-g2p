@@ -1,4 +1,4 @@
-# 🔤 Multilingual Grapheme-to-Phoneme (G2P) with Phoneme Clustering
+# Multilingual Grapheme-to-Phoneme (G2P) with Phoneme Clustering
 
 > **Samsung R&D Internship Project**
 
@@ -6,7 +6,7 @@ A multilingual G2P system for Indian languages (Hindi, Gujarati, Marathi) that c
 
 ---
 
-## 📊 Key Results
+##  Key Results
 
 | Metric | Baseline | Clustered (Phonetic Folding) | Change |
 |--------|----------|------------------------------|--------|
@@ -20,7 +20,7 @@ A multilingual G2P system for Indian languages (Hindi, Gujarati, Marathi) that c
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```
 ├── data/                                # Datasets & pronunciation dictionaries
@@ -81,7 +81,7 @@ A multilingual G2P system for Indian languages (Hindi, Gujarati, Marathi) that c
 
 ---
 
-## 🔬 Pipeline (9 Tasks)
+##  Pipeline (9 Tasks)
 
 ### Month 1–2: Data & Baseline
 | Phase | Description | Script/Notebook |
@@ -107,7 +107,7 @@ A multilingual G2P system for Indian languages (Hindi, Gujarati, Marathi) that c
 
 ---
 
-## 🧪 Acoustic Phonetic Folding
+##  Acoustic Phonetic Folding
 
 The original K-Means clustering (K=12) was too aggressive — it merged all vowels into one cluster, producing unintelligible audio. We replaced it with **Acoustic Phonetic Folding**, a linguistically-informed approach that only merges:
 
@@ -119,7 +119,7 @@ This achieves **31.6% vocabulary reduction** (57 → 39) while keeping all criti
 
 ---
 
-## 🌐 Languages Supported
+##  Languages Supported
 
 - 🇮🇳 Hindi (`HI`) — ~30,000 entries
 - 🇮🇳 Gujarati (`GU`) — ~12,000 entries
@@ -127,13 +127,13 @@ This achieves **31.6% vocabulary reduction** (57 → 39) while keeping all criti
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 Python · TensorFlow · Scikit-learn · NumPy · Matplotlib · librosa · gTTS · editdistance
 
 ---
 
-## 🚀 Quick Start
+##  Quick Start
 
 ```bash
 # 1. Apply phonetic folding to generate cluster mapping
@@ -157,6 +157,6 @@ python g2p/task9_correlation_analysis.py
 
 ---
 
-## 📖 Dataset
+##  Dataset
 
 [IndicTTS Dataset](https://www.iitm.ac.in/donlab/indictts/database) — Audio recordings + text transcripts for Indian languages, processed into pronunciation lexicons.
