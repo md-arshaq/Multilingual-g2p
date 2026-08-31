@@ -1,0 +1,86 @@
+{
+  "_comment": "Clustered VITS config — 39 cluster tokens (C0-C38). Coqui TTS format.",
+  "model": "vits",
+  "run_name": "vits_hindi_female_clustered",
+
+  "audio": {
+    "sample_rate": 22050,
+    "fft_size": 1024,
+    "win_length": 1024,
+    "hop_length": 256,
+    "num_mels": 80,
+    "mel_fmin": 0,
+    "mel_fmax": null,
+    "signal_norm": true,
+    "do_trim_silence": false,
+    "trim_db": 60
+  },
+
+  "use_phonemes": false,
+  "phoneme_language": null,
+  "phonemizer": null,
+  "text_cleaner": null,
+
+  "characters": {
+    "characters_class": "TTS.tts.utils.text.characters.Graphemes",
+    "pad": "<pad>",
+    "eos": "<eos>",
+    "bos": "<bos>",
+    "blank": "<blnk>",
+    "characters": "C0 C1 C2 C3 C4 C5 C6 C7 C8 C9 C10 C11 C12 C13 C14 C15 C16 C17 C18 C19 C20 C21 C22 C23 C24 C25 C26 C27 C28 C29 C30 C31 C32 C33 C34 C35 C36 C37 C38 <wb>",
+    "punctuations": ""
+  },
+
+  "datasets": [
+    {
+      "formatter": "ljspeech",
+      "dataset_name": "hindi_female_clustered",
+      "path": "data/tts_hindi_female/",
+      "meta_file_train": "train/metadata_clustered.csv",
+      "meta_file_val": "val/metadata_clustered.csv",
+      "language": "hi"
+    }
+  ],
+
+  "training": {
+    "epochs": 10000,
+    "max_steps": 15000,
+    "batch_size": 32,
+    "eval_batch_size": 16,
+    "num_loader_workers": 4,
+    "print_step": 50,
+    "save_step": 500,
+    "eval_step": 500,
+    "save_best_after": 500,
+    "run_eval": true,
+    "lr": 0.0002,
+    "seed": 42
+  },
+
+  "optimizer": "AdamW",
+  "optimizer_params": {
+    "betas": [0.8, 0.99],
+    "eps": 1e-9,
+    "weight_decay": 0.01
+  },
+
+  "lr_scheduler": "ExponentialLR",
+  "lr_scheduler_params": {
+    "gamma": 0.999875
+  },
+
+  "test_sentences": [
+    "C3 C1 C29 C0 C32 <wb> C11 C19 <wb> C22 C0 C15 C1 C24 <wb> C7 C11 C31 <wb> C15 C11",
+    "C24 C0 C22 C0 C30 C0 C32 C11 <wb> C1 C28 <wb> C19 C11 C30 C11 <wb> C15 C11 C23"
+  ],
+
+  "notes": {
+    "experiment": "Clustered VITS for Hindi female TTS",
+    "vocabulary": "39 cluster tokens (C0-C38) from phoneme_cluster_mapping.json",
+    "vocab_size": 44,
+    "content_tokens": 39,
+    "special_tokens": 5,
+    "fairness": "Identical to baseline config except vocabulary and metadata path",
+    "critical_constraint": "Cluster tokens C0-C38 are used as direct input. No back-conversion to phonemes."
+  }
+}

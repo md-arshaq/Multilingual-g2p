@@ -15,6 +15,40 @@ desktop.ini
 .vscode/
 .idea/
 
-# TTS training audio
+# TTS training audio (legacy)
 data/tts/
+
+# TTS Hindi female experiment — raw/processed audio
+data/tts_hindi_female/raw/
+data/tts_hindi_female/processed/
+
+# TTS model checkpoints
+models/tts_hindi_female/
+
+# TTS generated samples
+samples/tts_hindi_female/
+
+# Audio files (never commit)
+*.wav
+*.mp3
+*.flac
+*.ogg
+*.zip
+
+# Model checkpoints
+*.pt
+*.pth
+*.ckpt
+
+# Hugging Face cache and tokens
+.cache/
+.hf_cache/
+huggingface/
+*.token
+.env
+.env.*
+
+# Colab / secrets
+*.secret
+colab_secrets/
 

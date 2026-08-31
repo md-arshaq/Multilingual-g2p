@@ -1,0 +1,25 @@
+{
+  "_comment": "20 unseen Hindi sentences for generalization evaluation. Not present in training/validation/test data. Varied length, normal neutral Hindi, fully tokenizable by G2P dictionary.",
+  "sentences": [
+    {"id": 1, "text": "आज का दिन बहुत सुंदर है", "description": "Simple weather observation"},
+    {"id": 2, "text": "बच्चों को पढ़ाई करनी चाहिए", "description": "General advice"},
+    {"id": 3, "text": "हमारा देश बहुत बड़ा है", "description": "Geographic statement"},
+    {"id": 4, "text": "कल सुबह जल्दी उठना है", "description": "Daily routine"},
+    {"id": 5, "text": "यह फिल्म बहुत अच्छी थी", "description": "Opinion expression"},
+    {"id": 6, "text": "मेरे पिताजी अभी घर पर हैं", "description": "Family statement"},
+    {"id": 7, "text": "सड़क पर बहुत भीड़ है", "description": "Observation"},
+    {"id": 8, "text": "पानी पीना सेहत के लिए अच्छा है", "description": "Health advice"},
+    {"id": 9, "text": "हम सब भारतीय हैं", "description": "Identity statement"},
+    {"id": 10, "text": "गर्मियों में आम बहुत मीठे होते हैं", "description": "Seasonal fact"},
+    {"id": 11, "text": "मुझे संगीत सुनना बहुत पसंद है", "description": "Personal preference"},
+    {"id": 12, "text": "कृपया दरवाजा बंद करें", "description": "Polite request"},
+    {"id": 13, "text": "शाम को हम सब बगीचे में जाते हैं", "description": "Daily activity"},
+    {"id": 14, "text": "पहाड़ों पर बर्फ गिरती है", "description": "Natural phenomenon"},
+    {"id": 15, "text": "राम और सीता की कहानी प्रसिद्ध है", "description": "Cultural reference"},
+    {"id": 16, "text": "खाना बनाना एक कला है", "description": "General statement"},
+    {"id": 17, "text": "नदी का पानी बहुत ठंडा था", "description": "Descriptive sentence"},
+    {"id": 18, "text": "सूरज पश्चिम में डूबता है", "description": "Scientific fact"},
+    {"id": 19, "text": "दादी माँ हमें कहानियाँ सुनाती थीं", "description": "Nostalgic memory"},
+    {"id": 20, "text": "स्कूल में आज छुट्टी है", "description": "Announcement"}
+  ]
+}

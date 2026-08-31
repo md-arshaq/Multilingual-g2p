@@ -1,0 +1,85 @@
+{
+  "_comment": "Baseline VITS config — 57 phoneme tokens. Coqui TTS format.",
+  "model": "vits",
+  "run_name": "vits_hindi_female_baseline",
+
+  "audio": {
+    "sample_rate": 22050,
+    "fft_size": 1024,
+    "win_length": 1024,
+    "hop_length": 256,
+    "num_mels": 80,
+    "mel_fmin": 0,
+    "mel_fmax": null,
+    "signal_norm": true,
+    "do_trim_silence": false,
+    "trim_db": 60
+  },
+
+  "use_phonemes": false,
+  "phoneme_language": null,
+  "phonemizer": null,
+  "text_cleaner": null,
+
+  "characters": {
+    "characters_class": "TTS.tts.utils.text.characters.Graphemes",
+    "pad": "<pad>",
+    "eos": "<eos>",
+    "bos": "<bos>",
+    "blank": "<blnk>",
+    "characters": "a aa ae ax b bh c ch d dh dx dxh dxhq dxq ee ei f g gh gq h hq i ii j jh k kh khq kq l lx m mq n ng nj nx o ou p ph q r rq s sh sx t th tx txh u uu w y z <wb>",
+    "punctuations": ""
+  },
+
+  "datasets": [
+    {
+      "formatter": "ljspeech",
+      "dataset_name": "hindi_female_baseline",
+      "path": "data/tts_hindi_female/",
+      "meta_file_train": "train/metadata_baseline.csv",
+      "meta_file_val": "val/metadata_baseline.csv",
+      "language": "hi"
+    }
+  ],
+
+  "training": {
+    "epochs": 10000,
+    "max_steps": 15000,
+    "batch_size": 32,
+    "eval_batch_size": 16,
+    "num_loader_workers": 4,
+    "print_step": 50,
+    "save_step": 500,
+    "eval_step": 500,
+    "save_best_after": 500,
+    "run_eval": true,
+    "lr": 0.0002,
+    "seed": 42
+  },
+
+  "optimizer": "AdamW",
+  "optimizer_params": {
+    "betas": [0.8, 0.99],
+    "eps": 1e-9,
+    "weight_decay": 0.01
+  },
+
+  "lr_scheduler": "ExponentialLR",
+  "lr_scheduler_params": {
+    "gamma": 0.999875
+  },
+
+  "test_sentences": [
+    "b aa r ax t <wb> ee k a <wb> m a h a aa n <wb> d a ee sh a <wb> h a ee",
+    "n a m a s a t a ee <wb> aa p a <wb> k a ee s a ee <wb> h a ee q"
+  ],
+
+  "notes": {
+    "experiment": "Baseline VITS for Hindi female TTS",
+    "vocabulary": "57 phoneme tokens from phoneme_vocab.json",
+    "vocab_size": 62,
+    "content_tokens": 57,
+    "special_tokens": 5,
+    "fairness": "Identical to clustered config except vocabulary and metadata path"
+  }
+}
