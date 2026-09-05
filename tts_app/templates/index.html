@@ -32,25 +32,25 @@
           <label class="choice-card selected" data-lang="all">
             <input type="radio" name="language" value="all" checked>
             <div class="choice-title">🌐 All</div>
-            <div class="choice-desc" id="count-all">176 pairs</div>
+            <div class="choice-desc" id="count-all">44 pairs</div>
           </label>
           
           <label class="choice-card" data-lang="hi">
             <input type="radio" name="language" value="hi">
             <div class="choice-title">🇮🇳 Hindi</div>
-            <div class="choice-desc" id="count-hi">70 pairs</div>
+            <div class="choice-desc" id="count-hi">12 pairs</div>
           </label>
           
           <label class="choice-card" data-lang="mr">
             <input type="radio" name="language" value="mr">
             <div class="choice-title">🚩 Marathi</div>
-            <div class="choice-desc" id="count-mr">60 pairs</div>
+            <div class="choice-desc" id="count-mr">19 pairs</div>
           </label>
           
           <label class="choice-card" data-lang="gu">
             <input type="radio" name="language" value="gu">
             <div class="choice-title">🦁 Gujarati</div>
-            <div class="choice-desc" id="count-gu">46 pairs</div>
+            <div class="choice-desc" id="count-gu">13 pairs</div>
           </label>
         </div>
       </div>
@@ -83,19 +83,18 @@
       <div class="form-group">
         <label class="form-label" style="display: flex; justify-content: space-between;">
           <span>Number of Audio Pairs to Evaluate</span>
-          <span id="slider-range-indicator" style="color: var(--text-muted); font-weight: 400;">(Min: 10, Max: 176)</span>
+          <span id="slider-range-indicator" style="color: var(--text-muted); font-weight: 400;">(Min: 5, Max: 44)</span>
         </label>
         
         <div class="slider-container">
-          <input type="range" id="sample-count-slider" class="range-slider" min="10" max="176" value="25" step="1">
-          <div class="slider-value" id="sample-count-value">25</div>
+          <input type="range" id="sample-count-slider" class="range-slider" min="5" max="44" value="10" step="1">
+          <div class="slider-value" id="sample-count-value">10</div>
         </div>
 
         <!-- Preset Chips -->
         <div class="chip-group">
-          <button type="button" class="chip" data-count="10">⚡ Quick (10)</button>
-          <button type="button" class="chip active" data-count="25">⭐ Standard (25)</button>
-          <button type="button" class="chip" data-count="50">🔬 Thorough (50)</button>
+          <button type="button" class="chip" data-count="5">⚡ Quick (5)</button>
+          <button type="button" class="chip active" data-count="10">⭐ Standard (10)</button>
           <button type="button" class="chip" data-count="max" id="btn-max-count">🏆 All Available</button>
         </div>
       </div>
@@ -169,7 +168,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   function updateSliderLimits() {
     const max = getMaxAvailable();
-    const min = Math.min(10, max);
+    const min = Math.min(5, max);
     slider.min = min;
     slider.max = max;
     

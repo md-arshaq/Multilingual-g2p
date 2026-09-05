@@ -64,30 +64,34 @@ CHECKPOINTS = {
     },
 }
 
-# Curated Presets Library
+# Curated Presets Library (Short sentences: 3–5 words maximum)
 PRESETS = {
     "hi": [
-        {"category": "Conversation", "text": "नमस्ते, आप आज कैसे हैं? क्या सब कुछ ठीक है?"},
-        {"category": "News", "text": "भारत ने अंतरिक्ष विज्ञान और तकनीकी क्षेत्र में महत्वपूर्ण प्रगति हासिल की है।"},
-        {"category": "Proverb", "text": "जहाँ चाह, वहाँ राह होती है।"},
-        {"category": "Tongue Twister", "text": "चंदू के चाचा ने, चंदू की चाची को, चाँदनी रात में, चाँदी की चम्मच से चटनी चटाई।"},
-        {"category": "Literature", "text": "जीवन में आगे बढ़ने के लिए निरंतर परिश्रम और धैर्य बहुत आवश्यक है।"}
+        {"category": "Conversation", "text": "नमस्ते आप कैसे हैं"},
+        {"category": "Daily", "text": "आज मौसम बहुत अच्छा"},
+        {"category": "General", "text": "हम सब भारतीय हैं"},
+        {"category": "Proverb", "text": "सत्य की जीत होती"},
+        {"category": "Greeting", "text": "शुभ प्रभात मेरे दोस्त"},
+        {"category": "Courtesy", "text": "आपका बहुत बहुत धन्यवाद"}
     ],
     "mr": [
-        {"category": "Conversation", "text": "नमस्कार, तुम्ही कसे आहात? आजचा दिवस छान जावो."},
-        {"category": "News", "text": "महाराष्ट्रात आधुनिक तंत्रज्ञानाचा वापर करून जलसंधारणाची नवी कामे सुरू झाली आहेत."},
-        {"category": "Proverb", "text": "प्रयत्ने वाळूचे कण रगडीता तेलही गळे."},
-        {"category": "Tongue Twister", "text": "कावळ्याने काकडी खाल्ली आणि झाडावर जाऊन बसला."},
-        {"category": "Literature", "text": "मनुष्याचे विचारच त्याच्या जीवनाची दिशा आणि ध्येय ठरवतात."}
+        {"category": "Conversation", "text": "नमस्कार तुम्ही कसे आहात"},
+        {"category": "Daily", "text": "आजचा दिवस खूप छान"},
+        {"category": "General", "text": "आपण सर्व भारतीय आहोत"},
+        {"category": "Proverb", "text": "डोंगरावर बर्फ पडतो"},
+        {"category": "Greeting", "text": "शुभ प्रभात माझ्या मित्रा"},
+        {"category": "Courtesy", "text": "तुमचे मनापासून खूप आभार"}
     ],
     "gu": [
-        {"category": "Conversation", "text": "નમસ્તે, તમે કેમ છો? તમારો આજનો દિવસ સારો રહે."},
-        {"category": "News", "text": "ગુજરાતમાં નવી સૌર ઊર્જા પરિયોજનાઓનું સફળતાપૂર્વક નિર્માણ થઈ રહ્યું છે."},
-        {"category": "Proverb", "text": "સિદ્ધિ તેને જઈ વરે, જે પરસેવે ન્હાય."},
-        {"category": "Tongue Twister", "text": "કાચા પાપડ પાકા પાપડ, પાકા પાપડ કાચા પાપડ."},
-        {"category": "Literature", "text": "સત્ય અને અહિંસાના માર્ગ પર ચાલવાથી જીવનમાં શાંતિ મળે છે."}
+        {"category": "Conversation", "text": "નમસ્તે તમે કેમ છો"},
+        {"category": "Daily", "text": "આજે હવામાન ખૂબ સારું"},
+        {"category": "General", "text": "આપણે બધા ભારતીય છીએ"},
+        {"category": "Proverb", "text": "સિદ્ધિ તેને જઈ વરે"},
+        {"category": "Greeting", "text": "શુભ સવાર મારા મિત્ર"},
+        {"category": "Courtesy", "text": "તમારો ખૂબ ખૂબ આભાર"}
     ]
 }
+
 
 
 # ── Optimized VITS inference parameters for natural, human-quality audio ──
