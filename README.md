@@ -258,7 +258,40 @@ python tts/tts_automated_eval.py --lang mr
 
 # Generate cross-lingual statistical meta-analysis
 python tts/tts_cross_language_analysis.py
+
+# Generate all 14 publication figures & statistical hypothesis tables
+python scripts/generate_paper_figures.py
 ```
+
+---
+
+## 📄 Research Paper Deliverables & Visualizations
+
+Comprehensive empirical results, formal statistical hypothesis evaluations, and camera-ready figures for research paper submission are available in the repository:
+
+- 📊 **Detailed Paper Results & Metrics**: [`results/research_paper_metrics_and_results.md`](results/research_paper_metrics_and_results.md)
+- 🖼️ **Publication Figures Catalog**: [`results/paper_figures/PAPER_FIGURES_MANIFEST.md`](results/paper_figures/PAPER_FIGURES_MANIFEST.md)
+- 📋 **LaTeX Hypothesis Summary Table**: [`results/paper_figures/hypothesis_summary_table.tex`](results/paper_figures/hypothesis_summary_table.tex)
+- 📑 **CSV Hypothesis Summary Table**: [`results/paper_figures/hypothesis_summary_table.csv`](results/paper_figures/hypothesis_summary_table.csv)
+
+### Figure Gallery (300 DPI PNG & Vector SVG)
+
+| Figure | Description |
+|---|---|
+| **Fig 01** | [Phoneme Frequency Distribution](results/paper_figures/fig01_phoneme_freq_distribution.png) (Long-tail log-scale distribution across HI, MR, GU) |
+| **Fig 02** | [Cluster Size Distribution](results/paper_figures/fig02_cluster_size_distribution.png) (22 singletons vs. 17 articulatory merges at $K=39$) |
+| **Fig 03** | [Phoneme Cluster Mapping Table](results/paper_figures/fig03_phoneme_cluster_mapping.png) (Transparent map of all multi-phoneme cluster heads) |
+| **Fig 04** | [K-Means Elbow & Silhouette Plot](results/paper_figures/fig04_elbow_silhouette.png) (Optimization validation for $K=39$ cluster choice) |
+| **Fig 05** | [G2P Transformer Training Dynamics](results/paper_figures/fig05_g2p_learning_curves.png) (Loss, accuracy, and epoch time across 21 epochs) |
+| **Fig 06** | [PER & WER Comparison](results/paper_figures/fig06_per_wer_comparison.png) (Baseline vs. Clustered G2P on 5,476 test samples) |
+| **Fig 07** | [Model Structural Efficiency](results/paper_figures/fig07_model_efficiency.png) (-31.6% vocab compression & parameter footprint reduction) |
+| **Fig 08** | [DNSMOS Distribution Violins](results/paper_figures/fig08_dnsmos_violin.png) (Acoustic quality distributions across Hindi, Marathi, Gujarati) |
+| **Fig 09** | [Cohen's d Effect Size Radar](results/paper_figures/fig09_effect_size_radar.png) (Negligible effect boundary validation across all 6 conditions) |
+| **Fig 10** | [Human Listener Preference](results/paper_figures/fig10_human_preference_donut.png) (Double-blind A/B listening test on short 3–5 word utterances) |
+| **Fig 11** | [Human vs. Automated MOS Correlation](results/paper_figures/fig11_human_vs_auto_correlation.png) (Validation of automated DNSMOS vs. human ratings) |
+| **Fig 12** | [Cross-Lingual Phoneme Coverage Heatmap](results/paper_figures/fig12_phoneme_coverage_heatmap.png) (57 phonemes across Devanagari and Gujarati scripts) |
+| **Fig 13** | [End-to-End Pipeline Architecture](results/paper_figures/fig13_pipeline_architecture.png) (Text $\rightarrow$ G2P $\rightarrow$ Clustering $\rightarrow$ VITS TTS schematic) |
+| **Fig 14** | [Inference Hyperparameter Optimization](results/paper_figures/fig14_inference_params.png) (Acoustic artifact suppression profile: noise scale & headroom) |
 
 ---
 
