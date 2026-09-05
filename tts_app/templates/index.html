@@ -1,0 +1,313 @@
+{% extends "base.html" %}
+
+{% block title %}Start Evaluation - Multilingual Indic TTS{% endblock %}
+
+{% block content %}
+<div style="max-width: 800px; margin: 0 auto;">
+  <!-- Welcome Hero -->
+  <div style="text-align: center; margin-bottom: 36px;">
+    <h1 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 12px; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+      Subjective Listening Test
+    </h1>
+    <p style="color: var(--text-secondary); font-size: 1.05rem;">
+      Help evaluate speech synthesis naturalness across Indic languages. You will listen to paired audio samples in a blind A/B setup and rate their quality.
+    </p>
+  </div>
+
+  <!-- Session Setup Card -->
+  <div class="card">
+    <h2 class="card-title">⚙️ Configure Your Listening Session</h2>
+    
+    <form id="session-form">
+      <!-- 1. Evaluator Name -->
+      <div class="form-group">
+        <label class="form-label" for="evaluator-name">Your Name / Evaluator ID</label>
+        <input type="text" id="evaluator-name" class="form-control" placeholder="e.g. Priya, John, Evaluator-1" required autocomplete="name">
+      </div>
+
+      <!-- 2. Language Selection -->
+      <div class="form-group">
+        <label class="form-label">Select Language</label>
+        <div class="choice-grid">
+          <label class="choice-card selected" data-lang="all">
+            <input type="radio" name="language" value="all" checked>
+            <div class="choice-title">🌐 All</div>
+            <div class="choice-desc" id="count-all">176 pairs</div>
+          </label>
+          
+          <label class="choice-card" data-lang="hi">
+            <input type="radio" name="language" value="hi">
+            <div class="choice-title">🇮🇳 Hindi</div>
+            <div class="choice-desc" id="count-hi">70 pairs</div>
+          </label>
+          
+          <label class="choice-card" data-lang="mr">
+            <input type="radio" name="language" value="mr">
+            <div class="choice-title">🚩 Marathi</div>
+            <div class="choice-desc" id="count-mr">60 pairs</div>
+          </label>
+          
+          <label class="choice-card" data-lang="gu">
+            <input type="radio" name="language" value="gu">
+            <div class="choice-title">🦁 Gujarati</div>
+            <div class="choice-desc" id="count-gu">46 pairs</div>
+          </label>
+        </div>
+      </div>
+
+      <!-- 3. Evaluation Split -->
+      <div class="form-group">
+        <label class="form-label">Evaluation Set</label>
+        <div class="choice-grid">
+          <label class="choice-card selected" data-split="both">
+            <input type="radio" name="eval_set" value="both" checked>
+            <div class="choice-title">Balanced Mix</div>
+            <div class="choice-desc">Held-out & Unseen</div>
+          </label>
+          
+          <label class="choice-card" data-split="held_out">
+            <input type="radio" name="eval_set" value="held_out">
+            <div class="choice-title">Held-Out Only</div>
+            <div class="choice-desc">Test split audio</div>
+          </label>
+          
+          <label class="choice-card" data-split="unseen">
+            <input type="radio" name="eval_set" value="unseen">
+            <div class="choice-title">Unseen Only</div>
+            <div class="choice-desc">Generalization test</div>
+          </label>
+        </div>
+      </div>
+
+      <!-- 4. Sample Count Selector (Min 10 up to Max) -->
+      <div class="form-group">
+        <label class="form-label" style="display: flex; justify-content: space-between;">
+          <span>Number of Audio Pairs to Evaluate</span>
+          <span id="slider-range-indicator" style="color: var(--text-muted); font-weight: 400;">(Min: 10, Max: 176)</span>
+        </label>
+        
+        <div class="slider-container">
+          <input type="range" id="sample-count-slider" class="range-slider" min="10" max="176" value="25" step="1">
+          <div class="slider-value" id="sample-count-value">25</div>
+        </div>
+
+        <!-- Preset Chips -->
+        <div class="chip-group">
+          <button type="button" class="chip" data-count="10">⚡ Quick (10)</button>
+          <button type="button" class="chip active" data-count="25">⭐ Standard (25)</button>
+          <button type="button" class="chip" data-count="50">🔬 Thorough (50)</button>
+          <button type="button" class="chip" data-count="max" id="btn-max-count">🏆 All Available</button>
+        </div>
+      </div>
+
+      <!-- Submit CTA -->
+      <div style="margin-top: 32px; text-align: center;">
+        <button type="submit" id="start-btn" class="btn btn-primary btn-large" style="width: 100%;">
+          🚀 Start Evaluation Session
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Incomplete / Recent Sessions to Resume -->
+  <div class="card" id="resume-card" style="display: none;">
+    <h2 class="card-title">🔄 Resume an Incomplete Session</h2>
+    <div id="recent-sessions-list">
+      <!-- Injected by JS -->
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  let availableCounts = {
+    all: { total: 176, held_out: 116, unseen: 60 },
+    hi: { total: 70, held_out: 50, unseen: 20 },
+    mr: { total: 60, held_out: 40, unseen: 20 },
+    gu: { total: 46, held_out: 26, unseen: 20 },
+  };
+
+  const slider = document.getElementById("sample-count-slider");
+  const sliderValue = document.getElementById("sample-count-value");
+  const rangeIndicator = document.getElementById("slider-range-indicator");
+  const form = document.getElementById("session-form");
+  const evaluatorInput = document.getElementById("evaluator-name");
+
+  // Fetch real counts from backend
+  try {
+    const res = await fetch("/api/available_counts");
+    const data = await res.json();
+    if (data.status === "success") {
+      availableCounts = data.counts;
+      document.getElementById("count-all").textContent = `${availableCounts.all.total} pairs`;
+      document.getElementById("count-hi").textContent = `${availableCounts.hi.total} pairs`;
+      document.getElementById("count-mr").textContent = `${availableCounts.mr.total} pairs`;
+      document.getElementById("count-gu").textContent = `${availableCounts.gu.total} pairs`;
+    }
+  } catch (err) {
+    console.warn("Using default sample counts", err);
+  }
+
+  function getSelectedLanguage() {
+    return document.querySelector('input[name="language"]:checked')?.value || "all";
+  }
+
+  function getSelectedSplit() {
+    return document.querySelector('input[name="eval_set"]:checked')?.value || "both";
+  }
+
+  function getMaxAvailable() {
+    const lang = getSelectedLanguage();
+    const split = getSelectedSplit();
+    const counts = availableCounts[lang] || availableCounts.all;
+    if (split === "held_out") return counts.held_out;
+    if (split === "unseen") return counts.unseen;
+    return counts.total;
+  }
+
+  function updateSliderLimits() {
+    const max = getMaxAvailable();
+    const min = Math.min(10, max);
+    slider.min = min;
+    slider.max = max;
+    
+    let curVal = parseInt(slider.value, 10);
+    if (curVal > max) curVal = max;
+    if (curVal < min) curVal = min;
+    slider.value = curVal;
+    sliderValue.textContent = curVal;
+    rangeIndicator.textContent = `(Min: ${min}, Max: ${max})`;
+  }
+
+  // Radio button card styling
+  document.querySelectorAll(".choice-card").forEach(card => {
+    card.addEventListener("click", () => {
+      const radio = card.querySelector('input[type="radio"]');
+      if (radio) {
+        radio.checked = true;
+        const name = radio.name;
+        document.querySelectorAll(`input[name="${name}"]`).forEach(r => {
+          r.closest(".choice-card").classList.remove("selected");
+        });
+        card.classList.add("selected");
+        updateSliderLimits();
+      }
+    });
+  });
+
+  // Slider change
+  slider.addEventListener("input", (e) => {
+    sliderValue.textContent = e.target.value;
+    // update chip active states
+    document.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
+  });
+
+  // Chip presets
+  document.querySelectorAll(".chip").forEach(chip => {
+    chip.addEventListener("click", () => {
+      document.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
+      chip.classList.add("active");
+      
+      const countAttr = chip.dataset.count;
+      const max = getMaxAvailable();
+      let target = max;
+      if (countAttr !== "max") {
+        target = Math.min(parseInt(countAttr, 10), max);
+      }
+      slider.value = target;
+      sliderValue.textContent = target;
+    });
+  });
+
+  // Initial limit check
+  updateSliderLimits();
+
+  // Load recent sessions to resume
+  try {
+    const sRes = await fetch("/api/evaluators");
+    const sData = await sRes.json();
+    if (sData.status === "success" && sData.sessions.length > 0) {
+      const incomplete = sData.sessions.filter(s => !s.is_complete);
+      if (incomplete.length > 0) {
+        const resumeCard = document.getElementById("resume-card");
+        const listContainer = document.getElementById("recent-sessions-list");
+        resumeCard.style.display = "block";
+        listContainer.innerHTML = incomplete.map(s => `
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: var(--bg-secondary); border-radius: var(--radius-md); margin-bottom: 8px; border: 1px solid var(--border-subtle);">
+            <div>
+              <div style="font-weight: 700;">${s.name}</div>
+              <div style="font-size: 0.85rem; color: var(--text-muted);">
+                Language: ${s.language.toUpperCase()} • Set: ${s.eval_set} • Progress: ${s.completed_trials}/${s.requested_count} pairs
+              </div>
+            </div>
+            <button type="button" class="btn btn-secondary btn-resume" data-session-id="${s.session_id}" data-name="${s.name}">
+              Resume ➡️
+            </button>
+          </div>
+        `).join("");
+
+        document.querySelectorAll(".btn-resume").forEach(btn => {
+          btn.addEventListener("click", async () => {
+            const sid = btn.dataset.sessionId;
+            const name = btn.dataset.name;
+            const res = await fetch("/api/session", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ name: name, resume_session_id: sid })
+            });
+            const data = await res.json();
+            if (data.status === "success") {
+              sessionStorage.setItem("tts_session_id", data.session_id);
+              window.location.href = `/evaluate?session_id=${data.session_id}`;
+            }
+          });
+        });
+      }
+    }
+  } catch (err) {
+    console.error("Error loading resume sessions", err);
+  }
+
+  // Handle Form Submission
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const name = evaluatorInput.value.trim();
+    if (!name) return;
+
+    const startBtn = document.getElementById("start-btn");
+    startBtn.disabled = true;
+    startBtn.textContent = "⏳ Preparing Trials...";
+
+    const payload = {
+      name: name,
+      language: getSelectedLanguage(),
+      eval_set: getSelectedSplit(),
+      count: parseInt(slider.value, 10),
+    };
+
+    try {
+      const res = await fetch("/api/session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (data.status === "success") {
+        sessionStorage.setItem("tts_session_id", data.session_id);
+        window.location.href = `/evaluate?session_id=${data.session_id}`;
+      } else {
+        alert(data.message || "Could not start session");
+        startBtn.disabled = false;
+        startBtn.textContent = "🚀 Start Evaluation Session";
+      }
+    } catch (err) {
+      alert("Network error: Could not reach the evaluation server.");
+      startBtn.disabled = false;
+      startBtn.textContent = "🚀 Start Evaluation Session";
+    }
+  });
+});
+</script>
+{% endblock %}

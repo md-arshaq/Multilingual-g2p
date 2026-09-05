@@ -1,0 +1,25 @@
+{
+  "_comment": "20 unseen Gujarati sentences for generalization evaluation. Not present in training/validation/test data. Varied length, normal neutral Gujarati, fully tokenizable by G2P dictionary.",
+  "sentences": [
+    {"id": 1, "text": "આજનો દિવસ ખૂબ જ સુંદર છે", "description": "Simple weather observation"},
+    {"id": 2, "text": "બાળકોએ નિયમિત અભ્યાસ કરવો જોઈએ", "description": "General advice"},
+    {"id": 3, "text": "આપણો દેશ ઘણો મોટો છે", "description": "Geographic statement"},
+    {"id": 4, "text": "કાલે સવારે વહેલા ઉઠવાનું છે", "description": "Daily routine"},
+    {"id": 5, "text": "આ ફિલ્મ ઘણી સારી હતી", "description": "Opinion expression"},
+    {"id": 6, "text": "મારા પિતાજી અત્યારે ઘરે છે", "description": "Family statement"},
+    {"id": 7, "text": "રસ્તા પર ખૂબ ભીડ છે", "description": "Observation"},
+    {"id": 8, "text": "પાણી પીવું સ્વાસ્થ્ય માટે સારું છે", "description": "Health advice"},
+    {"id": 9, "text": "આપણે બધા ભારતીય છીએ", "description": "Identity statement"},
+    {"id": 10, "text": "ઉનાળામાં કેરી ખૂબ મીઠી હોય છે", "description": "Seasonal fact"},
+    {"id": 11, "text": "મને સંગીત સાંભળવું ખૂબ ગમે છે", "description": "Personal preference"},
+    {"id": 12, "text": "કૃપા કરીને દરવાજો બંધ કરો", "description": "Polite request"},
+    {"id": 13, "text": "સાંજે અમે બગીચામાં ફરવા જઈએ છીએ", "description": "Daily activity"},
+    {"id": 14, "text": "પર્વત પર બરફ પડે છે", "description": "Natural phenomenon"},
+    {"id": 15, "text": "રામાયણ ભારતની પ્રસિદ્ધ વાર્તા છે", "description": "Cultural reference"},
+    {"id": 16, "text": "રસોઈ બનાવવી એ એક કળા છે", "description": "General statement"},
+    {"id": 17, "text": "નદીનું પાણી ખૂબ ઠંડુ હતું", "description": "Descriptive sentence"},
+    {"id": 18, "text": "સૂર્ય પશ્ચિમમાં આથમે છે", "description": "Scientific fact"},
+    {"id": 19, "text": "દાદીમા અમને સરસ વાર્તાઓ કહેતા હતા", "description": "Nostalgic memory"},
+    {"id": 20, "text": "શાળામાં આજે રજા છે", "description": "Announcement"}
+  ]
+}

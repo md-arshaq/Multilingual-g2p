@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block title %}Evaluation Session - Multilingual Indic TTS{% endblock %}
+
+{% block content %}
+<div style="max-width: 900px; margin: 0 auto;" id="eval-app">
+  <!-- Progress & Meta Header -->
+  <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 12px;">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <span class="brand-badge" id="lang-badge">Language</span>
+      <span class="brand-badge" style="background: var(--bg-elevated); color: var(--text-secondary);" id="set-badge">Split</span>
+    </div>
+    
+    <div style="font-weight: 700; font-size: 1.1rem;" id="progress-text">
+      Trial <span id="cur-trial-num">1</span> of <span id="total-trial-num">25</span>
+    </div>
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="progress-bar-container">
+    <div class="progress-bar-fill" id="progress-fill" style="width: 0%;"></div>
+  </div>
+
+  <!-- Sentence Prompt Card -->
+  <div class="text-prompt-card">
+    <div class="prompt-badge">Spoken Sentence</div>
+    <div class="prompt-text" id="sentence-text">
+      Loading sentence...
+    </div>
+  </div>
+
+  <!-- Side-by-Side Audio Comparison -->
+  <div class="audio-comparison-grid">
+    <!-- Sample A -->
+    <div class="audio-box box-a" id="box-sample-a">
+      <div class="audio-box-header">
+        <div class="sample-tag tag-a">
+          <span>🔊 Sample A</span>
+        </div>
+        <div class="shortcut-pill">Press 1 to Play</div>
+      </div>
+      
+      <audio id="audio-player-a" controls preload="auto"></audio>
+
+      <!-- Rating A (1.0 to 5.0) -->
+      <div class="rating-section">
+        <div class="rating-label">
+          <span>Rate Naturalness & Clarity</span>
+          <span id="label-score-a" style="font-weight: 700; color: #818cf8;">Select score</span>
+        </div>
+        <div class="rating-scale-grid" id="scale-grid-a">
+          <button type="button" class="rating-btn" data-val="1.0">1.0</button>
+          <button type="button" class="rating-btn" data-val="1.5">1.5</button>
+          <button type="button" class="rating-btn" data-val="2.0">2.0</button>
+          <button type="button" class="rating-btn" data-val="2.5">2.5</button>
+          <button type="button" class="rating-btn" data-val="3.0">3.0</button>
+          <button type="button" class="rating-btn" data-val="3.5">3.5</button>
+          <button type="button" class="rating-btn" data-val="4.0">4.0</button>
+          <button type="button" class="rating-btn" data-val="4.5">4.5</button>
+          <button type="button" class="rating-btn" data-val="5.0">5.0</button>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">
+          <span>1.0 = Bad</span>
+          <span>3.0 = Fair</span>
+          <span>5.0 = Excellent</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sample B -->
+    <div class="audio-box box-b" id="box-sample-b">
+      <div class="audio-box-header">
+        <div class="sample-tag tag-b">
+          <span>🔊 Sample B</span>
+        </div>
+        <div class="shortcut-pill">Press 2 to Play</div>
+      </div>
+      
+      <audio id="audio-player-b" controls preload="auto"></audio>
+
+      <!-- Rating B (1.0 to 5.0) -->
+      <div class="rating-section">
+        <div class="rating-label">
+          <span>Rate Naturalness & Clarity</span>
+          <span id="label-score-b" style="font-weight: 700; color: #fb923c;">Select score</span>
+        </div>
+        <div class="rating-scale-grid" id="scale-grid-b">
+          <button type="button" class="rating-btn" data-val="1.0">1.0</button>
+          <button type="button" class="rating-btn" data-val="1.5">1.5</button>
+          <button type="button" class="rating-btn" data-val="2.0">2.0</button>
+          <button type="button" class="rating-btn" data-val="2.5">2.5</button>
+          <button type="button" class="rating-btn" data-val="3.0">3.0</button>
+          <button type="button" class="rating-btn" data-val="3.5">3.5</button>
+          <button type="button" class="rating-btn" data-val="4.0">4.0</button>
+          <button type="button" class="rating-btn" data-val="4.5">4.5</button>
+          <button type="button" class="rating-btn" data-val="5.0">5.0</button>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">
+          <span>1.0 = Bad</span>
+          <span>3.0 = Fair</span>
+          <span>5.0 = Excellent</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Preference Selection -->
+  <div class="preference-card">
+    <div style="font-weight: 700; font-size: 1.1rem;">⚖️ Which sample sounds more natural overall?</div>
+    <div class="preference-options">
+      <button type="button" class="pref-btn pref-a" data-pref="A">
+        👈 Sample A is Better
+      </button>
+      <button type="button" class="pref-btn pref-none" data-pref="none">
+        🤝 No Preference / Equal
+      </button>
+      <button type="button" class="pref-btn pref-b" data-pref="B">
+        👉 Sample B is Better
+      </button>
+    </div>
+  </div>
+
+  <!-- Action Bar -->
+  <div class="action-bar">
+    <button type="button" id="prev-btn" class="btn btn-secondary" disabled>
+      ⬅️ Previous Trial
+    </button>
+
+    <div style="display: flex; gap: 12px; align-items: center;">
+      <span id="validation-hint" style="font-size: 0.85rem; color: var(--accent-warning); display: none;">
+        ⚠️ Please rate both samples & choose a preference
+      </span>
+      <button type="button" id="submit-next-btn" class="btn btn-primary btn-large">
+        Submit & Next ➡️
+      </button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/evaluate.js') }}"></script>
+{% endblock %}

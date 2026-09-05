@@ -1,0 +1,25 @@
+{
+  "_comment": "20 unseen Marathi sentences for generalization evaluation. Not present in training/validation/test data. Varied length, normal neutral Marathi, fully tokenizable by G2P dictionary.",
+  "sentences": [
+    {"id": 1, "text": "आजचा दिवस खूप छान आहे", "description": "Simple weather observation"},
+    {"id": 2, "text": "मुलांनी नियमित अभ्यास केला पाहिजे", "description": "General advice"},
+    {"id": 3, "text": "आपला देश खूप मोठा आहे", "description": "Geographic statement"},
+    {"id": 4, "text": "उद्या सकाळी लवकर उठायचे आहे", "description": "Daily routine"},
+    {"id": 5, "text": "हा चित्रपट खूप चांगला होता", "description": "Opinion expression"},
+    {"id": 6, "text": "माझे वडील आता घरी आहेत", "description": "Family statement"},
+    {"id": 7, "text": "रस्त्यावर खूप गर्दी आहे", "description": "Observation"},
+    {"id": 8, "text": "पाणी पिणे आरोग्यासाठी चांगले असते", "description": "Health advice"},
+    {"id": 9, "text": "आपण सर्व भारतीय आहोत", "description": "Identity statement"},
+    {"id": 10, "text": "उन्हाळ्यात आंबे खूप गोड असतात", "description": "Seasonal fact"},
+    {"id": 11, "text": "मला गाणी ऐकायला खूप आवडते", "description": "Personal preference"},
+    {"id": 12, "text": "कृपया दरवाजा बंद करा", "description": "Polite request"},
+    {"id": 13, "text": "संध्याकाळी आम्ही बागेत फिरायला जातो", "description": "Daily activity"},
+    {"id": 14, "text": "डोंगरावर बर्फ पडतो", "description": "Natural phenomenon"},
+    {"id": 15, "text": "रामायण ही भारताची प्रसिद्ध कथा आहे", "description": "Cultural reference"},
+    {"id": 16, "text": "जेवण बनवणे ही एक कला आहे", "description": "General statement"},
+    {"id": 17, "text": "नदीचे पाणी खूप थंड होते", "description": "Descriptive sentence"},
+    {"id": 18, "text": "सूर्य पश्चिमेला मावळतो", "description": "Scientific fact"},
+    {"id": 19, "text": "आजी आम्हाला छान गोष्टी सांगायची", "description": "Nostalgic memory"},
+    {"id": 20, "text": "शाळेला आज सुट्टी आहे", "description": "Announcement"}
+  ]
+}

@@ -124,23 +124,37 @@ def main():
         description="Phase 3: Audio preprocessing for TTS experiment"
     )
     parser.add_argument(
-        "--manifest", type=str, default=DEFAULT_MANIFEST,
+        "--lang", type=str, default="hi", choices=["hi", "mr", "gu"],
+        help="Language code ('hi', 'mr', or 'gu', default: 'hi')"
+    )
+    parser.add_argument(
+        "--manifest", type=str, default=None,
         help="Path to manifest CSV"
     )
     parser.add_argument(
-        "--raw_dir", type=str, default=DEFAULT_RAW_DIR,
+        "--raw_dir", type=str, default=None,
         help="Directory containing raw audio files"
     )
     parser.add_argument(
-        "--processed_dir", type=str, default=DEFAULT_PROCESSED_DIR,
+        "--processed_dir", type=str, default=None,
         help="Output directory for processed audio"
     )
     args = parser.parse_args()
 
+    lang_dir_names = {"hi": "tts_hindi_female", "mr": "tts_marathi_female", "gu": "tts_gujarati_female"}
+    lang_dir_name = lang_dir_names.get(args.lang, f"tts_{args.lang}_female")
+    base_dir = os.path.join(PROJECT_DIR, "data", lang_dir_name)
+    if args.manifest is None:
+        args.manifest = os.path.join(base_dir, "manifest.csv")
+    if args.raw_dir is None:
+        args.raw_dir = os.path.join(base_dir, "raw")
+    if args.processed_dir is None:
+        args.processed_dir = os.path.join(base_dir, "processed")
+
     os.makedirs(args.processed_dir, exist_ok=True)
 
     print("=" * 60)
-    print("PHASE 3: AUDIO PREPROCESSING")
+    print(f"PHASE 3: AUDIO PREPROCESSING ({args.lang.upper()})")
     print("=" * 60)
 
     # Check dependencies
