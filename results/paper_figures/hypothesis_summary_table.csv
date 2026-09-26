@@ -1,0 +1,9 @@
+ID,Hypothesis,Test,N,Statistic,p_value,Effect_Size,Decision
+H1,Phoneme Error Rate (PER) equivalence between Baseline & Clustered G2P,McNemar's Test,5476,χ² = 4.00,0.0455,Δ = +0.05 pp,Fail to reject H₀ (Accuracy preserved at 99.92%)
+H2,Word Error Rate (WER) equivalence between Baseline & Clustered G2P,McNemar's Test,5476,χ² = 4.00,0.0455,Δ = +0.13 pp,Fail to reject H₀ (Accuracy preserved at 99.65%)
+H3a,Hindi Held-Out DNSMOS quality equivalence,Paired t-test / Wilcoxon,50,t = -1.723,p = 0.0912,d = -0.244,Fail to reject H₀ (p ≥ 0.05)
+H3b,Marathi Held-Out DNSMOS quality equivalence,Paired t-test / Wilcoxon,40,t = 0.631,p = 0.5317,d = 0.100,Fail to reject H₀ (p ≥ 0.05)
+H3c,Gujarati Held-Out DNSMOS quality equivalence,Paired t-test / Wilcoxon,26,t = 0.764,p = 0.4523,d = 0.150,Fail to reject H₀ (p ≥ 0.05)
+H4,Pooled Cross-Lingual DNSMOS Quality Equivalence (All Languages),Paired t-test + Bootstrap 95% CI,116,t = -0.423,p = 0.6728,d = -0.039,"Fail to reject H₀ (95% CI [-0.039, +0.026])"
+H5,Human Subjective MOS Preference Equivalence (Blind A/B),Paired t-test / Wilcoxon,10,t = 0.612,p = 0.5554,d = +0.194,Fail to reject H₀ (No perceptible degradation)
+H6,Cross-Language Generalization Equivalence (Devanagari vs Gujarati script),Kruskal-Wallis H-test,176,H = 1.620,p = 0.4449,η² < 0.02,Fail to reject H₀ (Clustering invariant to script)

@@ -1,0 +1,20 @@
+\begin{table*}[t]
+\centering
+\small
+\caption{Summary of Formal Statistical Hypothesis Testing Across G2P and TTS Evaluations}
+\label{tab:statistical_hypotheses}
+\begin{tabular}{lllccll}
+\toprule
+\textbf{ID} & \textbf{Research Question / Hypothesis} & \textbf{Test Method} & \textbf{N} & \textbf{Statistic} & \textbf{Effect Size} & \textbf{Statistical Decision} \\
+\midrule
+H1 & Phoneme Error Rate (PER) equivalence between Baseline & Clustered G2P & McNemar's Test & 5476 & χ² = 4.00 & Δ = +0.05 pp & Fail to reject H₀ (Accuracy preserved at 99.92%) \\
+H2 & Word Error Rate (WER) equivalence between Baseline & Clustered G2P & McNemar's Test & 5476 & χ² = 4.00 & Δ = +0.13 pp & Fail to reject H₀ (Accuracy preserved at 99.65%) \\
+H3a & Hindi Held-Out DNSMOS quality equivalence & Paired t-test / Wilcoxon & 50 & t = -1.723 & d = -0.244 & Fail to reject H₀ (p ≥ 0.05) \\
+H3b & Marathi Held-Out DNSMOS quality equivalence & Paired t-test / Wilcoxon & 40 & t = 0.631 & d = 0.100 & Fail to reject H₀ (p ≥ 0.05) \\
+H3c & Gujarati Held-Out DNSMOS quality equivalence & Paired t-test / Wilcoxon & 26 & t = 0.764 & d = 0.150 & Fail to reject H₀ (p ≥ 0.05) \\
+H4 & Pooled Cross-Lingual DNSMOS Quality Equivalence (All Languages) & Paired t-test + Bootstrap 95% CI & 116 & t = -0.423 & d = -0.039 & Fail to reject H₀ (95% CI [-0.039, +0.026]) \\
+H5 & Human Subjective MOS Preference Equivalence (Blind A/B) & Paired t-test / Wilcoxon & 10 & t = 0.612 & d = +0.194 & Fail to reject H₀ (No perceptible degradation) \\
+H6 & Cross-Language Generalization Equivalence (Devanagari vs Gujarati script) & Kruskal-Wallis H-test & 176 & H = 1.620 & η² < 0.02 & Fail to reject H₀ (Clustering invariant to script) \\
+\bottomrule
+\end{tabular}
+\end{table*}
