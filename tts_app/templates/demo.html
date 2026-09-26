@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+
+{% block title %}Live TTS Playground - Multilingual Indic Speech{% endblock %}
+
+{% block content %}
+<div style="max-width: 960px; margin: 0 auto;">
+  <!-- Header Hero -->
+  <div style="text-align: center; margin-bottom: 32px;">
+    <h1 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 10px; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+      🎙️ Live Multilingual TTS Playground
+    </h1>
+    <p style="color: var(--text-secondary); font-size: 1.05rem;">
+      Test real-time speech synthesis across Hindi, Marathi, and Gujarati. Compare the <strong>57-Phoneme Baseline</strong> vs <strong>39-Cluster</strong> VITS models side-by-side.
+    </p>
+  </div>
+
+  <!-- Playground Main Card -->
+  <div class="card">
+    <!-- 1. Language Selection Tabs -->
+    <div style="display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 16px;">
+      <button type="button" class="btn btn-secondary lang-tab-btn active" data-lang="hi" style="flex: 1;">
+        🇮🇳 Hindi (हिन्दी)
+      </button>
+      <button type="button" class="btn btn-secondary lang-tab-btn" data-lang="mr" style="flex: 1;">
+        🚩 Marathi (मराठी)
+      </button>
+      <button type="button" class="btn btn-secondary lang-tab-btn" data-lang="gu" style="flex: 1;">
+        🦁 Gujarati (ગુજરાતી)
+      </button>
+    </div>
+
+    <!-- 2. Preset Sentences Carousel -->
+    <div style="margin-bottom: 18px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+        <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase;">
+          💡 Try Sample Sentences
+        </span>
+        <span style="font-size: 0.8rem; color: var(--text-muted);">Click to load</span>
+      </div>
+      <div class="chip-group" id="preset-chips" style="margin-top: 0;">
+        <!-- Injected by JS -->
+      </div>
+    </div>
+
+    <!-- 3. Text Input Box -->
+    <div class="form-group" style="margin-bottom: 20px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+        <label class="form-label" for="tts-input-text" style="margin-bottom: 0;">
+          Input Text
+        </label>
+        <div style="display: flex; gap: 12px; align-items: center;">
+          <span id="char-counter" style="font-size: 0.85rem; color: var(--text-muted);">0 chars</span>
+          <button type="button" id="clear-btn" style="background: none; border: none; color: var(--text-muted); font-size: 0.85rem; cursor: pointer;">
+            Clear ✕
+          </button>
+        </div>
+      </div>
+
+      <textarea id="tts-input-text" class="form-control" rows="3" style="font-family: var(--font-indic); font-size: 1.25rem; resize: vertical;" placeholder="Type or paste text in Devanagari / Gujarati script..."></textarea>
+    </div>
+
+    <!-- 4. Action Controls -->
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <button type="button" id="preview-g2p-btn" class="btn btn-secondary">
+          🔍 Inspect G2P Tokens
+        </button>
+        <span style="font-size: 0.8rem; color: var(--text-muted);">Shortcut: Ctrl + Enter</span>
+      </div>
+
+      <button type="button" id="synthesize-btn" class="btn btn-primary btn-large">
+        ⚡ Synthesize Both Models (GPU)
+      </button>
+    </div>
+  </div>
+
+  <!-- Real-Time G2P Phoneme Inspector Card (Collapsible / Active) -->
+  <div class="card" id="g2p-inspector-card" style="display: none;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+      <h2 class="card-title" style="margin-bottom: 0;">🔤 G2P Phoneme Breakdown & Compression</h2>
+      <span class="brand-badge" id="g2p-reduction-badge" style="background: var(--accent-success); color: #ffffff; font-size: 0.85rem;">
+        -29.2% Tokens
+      </span>
+    </div>
+
+    <!-- Baseline Phoneme Breakdown -->
+    <div style="margin-bottom: 16px; padding: 14px 18px; background: var(--bg-secondary); border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+      <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 700; color: #818cf8; margin-bottom: 8px;">
+        <span>Baseline Phonemes (57 inventory)</span>
+        <span id="g2p-baseline-count">0 tokens</span>
+      </div>
+      <div id="g2p-baseline-tokens" style="font-family: monospace; font-size: 0.95rem; line-height: 1.8; color: var(--text-primary); word-break: break-word;">
+        -
+      </div>
+    </div>
+
+    <!-- Clustered Tokens Breakdown -->
+    <div style="padding: 14px 18px; background: var(--bg-secondary); border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+      <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 700; color: #fb923c; margin-bottom: 8px;">
+        <span>Clustered Tokens (39 clusters: C0–C38)</span>
+        <span id="g2p-clustered-count">0 tokens</span>
+      </div>
+      <div id="g2p-clustered-tokens" style="font-family: monospace; font-size: 0.95rem; line-height: 1.8; color: var(--text-primary); word-break: break-word;">
+        -
+      </div>
+    </div>
+  </div>
+
+  <!-- Synthesis Output Cards (Side-by-Side Audio) -->
+  <div id="synthesis-results-area" style="display: none;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+      <h2 style="font-size: 1.35rem; font-weight: 800;">🎧 Live Synthesized Audio Output</h2>
+      <button type="button" id="play-sequence-btn" class="btn btn-secondary" style="font-size: 0.85rem; padding: 8px 14px;">
+        ▶️ Play Both Sequentially (A ➔ B)
+      </button>
+    </div>
+
+    <div class="audio-comparison-grid">
+      <!-- Baseline Audio Box -->
+      <div class="audio-box box-a" id="live-box-baseline">
+        <div class="audio-box-header">
+          <div>
+            <div class="sample-tag tag-a">
+              <span>🔵 Baseline (57 Phonemes)</span>
+            </div>
+            <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;" id="meta-baseline">
+              Latency: 0 ms • RTF: 0.00x
+            </div>
+          </div>
+          <a id="download-baseline-btn" class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.8rem;" download="baseline.wav">
+            ⬇️ WAV
+          </a>
+        </div>
+
+        <audio id="live-audio-baseline" controls preload="auto"></audio>
+      </div>
+
+      <!-- Clustered Audio Box -->
+      <div class="audio-box box-b" id="live-box-clustered">
+        <div class="audio-box-header">
+          <div>
+            <div class="sample-tag tag-b">
+              <span>🟠 Clustered (39 Clusters)</span>
+            </div>
+            <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;" id="meta-clustered">
+              Latency: 0 ms • RTF: 0.00x
+            </div>
+          </div>
+          <a id="download-clustered-btn" class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.8rem;" download="clustered.wav">
+            ⬇️ WAV
+          </a>
+        </div>
+
+        <audio id="live-audio-clustered" controls preload="auto"></audio>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/demo.js') }}"></script>
+{% endblock %}

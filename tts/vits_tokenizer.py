@@ -50,10 +50,10 @@ def patch_tokenizer(tokenizer, vocab):
     eos_id = vocab["<eos>"]
     blank_id = vocab["<blnk>"]
 
-    def text_to_ids(text):
+    def text_to_ids(text, *args, **kwargs):
         return [vocab[token] for token in validate_token_sequence(text, vocab)]
 
-    def ids_to_text(ids):
+    def ids_to_text(ids, *args, **kwargs):
         special_ids = {pad_id, bos_id, eos_id, blank_id}
         return " ".join(
             id_to_token[token_id]
@@ -73,16 +73,19 @@ def patch_tokenizer(tokenizer, vocab):
     # VITS consults this object for vocabulary-size and special-token metadata.
     chars = getattr(tokenizer, "characters", None)
     if chars is not None:
-        chars._char_to_id = vocab
-        chars._id_to_char = id_to_token
-        chars.char_to_id = lambda token: vocab[token]
-        chars.id_to_char = lambda token_id: id_to_token[token_id]
-        chars.vocab_size = len(vocab)
-        chars.num_chars = len(vocab)
-        chars.pad_id = pad_id
-        chars.blank_id = blank_id
-        chars.pad = "<pad>"
-        chars.blank = "<blnk>"
+        try:
+            chars._char_to_id = vocab
+            chars._id_to_char = id_to_token
+            chars.char_to_id = lambda token: vocab[token]
+            chars.id_to_char = lambda token_id: id_to_token[token_id]
+            chars.vocab_size = len(vocab)
+            chars._vocab = list(vocab.keys())
+            chars.pad_id = pad_id
+            chars.blank_id = blank_id
+            chars.pad = "<pad>"
+            chars.blank = "<blnk>"
+        except Exception:
+            pass
 
     return tokenizer
 

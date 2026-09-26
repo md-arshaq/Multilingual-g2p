@@ -34,7 +34,7 @@ CLUSTER_MAPPING_PATH = os.path.join(PROJECT_DIR, "g2p", "phoneme_cluster_mapping
 # Import labeling functions
 sys.path.insert(0, SCRIPT_DIR)
 from tts_g2p_labeling import (
-    load_hindi_g2p_dict, load_cluster_mapping, load_phoneme_vocab,
+    load_g2p_dict, load_cluster_mapping, load_phoneme_vocab,
     normalize_hindi_text, text_to_baseline_tokens, baseline_to_clustered_tokens
 )
 from vits_tokenizer import (
@@ -76,18 +76,89 @@ def load_patched_tts_model(model_path, config_path, vocab, smoke_sequence):
     loader cannot infer multi-character token boundaries from config.json.
     Applying the same shared patch here prevents character-level inference.
     """
-    from TTS.api import TTS
+    from TTS.config import load_config
+    from TTS.utils.audio import AudioProcessor
+    from TTS.tts.utils.text.tokenizer import TTSTokenizer
+    from TTS.tts.models.vits import Vits
+    import torch
 
-    model = TTS(model_path=model_path, config_path=config_path)
-    try:
-        tokenizer = model.synthesizer.tts_model.tokenizer
-    except AttributeError as exc:
-        raise RuntimeError("Loaded model does not expose a Coqui VITS tokenizer") from exc
+    if model_path and os.path.isdir(model_path):
+        for root, _, files in os.walk(model_path):
+            if "best_model.pth" in files:
+                model_path = os.path.join(root, "best_model.pth")
+                break
+        else:
+            ckpts = []
+            for root, _, files in os.walk(model_path):
+                for f in files:
+                    if f.startswith("checkpoint_") and f.endswith(".pth"):
+                        ckpts.append(os.path.join(root, f))
+            if ckpts:
+                ckpts.sort(key=lambda x: os.path.getmtime(x))
+                model_path = ckpts[-1]
 
-    patch_tokenizer(tokenizer, vocab)
-    ids = assert_tokenizer_round_trip(tokenizer, smoke_sequence)
+    if config_path is None and model_path:
+        dir_path = os.path.dirname(os.path.abspath(model_path))
+        candidate = os.path.join(dir_path, "config.json")
+        if os.path.exists(candidate):
+            config_path = candidate
+        else:
+            parent_candidate = os.path.join(os.path.dirname(dir_path), "config.json")
+            if os.path.exists(parent_candidate):
+                config_path = parent_candidate
+
+    cfg = load_config(config_path)
+    ap = AudioProcessor.init_from_config(cfg)
+    tok, cfg = TTSTokenizer.init_from_config(cfg)
+    tok = patch_tokenizer(tok, vocab)
+
+    model = Vits(cfg, ap, tok, speaker_manager=None)
+    model.load_checkpoint(cfg, model_path, eval=True)
+    if torch.cuda.is_available():
+        model.cuda()
+    model.eval()
+
+    import numpy as np
+
+    # Optimized VITS inference for natural, human-quality audio
+    NOISE_SCALE = 0.333       # Lower = cleaner, less robotic buzz
+    NOISE_SCALE_DP = 0.333    # Lower = smoother phoneme timing
+    LENGTH_SCALE = 0.92       # Slightly faster, natural cadence
+    PEAK_HEADROOM = 0.85      # Prevent digital clipping
+
+    class VitsWrapper:
+        def __init__(self, vits_model, audio_processor, tokenizer):
+            self.model = vits_model
+            self.ap = audio_processor
+            self.tokenizer = tokenizer
+
+        def tts_to_file(self, text, file_path):
+            import scipy.io.wavfile as wavfile
+            with torch.no_grad():
+                res = self.model.synthesize(
+                    text,
+                    self.model.config,
+                    noise_scale=NOISE_SCALE,
+                    noise_scale_dp=NOISE_SCALE_DP,
+                    length_scale=LENGTH_SCALE,
+                )
+                wav = np.asarray(res["wav"], dtype=np.float32)
+                sr = self.ap.sample_rate if hasattr(self.ap, "sample_rate") else 22050
+                fade_len = min(int(sr * 0.005), len(wav) // 4)
+                if fade_len > 0:
+                    fade_in = 0.5 * (1.0 - np.cos(np.pi * np.arange(fade_len) / fade_len))
+                    fade_out = 0.5 * (1.0 + np.cos(np.pi * np.arange(fade_len) / fade_len))
+                    wav[:fade_len] *= fade_in
+                    wav[-fade_len:] *= fade_out
+                peak = np.max(np.abs(wav))
+                if peak > 0:
+                    wav = wav * (PEAK_HEADROOM / peak)
+                wav_int16 = (wav * 32767.0).astype(np.int16)
+                wavfile.write(file_path, sr, wav_int16)
+
+    ids = assert_tokenizer_round_trip(tok, smoke_sequence)
     print(f"  Tokenizer restored: {smoke_sequence!r} -> {ids}")
-    return model
+    return VitsWrapper(model, ap, tok)
 
 
 def generate_held_out(manifest_path, baseline_model, clustered_model, output_dir):
@@ -141,16 +212,17 @@ def generate_held_out(manifest_path, baseline_model, clustered_model, output_dir
             "clustered_tokens": clustered_tokens,
             "baseline_wav": os.path.basename(baseline_path) if baseline_ok else "",
             "clustered_wav": os.path.basename(clustered_path) if clustered_ok else "",
+            "error": "",
         })
 
     return metadata
 
 
-def generate_unseen(unseen_path, baseline_model, clustered_model, output_dir,
-                    g2p_dict, cluster_map, valid_phonemes):
-    """Generate paired synthesis for unseen generalization sentences."""
-    print("\n--- Unseen generalization set ---")
-
+def generate_unseen(unseen_path, baseline_model, clustered_model,
+                    output_dir, g2p_dict, cluster_map, valid_phonemes, lang="hi"):
+    """
+    Generate audio for the unseen generalization set.
+    """
     unseen_dir = os.path.join(output_dir, "unseen")
     os.makedirs(unseen_dir, exist_ok=True)
 
@@ -167,7 +239,7 @@ def generate_unseen(unseen_path, baseline_model, clustered_model, output_dir,
 
         # G2P pipeline: text -> baseline tokens
         baseline_tokens, oov, baseline_ok = text_to_baseline_tokens(
-            text, g2p_dict, valid_phonemes
+            text, g2p_dict, valid_phonemes, lang=lang
         )
 
         if not baseline_ok:
@@ -243,6 +315,10 @@ def main():
         description="Phase 7: Inference for evaluation"
     )
     parser.add_argument(
+        "--lang", type=str, choices=["hi", "mr", "gu"], default="hi",
+        help="Language code ('hi', 'mr', or 'gu', default: 'hi')"
+    )
+    parser.add_argument(
         "--baseline_model", type=str, default=None,
         help="Path to trained baseline VITS model checkpoint"
     )
@@ -259,15 +335,15 @@ def main():
         help="Path to clustered VITS config"
     )
     parser.add_argument(
-        "--manifest", type=str, default=DEFAULT_MANIFEST,
+        "--manifest", type=str, default=None,
         help="Path to manifest CSV"
     )
     parser.add_argument(
-        "--unseen", type=str, default=DEFAULT_UNSEEN,
+        "--unseen", type=str, default=None,
         help="Path to unseen sentences JSON"
     )
     parser.add_argument(
-        "--output_dir", type=str, default=DEFAULT_OUTPUT,
+        "--output_dir", type=str, default=None,
         help="Output directory for synthesized audio"
     )
     parser.add_argument(
@@ -276,15 +352,26 @@ def main():
     )
     args = parser.parse_args()
 
+    lang_dir_names = {"hi": "tts_hindi_female", "mr": "tts_marathi_female", "gu": "tts_gujarati_female"}
+    lang_dir_name = lang_dir_names.get(args.lang, f"tts_{args.lang}_female")
+    if args.manifest is None:
+        args.manifest = os.path.join(PROJECT_DIR, "data", lang_dir_name, "manifest.csv")
+    if args.unseen is None:
+        unseen_map = {"hi": "tts_unseen_sentences.json", "mr": "tts_unseen_sentences_mr.json", "gu": "tts_unseen_sentences_gu.json"}
+        unseen_file = unseen_map.get(args.lang, "tts_unseen_sentences.json")
+        args.unseen = os.path.join(PROJECT_DIR, "configs", "tts", unseen_file)
+    if args.output_dir is None:
+        args.output_dir = os.path.join(PROJECT_DIR, "samples", lang_dir_name)
+
     os.makedirs(args.output_dir, exist_ok=True)
 
     print("=" * 60)
-    print("PHASE 7: INFERENCE & EVALUATION DATA GENERATION")
+    print(f"PHASE 7: INFERENCE & EVALUATION DATA GENERATION ({args.lang.upper()})")
     print("=" * 60)
 
     # Load G2P resources
-    print("\nLoading G2P resources...")
-    g2p_dict = load_hindi_g2p_dict()
+    print(f"\nLoading G2P resources for {args.lang.upper()}...")
+    g2p_dict = load_g2p_dict(args.lang)
     cluster_map = load_cluster_mapping()
     valid_phonemes = load_phoneme_vocab()
     print(f"  G2P dictionary: {len(g2p_dict)} words")
@@ -333,14 +420,14 @@ def main():
     # Generate unseen set
     unseen_meta = generate_unseen(
         args.unseen, baseline_model, clustered_model, args.output_dir,
-        g2p_dict, cluster_map, valid_phonemes
+        g2p_dict, cluster_map, valid_phonemes, lang=args.lang
     )
 
     # Save inference metadata
     all_meta = held_out_meta + unseen_meta
     meta_path = os.path.join(args.output_dir, "inference_metadata.csv")
     if all_meta:
-        fieldnames = list(all_meta[0].keys())
+        fieldnames = list(dict.fromkeys(k for d in all_meta for k in d.keys()))
         with open(meta_path, "w", newline="", encoding="utf-8") as f:
             writer = csv.DictWriter(f, fieldnames=fieldnames)
             writer.writeheader()

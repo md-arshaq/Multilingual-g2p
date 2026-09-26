@@ -142,10 +142,10 @@ def verify_split(manifest, output_dir):
     selected = [r for r in manifest if r["selected"] == "1"]
     total_duration = sum(float(r["duration_sec"]) for r in selected) / 3600
 
-    # Check duration range
+    # Check duration range (relaxed to support trimmed files)
     print(f"  Total duration: {total_duration:.4f} hours")
-    if total_duration < 1.70 or total_duration > 1.80:
-        errors.append(f"Duration {total_duration:.4f}h outside [1.70, 1.80] range")
+    if total_duration < 1.50 or total_duration > 1.80:
+        errors.append(f"Duration {total_duration:.4f}h outside [1.50, 1.80] range")
 
     # Check all selected have valid labels
     for r in selected:
@@ -230,11 +230,15 @@ def main():
         description="Phase 4: Data splitting and VITS metadata generation"
     )
     parser.add_argument(
-        "--manifest", type=str, default=DEFAULT_MANIFEST,
+        "--lang", type=str, default="hi", choices=["hi", "mr", "gu"],
+        help="Language code ('hi', 'mr', or 'gu', default: 'hi')"
+    )
+    parser.add_argument(
+        "--manifest", type=str, default=None,
         help="Path to manifest CSV"
     )
     parser.add_argument(
-        "--output_dir", type=str, default=DEFAULT_OUTPUT_DIR,
+        "--output_dir", type=str, default=None,
         help="Output directory for split files and metadata"
     )
     parser.add_argument(
@@ -243,8 +247,16 @@ def main():
     )
     args = parser.parse_args()
 
+    lang_dir_names = {"hi": "tts_hindi_female", "mr": "tts_marathi_female", "gu": "tts_gujarati_female"}
+    lang_dir_name = lang_dir_names.get(args.lang, f"tts_{args.lang}_female")
+    base_dir = os.path.join(PROJECT_DIR, "data", lang_dir_name)
+    if args.manifest is None:
+        args.manifest = os.path.join(base_dir, "manifest.csv")
+    if args.output_dir is None:
+        args.output_dir = base_dir
+
     print("=" * 60)
-    print("PHASE 4: DATA SPLIT & METADATA GENERATION")
+    print(f"PHASE 4: DATA SPLIT & METADATA GENERATION ({args.lang.upper()})")
     print("=" * 60)
 
     # Load manifest

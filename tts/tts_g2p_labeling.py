@@ -27,6 +27,8 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_DIR = os.path.dirname(SCRIPT_DIR)
 
 G2P_HI_PATH = os.path.join(PROJECT_DIR, "data", "g2p_hi.txt")
+G2P_MR_PATH = os.path.join(PROJECT_DIR, "data", "g2p_mr.txt")
+G2P_GU_PATH = os.path.join(PROJECT_DIR, "data", "g2p_gu.txt")
 G2P_MULTI_PATH = os.path.join(PROJECT_DIR, "data", "multilingual_g2p_dataset.txt")
 CLUSTER_MAPPING_PATH = os.path.join(PROJECT_DIR, "g2p", "phoneme_cluster_mapping.json")
 PHONEME_VOCAB_PATH = os.path.join(PROJECT_DIR, "g2p", "phoneme_vocab.json")
@@ -83,6 +85,105 @@ def load_hindi_g2p_dict():
     return g2p_dict
 
 
+def load_marathi_g2p_dict():
+    """
+    Load the Marathi G2P dictionary from both g2p_mr.txt and 
+    multilingual_g2p_dataset.txt (with <MR> prefix).
+    Returns dict: word (str) -> phoneme_sequence (str, space-separated)
+    """
+    g2p_dict = {}
+
+    # Load from g2p_mr.txt (word\tphonemes)
+    if os.path.exists(G2P_MR_PATH):
+        with open(G2P_MR_PATH, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                parts = line.split("\t")
+                if len(parts) == 2:
+                    word = parts[0].strip()
+                    phonemes = parts[1].strip()
+                    if word and phonemes:
+                        g2p_dict[word] = phonemes
+
+    # Also load Marathi entries from multilingual dataset
+    if os.path.exists(G2P_MULTI_PATH):
+        with open(G2P_MULTI_PATH, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                parts = line.split("\t")
+                if len(parts) != 2:
+                    continue
+                left = parts[0].strip()
+                phonemes = parts[1].strip()
+                if left.startswith("<") and ">" in left:
+                    end = left.index(">") + 1
+                    lang_tag = left[1:end - 1].upper()
+                    word = left[end:].strip()
+                    if lang_tag == "MR" and word and phonemes:
+                        if word not in g2p_dict:
+                            g2p_dict[word] = phonemes
+
+    return g2p_dict
+
+
+def load_gujarati_g2p_dict():
+    """
+    Load the Gujarati G2P dictionary from both g2p_gu.txt and 
+    multilingual_g2p_dataset.txt (with <GU> prefix).
+    Returns dict: word (str) -> phoneme_sequence (str, space-separated)
+    """
+    g2p_dict = {}
+
+    # Load from g2p_gu.txt (word\tphonemes)
+    if os.path.exists(G2P_GU_PATH):
+        with open(G2P_GU_PATH, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                parts = line.split("\t")
+                if len(parts) == 2:
+                    word = parts[0].strip()
+                    phonemes = parts[1].strip()
+                    if word and phonemes:
+                        g2p_dict[word] = phonemes
+
+    # Also load Gujarati entries from multilingual dataset
+    if os.path.exists(G2P_MULTI_PATH):
+        with open(G2P_MULTI_PATH, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                parts = line.split("\t")
+                if len(parts) != 2:
+                    continue
+                left = parts[0].strip()
+                phonemes = parts[1].strip()
+                if left.startswith("<") and ">" in left:
+                    end = left.index(">") + 1
+                    lang_tag = left[1:end - 1].upper()
+                    word = left[end:].strip()
+                    if lang_tag == "GU" and word and phonemes:
+                        if word not in g2p_dict:
+                            g2p_dict[word] = phonemes
+
+    return g2p_dict
+
+
+def load_g2p_dict(lang="hi"):
+    """Dispatcher to load G2P dictionary for specified language."""
+    if lang.lower() == "mr":
+        return load_marathi_g2p_dict()
+    elif lang.lower() == "gu":
+        return load_gujarati_g2p_dict()
+    return load_hindi_g2p_dict()
+
+
 def load_cluster_mapping():
     """
     Load phoneme -> cluster token mapping.
@@ -100,40 +201,169 @@ def load_phoneme_vocab():
     return set(vocab["phoneme_to_id"].keys())
 
 
-def normalize_hindi_text(text):
+def normalize_text(text, lang="hi"):
     """
-    Conservative text normalization for Hindi:
+    Conservative text normalization for Indic scripts (Hindi, Marathi, Gujarati):
     - Remove punctuation (danda, double danda, comma, period, question mark, etc.)
-    - Remove extra whitespace
-    - Preserve spoken Hindi words only
+    - Remove digits (both ASCII and Indic: 0-9, ०-९, ૦-૯)
+    - Remove zero-width characters
+    - Collapse extra whitespace
+    - Preserve spoken words only
     """
-    # Remove common Hindi/Unicode punctuation
-    # Danda (।), double danda (॥), other punctuation
     text = re.sub(r'[।॥,\.!?\-;:\'"()\[\]{}<>«»""''…–—/\\|@#$%^&*+=~`]', ' ', text)
-
-    # Remove digits (both Devanagari and ASCII)
-    text = re.sub(r'[0-9०-९]', ' ', text)
-
-    # Remove zero-width characters
+    text = re.sub(r'[0-9०-९૦-૯]', ' ', text)
     text = re.sub(r'[\u200b\u200c\u200d\u200e\u200f\ufeff]', '', text)
-
-    # Collapse whitespace
     text = re.sub(r'\s+', ' ', text).strip()
-
     return text
 
 
-def text_to_baseline_tokens(text, g2p_dict, valid_phonemes):
-    """
-    Convert Hindi text to baseline phoneme tokens using dictionary lookup.
+def normalize_hindi_text(text):
+    """Backward compatibility alias for normalize_text."""
+    return normalize_text(text)
 
-    Returns:
-        (token_sequence, oov_words, all_valid)
-        - token_sequence: str, space-separated tokens with <wb> boundaries
-        - oov_words: list of words not found in dictionary
-        - all_valid: True if all words found and all phonemes valid
+
+def devanagari_word_to_phonemes(word, valid_phonemes):
+    """Fallback Devanagari character-level phonemization for OOV words."""
+    vowel_map = {
+        'अ': ['a'], 'आ': ['aa'], 'इ': ['i'], 'ई': ['ii'], 'उ': ['u'], 'ऊ': ['uu'], 'ऋ': ['rq'], 'ए': ['ee'], 'ऐ': ['ei'], 'ओ': ['o'], 'औ': ['ou'],
+        'ॲ': ['ae'], 'ऑ': ['o']
+    }
+    consonant_map = {
+        'क': 'k', 'ख': 'kh', 'ग': 'g', 'घ': 'gh', 'ङ': 'ng',
+        'च': 'c', 'छ': 'ch', 'ज': 'j', 'झ': 'jh', 'ञ': 'nj',
+        'ट': 'tx', 'ठ': 'txh', 'ડ': 'dx', 'ढ': 'dxh', 'ण': 'nx',
+        'त': 't', 'थ': 'th', 'द': 'd', 'ध': 'dh', 'न': 'n',
+        'प': 'p', 'फ': 'ph', 'ब': 'b', 'भ': 'bh', 'म': 'm',
+        'य': 'y', 'र': 'r', 'ल': 'l', 'व': 'w',
+        'श': 'sh', 'ष': 'sx', 'स': 's', 'ह': 'h', 'ड़': 'dxq', 'ढ़': 'dxhq', 'फ़': 'f', 'ज़': 'z', 'ख़': 'khq', 'ग़': 'gq', 'क़': 'kq',
+        'ळ': 'lx'
+    }
+    matra_map = {
+        'ा': ['aa'], 'િ': ['i'], 'ी': ['ii'], 'ु': ['u'], 'ू': ['uu'], 'ृ': ['rq'], 'े': ['ee'], 'ै': ['ei'], 'ो': ['o'], 'ौ': ['ou'],
+        'ॅ': ['ae'], 'ॉ': ['o']
+    }
+
+    phonemes = []
+    i = 0
+    chars = list(word)
+    while i < len(chars):
+        c = chars[i]
+        if c in vowel_map:
+            phonemes.extend(vowel_map[c])
+            i += 1
+        elif c in consonant_map:
+            base_p = consonant_map[c]
+            # Check next character for matra or halant
+            if i + 1 < len(chars):
+                nxt = chars[i + 1]
+                if nxt == '्':
+                    phonemes.append(base_p)
+                    i += 2
+                elif nxt in matra_map:
+                    phonemes.append(base_p)
+                    phonemes.extend(matra_map[nxt])
+                    i += 2
+                elif nxt in ('ं', 'ँ'):
+                    phonemes.extend([base_p, 'a', 'mq'])
+                    i += 2
+                else:
+                    phonemes.extend([base_p, 'a'])
+                    i += 1
+            else:
+                # Word-final consonant (conservatively include schwa unless specified)
+                phonemes.extend([base_p, 'a'])
+                i += 1
+        elif c in matra_map:
+            phonemes.extend(matra_map[c])
+            i += 1
+        elif c in ('ं', 'ँ'):
+            phonemes.append('mq')
+            i += 1
+        elif c == 'ः':
+            phonemes.append('hq')
+            i += 1
+        else:
+            i += 1
+
+    invalid = [p for p in phonemes if p not in valid_phonemes]
+    if invalid or not phonemes:
+        return None
+    return phonemes
+
+
+def gujarati_word_to_phonemes(word, valid_phonemes):
+    """Fallback Gujarati character-level phonemization for OOV words."""
+    vowel_map = {
+        'અ': ['a'], 'આ': ['aa'], 'ઇ': ['i'], 'ઈ': ['ii'], 'ઉ': ['u'], 'ઊ': ['uu'],
+        'ઋ': ['rq'], 'એ': ['ee'], 'ઐ': ['ei'], 'ઓ': ['o'], 'ઔ': ['ou'],
+        'ઍ': ['ae'], 'ઑ': ['o']
+    }
+    consonant_map = {
+        'ક': 'k', 'ખ': 'kh', 'ગ': 'g', 'ઘ': 'gh', 'ઙ': 'ng',
+        'ચ': 'c', 'છ': 'ch', 'જ': 'j', 'ઝ': 'jh', 'ઞ': 'nj',
+        'ટ': 'tx', 'ઠ': 'txh', 'ડ': 'dx', 'ઢ': 'dxh', 'ણ': 'nx',
+        'ત': 't', 'થ': 'th', 'દ': 'd', 'ધ': 'dh', 'ન': 'n',
+        'પ': 'p', 'ફ': 'ph', 'બ': 'b', 'ભ': 'bh', 'મ': 'm',
+        'ય': 'y', 'ર': 'r', 'લ': 'l', 'ળ': 'lx', 'વ': 'w',
+        'શ': 'sh', 'ષ': 'sx', 'સ': 's', 'હ': 'h'
+    }
+    matra_map = {
+        'ા': ['aa'], 'િ': ['i'], 'ી': ['ii'], 'ુ': ['u'], 'ૂ': ['uu'],
+        'ૃ': ['rq'], 'ે': ['ee'], 'ૈ': ['ei'], 'ો': ['o'], 'ૌ': ['ou'],
+        'ૅ': ['ae'], 'ૉ': ['o']
+    }
+
+    phonemes = []
+    i = 0
+    chars = list(word)
+    while i < len(chars):
+        c = chars[i]
+        if c in vowel_map:
+            phonemes.extend(vowel_map[c])
+            i += 1
+        elif c in consonant_map:
+            base_p = consonant_map[c]
+            if i + 1 < len(chars):
+                nxt = chars[i + 1]
+                if nxt == '્':
+                    phonemes.append(base_p)
+                    i += 2
+                elif nxt in matra_map:
+                    phonemes.append(base_p)
+                    phonemes.extend(matra_map[nxt])
+                    i += 2
+                elif nxt in ('ં', 'ઁ'):
+                    phonemes.extend([base_p, 'a', 'mq'])
+                    i += 2
+                else:
+                    phonemes.extend([base_p, 'a'])
+                    i += 1
+            else:
+                phonemes.extend([base_p, 'a'])
+                i += 1
+        elif c in matra_map:
+            phonemes.extend(matra_map[c])
+            i += 1
+        elif c in ('ં', 'ઁ'):
+            phonemes.append('mq')
+            i += 1
+        elif c == 'ઃ':
+            phonemes.append('hq')
+            i += 1
+        else:
+            i += 1
+
+    invalid = [p for p in phonemes if p not in valid_phonemes]
+    if invalid or not phonemes:
+        return None
+    return phonemes
+
+
+def text_to_baseline_tokens(text, g2p_dict, valid_phonemes, lang="hi"):
     """
-    normalized = normalize_hindi_text(text)
+    Convert text (Hindi, Marathi, or Gujarati) to baseline phoneme tokens using dictionary lookup with fallback.
+    """
+    normalized = normalize_text(text, lang=lang)
     words = normalized.split()
 
     if not words:
@@ -151,14 +381,21 @@ def text_to_baseline_tokens(text, g2p_dict, valid_phonemes):
             # Validate all phonemes are in our vocabulary
             invalid = [p for p in phonemes if p not in valid_phonemes]
             if invalid:
-                oov_words.append(f"{word}(invalid_phonemes:{','.join(invalid)})")
-                all_valid = False
-                continue
-
-            word_phonemes.append(phonemes)
+                fb_phonemes = gujarati_word_to_phonemes(word, valid_phonemes) if lang == "gu" else devanagari_word_to_phonemes(word, valid_phonemes)
+                if fb_phonemes:
+                    word_phonemes.append(fb_phonemes)
+                else:
+                    oov_words.append(f"{word}(invalid_phonemes:{','.join(invalid)})")
+                    all_valid = False
+            else:
+                word_phonemes.append(phonemes)
         else:
-            oov_words.append(word)
-            all_valid = False
+            fb_phonemes = gujarati_word_to_phonemes(word, valid_phonemes) if lang == "gu" else devanagari_word_to_phonemes(word, valid_phonemes)
+            if fb_phonemes:
+                word_phonemes.append(fb_phonemes)
+            else:
+                oov_words.append(word)
+                all_valid = False
 
     if not all_valid or not word_phonemes:
         return "", oov_words, False
@@ -205,19 +442,28 @@ def main():
         description="Phase 2: G2P label preparation for TTS experiment"
     )
     parser.add_argument(
-        "--manifest", type=str, default=DEFAULT_MANIFEST,
-        help="Path to manifest CSV from Phase 1"
+        "--lang", type=str, default="hi", choices=["hi", "mr", "gu"],
+        help="Language code ('hi', 'mr', or 'gu', default: 'hi')"
+    )
+    parser.add_argument(
+        "--manifest", type=str, default=None,
+        help="Path to manifest CSV from Phase 1 (defaults to data/tts_{language}_female/manifest.csv)"
     )
     args = parser.parse_args()
 
+    lang_dir_names = {"hi": "tts_hindi_female", "mr": "tts_marathi_female", "gu": "tts_gujarati_female"}
+    lang_dir_name = lang_dir_names.get(args.lang, f"tts_{args.lang}_female")
+    if args.manifest is None:
+        args.manifest = os.path.join(PROJECT_DIR, "data", lang_dir_name, "manifest.csv")
+
     print("=" * 60)
-    print("PHASE 2: G2P LABEL PREPARATION")
+    print(f"PHASE 2: G2P LABEL PREPARATION ({args.lang.upper()})")
     print("=" * 60)
 
     # Load resources
-    print("\nLoading G2P dictionary...")
-    g2p_dict = load_hindi_g2p_dict()
-    print(f"  Loaded {len(g2p_dict)} Hindi word→phoneme entries")
+    print(f"\nLoading G2P dictionary for {args.lang.upper()}...")
+    g2p_dict = load_g2p_dict(args.lang)
+    print(f"  Loaded {len(g2p_dict)} {args.lang.upper()} word→phoneme entries")
 
     print("Loading cluster mapping...")
     cluster_map = load_cluster_mapping()
@@ -262,10 +508,10 @@ def main():
 
         # Get baseline tokens
         baseline_seq, oov_words, baseline_ok = text_to_baseline_tokens(
-            text, g2p_dict, valid_phonemes
+            text, g2p_dict, valid_phonemes, lang=args.lang
         )
 
-        word_count = len(normalize_hindi_text(text).split())
+        word_count = len(normalize_text(text, lang=args.lang).split())
         stats["total_words"] += word_count
 
         if not baseline_ok:

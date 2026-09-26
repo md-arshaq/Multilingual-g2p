@@ -18,10 +18,33 @@ import wave
 import io
 from pathlib import Path
 
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_DIR = os.path.dirname(SCRIPT_DIR)
+
 # ---------------------------------------------------------------------------
 # Constants
 # ---------------------------------------------------------------------------
-DATASET_NAME = "SPRINGLab/IndicTTS-Hindi"
+LANG_CONFIGS = {
+    "hi": {
+        "dataset_name": "SPRINGLab/IndicTTS-Hindi",
+        "output_dir": os.path.join(PROJECT_DIR, "data", "tts_hindi_female"),
+        "female_value": 1,
+        "prefix": "hindi_female",
+    },
+    "mr": {
+        "dataset_name": "SPRINGLab/IndicTTS_Marathi",
+        "output_dir": os.path.join(PROJECT_DIR, "data", "tts_marathi_female"),
+        "female_value": 0,
+        "prefix": "marathi_female",
+    },
+    "gu": {
+        "dataset_name": "SPRINGLab/IndicTTS_Gujarati",
+        "output_dir": os.path.join(PROJECT_DIR, "data", "tts_gujarati_female"),
+        "female_value": 0,
+        "prefix": "gujarati_female",
+    },
+}
+
 TARGET_HOURS = 1.75
 MIN_HOURS = 1.70
 MAX_HOURS = 1.80
@@ -29,69 +52,59 @@ MIN_DURATION_SEC = 2.5
 MAX_DURATION_SEC = 20.0
 RANDOM_SEED = 42
 TARGET_SR = 22050  # for duration estimation only; raw files kept as-is
-
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-PROJECT_DIR = os.path.dirname(SCRIPT_DIR)
 DEFAULT_OUTPUT_DIR = os.path.join(PROJECT_DIR, "data", "tts_hindi_female")
 
 
 def get_audio_duration_from_bytes(audio_bytes, sampling_rate):
-    """Compute duration in seconds from raw audio bytes and sample rate."""
+    """Compute duration in seconds from raw audio bytes using the built-in wave module."""
     if isinstance(audio_bytes, dict):
-        # HuggingFace datasets audio format: {'array': np.array, 'sampling_rate': int, 'path': str}
-        arr = audio_bytes.get("array")
-        sr = audio_bytes.get("sampling_rate", sampling_rate)
-        if arr is not None:
-            return len(arr) / sr
+        raw_bytes = audio_bytes.get("bytes")
+        if raw_bytes is not None:
+            try:
+                with wave.open(io.BytesIO(raw_bytes), "rb") as wav:
+                    frames = wav.getnframes()
+                    rate = wav.getframerate()
+                    return frames / float(rate)
+            except Exception:
+                pass
     return 0.0
 
 
 def validate_audio(audio_obj):
     """
-    Check that audio is not silent, corrupted, or contains NaNs.
+    Check that audio bytes are valid.
     Returns (is_valid, reason) tuple.
     """
-    import numpy as np
-
     if isinstance(audio_obj, dict):
-        arr = audio_obj.get("array")
-        if arr is None:
-            return False, "no_audio_array"
-        if len(arr) == 0:
+        raw_bytes = audio_obj.get("bytes")
+        if raw_bytes is None:
+            return False, "no_audio_bytes"
+        if len(raw_bytes) == 0:
             return False, "empty_audio"
-        if np.any(np.isnan(arr)):
-            return False, "contains_nan"
-        if np.max(np.abs(arr)) < 1e-6:
-            return False, "silent"
         return True, ""
     return False, "unknown_audio_format"
 
 
 def save_audio_wav(audio_obj, output_path):
-    """Save audio dict (from HuggingFace datasets) as WAV file."""
-    import numpy as np
-    import soundfile as sf
+    """Save raw audio bytes directly as a WAV file."""
+    raw_bytes = audio_obj.get("bytes")
+    if raw_bytes is not None:
+        with open(output_path, "wb") as f:
+            f.write(raw_bytes)
 
-    arr = audio_obj["array"]
-    sr = audio_obj["sampling_rate"]
-
-    # Ensure mono
-    if arr.ndim > 1:
-        arr = arr.mean(axis=-1)
-
-    # Normalize to float32
-    arr = arr.astype(np.float32)
-
-    sf.write(output_path, arr, sr)
 
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Download IndicTTS-Hindi and create female-only 1.75h subset"
+        description="Download IndicTTS and create female-only 1.75h subset"
     )
     parser.add_argument(
-        "--output_dir", type=str, default=DEFAULT_OUTPUT_DIR,
-        help=f"Output directory (default: {DEFAULT_OUTPUT_DIR})"
+        "--lang", type=str, default="hi", choices=["hi", "mr", "gu"],
+        help="Language code ('hi', 'mr', or 'gu', default: 'hi')"
+    )
+    parser.add_argument(
+        "--output_dir", type=str, default=None,
+        help="Output directory (defaults to data/tts_{language}_female)"
     )
     parser.add_argument(
         "--dry_run", action="store_true",
@@ -99,7 +112,10 @@ def main():
     )
     args = parser.parse_args()
 
-    output_dir = args.output_dir
+    lang_cfg = LANG_CONFIGS[args.lang]
+    dataset_name = lang_cfg["dataset_name"]
+    prefix = lang_cfg["prefix"]
+    output_dir = args.output_dir if args.output_dir is not None else lang_cfg["output_dir"]
     raw_dir = os.path.join(output_dir, "raw")
     os.makedirs(raw_dir, exist_ok=True)
 
@@ -107,7 +123,7 @@ def main():
     # Step 1: Load the dataset
     # -----------------------------------------------------------------------
     print("=" * 60)
-    print("PHASE 1: DATASET ACQUISITION & FEMALE SUBSET SELECTION")
+    print(f"PHASE 1: DATASET ACQUISITION & FEMALE SUBSET SELECTION ({args.lang.upper()})")
     print("=" * 60)
 
     try:
@@ -121,25 +137,27 @@ def main():
     sys.path.insert(0, SCRIPT_DIR)
     try:
         from tts_g2p_labeling import (
-            load_hindi_g2p_dict, load_phoneme_vocab, load_cluster_mapping,
+            load_g2p_dict, load_phoneme_vocab, load_cluster_mapping,
             text_to_baseline_tokens, baseline_to_clustered_tokens
         )
     except ImportError as e:
         print(f"ERROR: Failed to import G2P helper functions: {e}")
         sys.exit(1)
 
-    print("Loading G2P resources for candidate filtering...")
-    g2p_dict = load_hindi_g2p_dict()
+    print(f"Loading G2P resources for {args.lang.upper()} candidate filtering...")
+    g2p_dict = load_g2p_dict(args.lang)
     valid_phonemes = load_phoneme_vocab()
     cluster_map = load_cluster_mapping()
     print(f"  Loaded {len(g2p_dict)} G2P dictionary entries")
 
-    print(f"\nLoading {DATASET_NAME} ...")
+    print(f"\nLoading {dataset_name} ...")
     print("  (This may require HuggingFace authentication)")
     print("  Run 'huggingface-cli login' if you haven't already.\n")
 
     try:
-        ds = load_dataset(DATASET_NAME, split="train")
+        from datasets import load_dataset, Audio
+        ds = load_dataset(dataset_name, split="train")
+        ds = ds.cast_column("audio", Audio(decode=False))
     except Exception as e:
         print(f"ERROR: Failed to load dataset: {e}")
         print("\nPossible causes:")
@@ -162,25 +180,19 @@ def main():
         sys.exit(1)
 
     # Sample first 20 rows to determine gender encoding
-    gender_samples = [ds[i]["gender"] for i in range(min(20, len(ds)))]
-    unique_genders = set(ds["gender"])
+    genders = ds["gender"]
+    gender_samples = genders[:20]
+    unique_genders = set(genders)
     print(f"  Unique gender values: {unique_genders}")
     print(f"  First 20 gender values: {gender_samples}")
 
     # Determine female value
-    # IndicTTS typically uses: 0=male, 1=female OR "male"/"female"
     if unique_genders <= {0, 1}:
-        # Integer encoding — need to determine which is female
-        # IndicTTS convention: female samples are typically labeled 1
-        # We'll verify by checking counts (should be roughly equal ~5h each)
+        female_value = lang_cfg["female_value"]
         from collections import Counter
-        gender_counts = Counter(ds["gender"])
+        gender_counts = Counter(genders)
         print(f"  Gender distribution: {dict(gender_counts)}")
-
-        # The dataset description says Male: 5.16h, Female: 5.18h
-        # So counts should be roughly equal. We'll assume 1=female (IndicTTS convention)
-        female_value = 1
-        print(f"  Using female_value = {female_value} (IndicTTS convention)")
+        print(f"  Using female_value = {female_value} ({args.lang.upper()} configuration)")
     elif "female" in unique_genders or "Female" in unique_genders:
         female_value = "female" if "female" in unique_genders else "Female"
         print(f"  Using female_value = '{female_value}'")
@@ -193,7 +205,7 @@ def main():
     # Step 3: Filter to female samples
     # -----------------------------------------------------------------------
     print("\n--- Filtering to female samples ---")
-    female_indices = [i for i in range(len(ds)) if ds[i]["gender"] == female_value]
+    female_indices = [i for i, g in enumerate(genders) if g == female_value]
     print(f"  Female samples: {len(female_indices)} / {len(ds)} total")
 
     # -----------------------------------------------------------------------
@@ -222,7 +234,7 @@ def main():
 
         # Check G2P dictionary coverage
         baseline_seq, oov_words, baseline_ok = text_to_baseline_tokens(
-            text, g2p_dict, valid_phonemes
+            text, g2p_dict, valid_phonemes, lang=args.lang
         )
         if not baseline_ok:
             exclusions["oov_word"] += 1
@@ -347,7 +359,7 @@ def main():
             ds_idx = c["dataset_idx"]
             audio = ds[ds_idx]["audio"]
 
-            filename = f"hindi_female_{ds_idx:06d}.wav"
+            filename = f"{prefix}_{ds_idx:06d}.wav"
             output_path = os.path.join(raw_dir, filename)
             c["filename"] = filename
 
@@ -360,7 +372,7 @@ def main():
         print("\n--- DRY RUN: Skipping audio file saving ---")
         for sel_idx in selected:
             c = candidates[sel_idx]
-            c["filename"] = f"hindi_female_{c['dataset_idx']:06d}.wav"
+            c["filename"] = f"{prefix}_{c['dataset_idx']:06d}.wav"
 
     # -----------------------------------------------------------------------
     # Step 7: Save manifest
@@ -403,9 +415,9 @@ def main():
     # Summary
     # -----------------------------------------------------------------------
     print(f"\n{'=' * 60}")
-    print("PHASE 1 COMPLETE")
+    print(f"PHASE 1 COMPLETE ({args.lang.upper()})")
     print(f"{'=' * 60}")
-    print(f"  Dataset: {DATASET_NAME}")
+    print(f"  Dataset: {dataset_name}")
     print(f"  Total samples in dataset: {len(ds)}")
     print(f"  Female samples found: {len(female_indices)}")
     print(f"  Valid candidates after filtering: {len(candidates)}")

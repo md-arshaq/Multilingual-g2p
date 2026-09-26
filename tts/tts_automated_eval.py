@@ -27,20 +27,31 @@ DEFAULT_RESULTS = os.path.join(PROJECT_DIR, "results", "tts_hindi_female")
 
 
 def score_with_utmos(wav_paths):
-    """Try UTMOS/SpeechMOS for MOS prediction."""
+    """Try speechmos DNSMOS for MOS prediction."""
     scores = {}
 
-    # Try speechmos
+    # Try speechmos (DNSMOS)
     try:
-        import speechmos
-        predictor = speechmos.SpeechMOS()
-        for wav_path in wav_paths:
+        from speechmos import dnsmos
+        import librosa
+        import numpy as np
+
+        for i, wav_path in enumerate(wav_paths):
             try:
-                score = predictor.predict(wav_path)
-                scores[wav_path] = float(score)
+                y, sr = librosa.load(wav_path, sr=16000)
+                # DNSMOS requires audio in [-1, 1]
+                peak = np.max(np.abs(y))
+                if peak > 1.0:
+                    y = y / peak
+                result = dnsmos.run(y, sr)
+                # result is a dict: ovrl_mos, sig_mos, bak_mos, p808_mos
+                scores[wav_path] = float(result["ovrl_mos"])
             except Exception as e:
+                print(f"    WARN: scoring failed for {os.path.basename(wav_path)}: {e}")
                 scores[wav_path] = None
-        return scores, "speechmos"
+            if (i + 1) % 20 == 0:
+                print(f"    Scored {i + 1}/{len(wav_paths)}...")
+        return scores, "dnsmos"
     except ImportError:
         pass
 
@@ -159,19 +170,30 @@ def main():
         description="Phase 8a: Automated MOS evaluation"
     )
     parser.add_argument(
-        "--samples_dir", type=str, default=DEFAULT_SAMPLES,
+        "--lang", type=str, choices=["hi", "mr", "gu"], default="hi",
+        help="Language code ('hi', 'mr', or 'gu', default: 'hi')"
+    )
+    parser.add_argument(
+        "--samples_dir", type=str, default=None,
         help="Directory containing synthesized audio"
     )
     parser.add_argument(
-        "--results_dir", type=str, default=DEFAULT_RESULTS,
+        "--results_dir", type=str, default=None,
         help="Directory to save results"
     )
     args = parser.parse_args()
 
+    lang_dir_names = {"hi": "tts_hindi_female", "mr": "tts_marathi_female", "gu": "tts_gujarati_female"}
+    lang_dir_name = lang_dir_names.get(args.lang, f"tts_{args.lang}_female")
+    if args.samples_dir is None:
+        args.samples_dir = os.path.join(PROJECT_DIR, "samples", lang_dir_name)
+    if args.results_dir is None:
+        args.results_dir = os.path.join(PROJECT_DIR, "results", lang_dir_name)
+
     os.makedirs(args.results_dir, exist_ok=True)
 
     print("=" * 60)
-    print("PHASE 8a: AUTOMATED MOS EVALUATION")
+    print(f"PHASE 8a: AUTOMATED MOS EVALUATION ({args.lang.upper()})")
     print("=" * 60)
     print("\n  NOTE: These are AUTOMATED/PREDICTED MOS scores,")
     print("  NOT human MOS scores. They serve as supporting evidence only.")

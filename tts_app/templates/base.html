@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Multilingual Indic TTS - Human Evaluation{% endblock %}</title>
+  
+  <!-- Modern Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Sans+Gujarati:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- App Stylesheet -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  {% block head_extra %}{% endblock %}
+</head>
+<body>
+  <!-- Navigation Header -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="/" class="nav-brand">
+        <span>🎙️ Indic TTS Human Eval</span>
+        <span class="brand-badge">VITS Blind A/B</span>
+      </a>
+      
+      <nav class="nav-links">
+        <a href="/" class="nav-item {% if request.path == '/' %}active{% endif %}">Home</a>
+        <a href="/demo" class="nav-item {% if request.path == '/demo' %}active{% endif %}">🎙️ Live Demo</a>
+        <a href="/results" class="nav-item {% if request.path == '/results' %}active{% endif %}">📊 Results Dashboard</a>
+        <a href="/api/export/csv" class="nav-item" title="Download all ratings as CSV">📥 Export CSV</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container">
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>Multilingual G2P & TTS Research Pilot • Comparing Baseline (57 phonemes) vs Clustered (39 clusters) VITS models</p>
+    </div>
+  </footer>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>
