@@ -137,7 +137,7 @@ def init_db():
 # ── Metadata & Sample Loader ──────────────────────────────────────────────────
 
 def load_all_sample_pairs():
-    """Load all synthesized sample pairs across all languages from inference metadata."""
+    """Load synthesized sample pairs across all languages, filtered to short sentences (at max 3-5 words)."""
     sample_pool = []
     for lang_code, cfg in LANG_CONFIGS.items():
         csv_path = cfg["metadata_csv"]
@@ -150,6 +150,12 @@ def load_all_sample_pairs():
                 baseline_wav = row.get("baseline_wav", "")
                 clustered_wav = row.get("clustered_wav", "")
                 eval_set = row.get("set", "held_out")
+                text = (row.get("text") or "").strip()
+                
+                # Filter: strictly only small sentences (at max 3-5 words)
+                words = text.split()
+                if not (1 <= len(words) <= 5):
+                    continue
                 
                 if not baseline_wav or not clustered_wav:
                     continue
@@ -164,7 +170,7 @@ def load_all_sample_pairs():
                         "eval_set": eval_set,
                         "sample_index": int(row.get("index", 0)),
                         "sample_id": row.get("sample_id", ""),
-                        "text": row.get("text", ""),
+                        "text": text,
                         "baseline_wav": baseline_wav,
                         "clustered_wav": clustered_wav,
                     })
